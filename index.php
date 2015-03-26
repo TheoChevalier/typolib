@@ -37,5 +37,6 @@ echo "Traduction originale :  ".$parseTrad."<br/>";
 echo "Traduction corrigée : ".$correctTrad;
 
 ?>
+<a href="mozilla.org">LOL</a>
 </body>
 </html>
