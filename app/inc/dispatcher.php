@@ -1,7 +1,7 @@
 <?php
 namespace Transvision;
 
-$template     = true;
+$template     = false;
 $page         = $urls[$url['path']];
 
 $title = '<a href="/" id="typolib-title">Typolib’</a>';
