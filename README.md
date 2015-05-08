@@ -1,6 +1,51 @@
-# Typolib’
+
+<style>
+#logo {
+    position: relative;
+    padding: 0.1em 0.2em;
+    letter-spacing: 1px;
+    margin: 0;
+    width: 165px;
+    height: 50px;
+    line-height: 1.7em;
+    background-color: #28aae4;
+    border: 7px solid rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+#typolib-title {
+    color: #fff;
+    font-size: 2em;
+    font-weight: normal;
+    font-style: italic;
+    position: absolute;
+    left: 0.1em;
+    z-index: 1;
+}
+
+#typolib-title::before {
+    content: "";
+    -webkit-transform: rotate(11.4deg);
+    -moz-transform:    rotate(11.4deg);
+    -o-transform:      rotate(11.4deg);
+    transform:         rotate(11.4deg);
+    width: 90px;
+    height: 90px;
+    background-color: rgba(0, 0, 0, 0.15);
+    position: absolute;
+    display: block;
+    z-index: -1;
+    right: -33px;
+    top: -20px;
+}
+</style>
+<h1 id="logo" align="center"><span id="typolib-title">Typolib’</span></h1>
+
 
 Typolib’ is a project created by French students in MIAGE with the help of the [Mozilla Localization Drivers team](https://wiki.mozilla.org/L10n:Mozilla_Team).
+
+
+***
 
 
 **Mailing List:** [al2c-typolib@googlegroups.com](mailto:al2c-typolib@googlegroups.com)
