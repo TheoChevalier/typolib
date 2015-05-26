@@ -32,10 +32,10 @@
         <input type="submit" name="edit_code" value="Edit" alt="Edit" />
         <input type="submit" name="delete_code" value="Delete" alt="Delete" />
 
-        <br/>
-        <?php include VIEWS . 'replace_with_template.php'; ?>
+        <div id="template">
 
-        <br/>
+        </div>
+
         <fieldset>
             <p>Enter a comment:<br />
             <input type="text" name="comment" id="comment"/></p>
@@ -47,3 +47,4 @@
     <div id="results"><?php include VIEWS . 'view_treeview.php'; ?></div>
 </form>
 <?php include VIEWS . 'view_modal.php'; ?>
+<?php include VIEWS . 'replace_with_template.php'; ?>

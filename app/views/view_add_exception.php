@@ -1,4 +1,4 @@
-<div id="exceptionview">
+<div id="exceptionview" style="display: none;">
     <fieldset id="exception_main">
         <input type="hidden" name="id_rule" id="id_rule" value="1"/>
         <span class="bold">New exception:</span><br />

@@ -99,8 +99,19 @@ function clickHandlers() {
     });
 };
 
+function updateRuleTemplate() {
+    rule_type = $('#addrule_type :selected').val();
+    $('#template').empty();
+    var res = $('#template-' + rule_type + ' div').clone();
+    res.show();
+    $('#template').html(res);
+};
+
 $('#exceptionview').hide();
 clickHandlers();
+updateRuleTemplate();
+
+
 
 $('#locale_selector').on('change', function() {
     $.ajax({
@@ -138,8 +149,7 @@ $('#code_selector').on('change', function() {
 });
 
 $('#addrule_type').on('change', function() {
-    rule_type = $('#addrule_type :selected').text();
-    $('#rule').val(rule_type);
+    updateRuleTemplate();
 });
 
 $('#submitRule').click(function(event) {

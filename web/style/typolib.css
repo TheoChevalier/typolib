@@ -61,7 +61,7 @@ body {
 }
 
 header {
-    background-color: #28aae4;
+    background-color: #0095dd;
     padding: 10px;
 }
 
@@ -116,7 +116,6 @@ a.button {
     width: 165px;
     height: 50px;
     line-height: 1.7em;
-    background-color: #28aae4;
     border: 7px solid rgba(0, 0, 0, 0.15);
     overflow: hidden;
 }
