@@ -24,7 +24,7 @@
                             <label for="item-<?=$type_number;?>-<?=$rule_number;?>" class="rule" data-id-rule="<?=$id_rule;?>">
                                 <?=$buildRule[$id_rule]?>
                             </label>
-                            <input type="button" class="button button-negative delete-rule" value="×">
+                            <input type="button" class="button button-negative delete-rule close" value="×">
                             <?php if (isset($rule['comment'])) : ?>
                                 <span class="comment">
                                     <?=$rule['comment']?>

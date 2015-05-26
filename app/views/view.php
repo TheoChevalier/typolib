@@ -46,3 +46,4 @@
     </fieldset>
     <div id="results"><?php include VIEWS . 'view_treeview.php'; ?></div>
 </form>
+<?php include VIEWS . 'view_modal.php'; ?>
