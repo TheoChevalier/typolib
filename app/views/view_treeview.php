@@ -63,4 +63,14 @@
     </ul>
 </div>
 
-<?php include VIEWS . 'view_add_exception.php'; ?>
+<div id="exceptionview" style="display: none;">
+    <fieldset>
+        <span class="bold">New exception:</span><br />
+        <input type="text" id="exception" required="required"/><input type="button" id="submitRuleException" class="button button-green" value="Add" alt="Add" />
+    </fieldset>
+</div>
+
+<span class="edit-exception-form">
+    <input type="text" required="required"/>
+    <input type="button" id="submitUpdatedException" class="button" value="Send" alt="Send" />
+</span>

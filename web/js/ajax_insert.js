@@ -1,6 +1,6 @@
 function clickHandlers() {
     $("a.new-exception").unbind('click');
-    $("a.new-exception").click(function(event){
+    $("a.new-exception").click(function(event) {
         event.preventDefault();
         // Make sure the form is displayed
         $('#exceptionview').show();
@@ -13,6 +13,19 @@ function clickHandlers() {
 
         // Move the form under current rule
         $('#exceptionview').detach().appendTo($(this).parent());
+    });
+
+
+    $(".edit-exception").unbind('click');
+    $(".edit-exception").click(function(event) {
+        var li = $(this).parent();
+        var span = li.find('span');
+
+        var exception = span.text;
+        //li.empty();
+        console.log(exception);
+        li.html($('.edit-exception-form'));
+        li.find("input:text").val(exception);
     });
 
 
