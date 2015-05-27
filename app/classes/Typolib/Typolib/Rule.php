@@ -20,7 +20,7 @@ class Rule
     private $type;
     private $comment;
     // FIXME: string?
-    public static $rules_type = [ 'if_then'     => 'REPLACE %s WITH%s',
+    public static $rules_type = [ 'if_then'     => 'REPLACE %s WITH %s',
                                   'contains'    => 'CONTAINS %s',
                                   'string'      => 'STRING',
                                   'starts_with' => 'STARTS WITH %s',
@@ -196,6 +196,8 @@ class Rule
 
             return unserialize(file_get_contents($file));
         }
+
+        return false;
     }
 
     /**
@@ -271,27 +273,31 @@ class Rule
         $res = []; // var to be returned
         $array_quotation_marks = self::findQuotationMarks($user_string);
 
+        $positions = [];
         if ($array_quotation_marks != false) {
             $count = 0;
             foreach ($array_quotation_marks as $position => $quote) {
-                if ($count % 2 == 0) {
+                if ($count % 2 == 0 && $quote != $before) {
                     $user_string = \Typolib\Strings::replaceString(
                                                             $user_string,
                                                             $before,
                                                             $position
                                                         );
-                } else {
+                    $positions[] = $position;
+                }
+                if ($count % 2 == 1 && $quote != $after) {
                     $user_string = \Typolib\Strings::replaceString(
                                                             $user_string,
                                                             $after,
                                                             $position
                                                         );
+                    $positions[] = $position;
                 }
                 $count++;
             }
 
             array_push($res, $user_string);
-            array_push($res, array_keys($array_quotation_marks));
+            array_push($res, $positions);
 
             return $res;
         }
