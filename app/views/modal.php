@@ -1,4 +1,4 @@
-<div style="display: block;" id="modal" role="dialog" tabindex="-1">
+<div style="display: none;" id="modal" role="dialog" tabindex="-1">
     <div class="window">
         <div class="inner">
             <header>Typolib’</header>
