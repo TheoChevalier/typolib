@@ -20,11 +20,11 @@ class Rule
     private $type;
     private $comment;
     // FIXME: string?
-    public static $rules_type = [ 'if_then'     => 'REPLACE %s WITH %s',
-                                  'contains'    => 'CONTAINS %s',
-                                  'string'      => 'STRING',
-                                  'starts_with' => 'STARTS WITH %s',
-                                  'ends_with'   => 'ENDS WITH %s', ];
+    public static $rules_type = [ 'replace_with'         => 'REPLACE %s WITH %s',
+                                  'plural_separator'     => 'PLURAL SEPARATOR %s',
+                                  'ignore_variable'      => 'IGNORE VARIABLE %s',
+                                  'quotation_mark'       => 'QUOTATION MARK %s %s',
+                                ];
     private static $ifThenRuleArray = [];
     private static $variable_to_ignore_array = [];
     private static $start_variable_tag = '<-';

@@ -340,8 +340,14 @@ textarea {
     font-weight: bold;
 }
 
+
+
 #template input[type='text'] {
     width: auto;
+}
+
+input[type='text'].little-input {
+    width: 10px;
 }
 
 .close {
