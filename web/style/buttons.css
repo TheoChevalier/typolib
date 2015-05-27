@@ -1,3 +1,158 @@
+.button-flat,
+.button-flat:link,
+.button-flat:visited {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  border-radius: 6px;
+  -webkit-transition: all linear 0.25s;
+  transition: all linear 0.25s;
+  text-align: center;
+  padding: 12px 40px;
+  margin-bottom: 20px;
+  background: #00a0dc;
+  color: #fff;
+  font-size: 14px;
+  font-size: 0.875rem;
+  border: none;
+  cursor: pointer;
+}
+.button-flat:hover,
+.button-flat:link:hover,
+.button-flat:visited:hover,
+.button-flat:focus,
+.button-flat:link:focus,
+.button-flat:visited:focus {
+  text-decoration: none;
+  background: #00abeb;
+  color: #fff;
+}
+.button-flat-inverted {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  border-radius: 6px;
+  -webkit-transition: all linear 0.25s;
+  transition: all linear 0.25s;
+  text-align: center;
+  padding: 12px 40px;
+  margin-bottom: 20px;
+  background: #00a0dc;
+  color: #fff;
+  font-size: 14px;
+  font-size: 0.875rem;
+  border: none;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.4);
+  color: #00a0dc;
+  border: 2px solid #00a0dc;
+}
+.button-flat-inverted:hover,
+.button-flat-inverted:focus {
+  text-decoration: none;
+  background: #00abeb;
+  color: #fff;
+}
+.button-flat-inverted:hover,
+.button-flat-inverted:focus {
+  background: #ffffff;
+}
+html[lang^='en'] .button-flat,
+html[lang^='en'] .button-flat-inverted {
+  text-transform: uppercase;
+}
+.button,
+.button:link,
+.button:visited {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  border-radius: 0.25em;
+  box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.2), inset 0px -1px 0px 0px rgba(0, 0, 0, 0.3);
+  background-color: #43a6e2;
+  background-color: #277ac1;
+  background-repeat: repeat-x;
+  background-image: -webkit-linear-gradient(top, #43a6e2, #277ac1);
+  /* Safari 5.1+, Chrome 10+ */
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#43a6e2', endColorstr='#277ac1', GradientType=0)";
+  /* IE8+ */
+  background-image: linear-gradient(to bottom, #43a6e2, #277ac1);
+  /* the standard */
+  color: #ffffff;
+  text-align: center;
+  font-size: 14px;
+  font-size: 0.875rem;
+  font-weight: bold;
+  padding: 5px 10px;
+  line-height: 1.1;
+  text-decoration: none;
+  min-width: 80px;
+  border: 0;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+  font-family: 'Open Sans', X-LocaleSpecific, sans-serif;
+  -webkit-transition: all linear 0.25s;
+  transition: all linear 0.25s;
+}
+.button:hover,
+.button:link:hover,
+.button:visited:hover,
+.button.hover,
+.button:link.hover,
+.button:visited.hover,
+.button:focus,
+.button:link:focus,
+.button:visited:focus,
+.button.focus,
+.button:link.focus,
+.button:visited.focus {
+  box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.2), inset 0px -1px 0px 0px rgba(0, 0, 0, 0.3), inset 0px 12px 24px 2px #38a9ed;
+  color: #ffffff;
+  text-decoration: none;
+  -webkit-transition: all linear 0.25s;
+  transition: all linear 0.25s;
+}
+.button:focus,
+.button:link:focus,
+.button:visited:focus,
+.button.focus,
+.button:link.focus,
+.button:visited.focus {
+  outline-color: #484848;
+  box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.2), inset 0px -1px 0px 0px rgba(0, 0, 0, 0.3), inset 0px 12px 24px 2px #38a9ed, 0 0 0 2px rgba(73, 173, 227, 0.4);
+}
+.button:active,
+.button:link:active,
+.button:visited:active,
+.button.active,
+.button:link.active,
+.button:visited.active {
+  box-shadow: inset 0px 2px 0px 0px rgba(0, 0, 0, 0.2), inset 0px 12px 24px 6px rgba(0, 0, 0, 0.2), inset 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+  text-decoration: none;
+  -webkit-transition: all linear 0.25s;
+  transition: all linear 0.25s;
+}
+.button.insensitive,
+.button:link.insensitive,
+.button:visited.insensitive,
+.button.insensitive:hover,
+.button:link.insensitive:hover,
+.button:visited.insensitive:hover,
+.button.insensitive:focus,
+.button:link.insensitive:focus,
+.button:visited.insensitive:focus {
+  background-color: #9ca3aa;
+  background-repeat: repeat-x;
+  background-image: -webkit-linear-gradient(top, #bfc7cd, #9ca3aa);
+  /* Safari 5.1+, Chrome 10+ */
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#bfc7cd', endColorstr='#9ca3aa', GradientType=0)";
+  /* IE8+ */
+  background-image: linear-gradient(to bottom, #bfc7cd, #9ca3aa);
+  /* the standard */
+  box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.2), inset 0px -1px 0px 0px rgba(0, 0, 0, 0.3);
+  color: #eee;
+}
+
 .button-green,
 .button-green:link,
 .button-green:visited {

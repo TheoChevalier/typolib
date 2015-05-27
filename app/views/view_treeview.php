@@ -21,12 +21,13 @@
         ?>
                         <li>
                             <input type="checkbox" id="item-<?=$type_number;?>-<?=$rule_number;?>" />
-                            <label for="item-<?=$type_number;?>-<?=$rule_number;?>" class="rule" data-id-rule="<?=$id_rule;?>">
+                            <label for="item-<?=$type_number;?>-<?=$rule_number;?>" class="rule" data-id-rule="<?=$id_rule;?>" data-id-type="<?=$id_type;?>">
                                 <?=$buildRule[$id_rule]?>
                             </label>
-                            <input type="button" class="button button-negative delete-rule" value="×">
+                            <input type="button" class="button edit-rule" value="Edit">
+                            <input type="button" class="button button-negative delete-rule close" value="×">
                             <?php if (isset($rule['comment'])) : ?>
-                                <span class="comment">
+                                <br/><span class="comment">
                                     <?=$rule['comment']?>
                                 </span>
                             <?php endif; ?>
@@ -45,7 +46,7 @@
                                         } // End level 3
                                     }
                         ?>
-                                <a class="new-exception" href="#"><li>New exception…</li></a>
+                                <a class="new-exception button button-green" href="#"><li>Add new exception</li></a>
                             </ul>
                         </li>
         <?php
@@ -63,4 +64,13 @@
     </ul>
 </div>
 
-<?php include VIEWS . 'view_add_exception.php'; ?>
+<div id="exceptionview" style="display: none;">
+    <span class="bold">New exception:</span><br />
+    <input type="text" id="exception" />
+    <input type="button" id="submitRuleException" class="button button-green" value="Add" alt="Add" />
+</div>
+
+<span class="edit-exception-form" style="display: none;">
+    <input type="text" />
+    <input type="button" id="submitUpdatedException" class="button" value="Send" alt="Send" />
+</span>

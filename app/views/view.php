@@ -32,10 +32,10 @@
         <input type="submit" name="edit_code" value="Edit" alt="Edit" />
         <input type="submit" name="delete_code" value="Delete" alt="Delete" />
 
-        <br/>
-        <?php include VIEWS . 'replace_with_template.php'; ?>
+        <div id="template">
 
-        <br/>
+        </div>
+
         <fieldset>
             <p>Enter a comment:<br />
             <input type="text" name="comment" id="comment"/></p>
@@ -46,3 +46,16 @@
     </fieldset>
     <div id="results"><?php include VIEWS . 'view_treeview.php'; ?></div>
 </form>
+<?php
+
+include VIEWS . 'modal.php';
+
+$edit_mode = false;
+foreach ($ruletypes as $id_type => $pretty_name) {
+    include VIEWS . 'rule_form_template.php';
+}
+
+$edit_mode = true;
+foreach ($ruletypes as $id_type => $pretty_name) {
+    include VIEWS . 'rule_form_template.php';
+}
