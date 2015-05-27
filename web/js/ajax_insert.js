@@ -22,12 +22,19 @@ function clickHandlers() {
         var span = li.find('span');
 
         var exception = span.text;
-        //li.empty();
-        console.log(exception);
         li.html($('.edit-exception-form'));
         li.find("input:text").val(exception);
     });
 
+    $(".edit-rule").unbind('click');
+    $(".edit-rule").click(function(event) {
+        var li = $(this).parent();
+        var type = li.find('.rule').data('id-type');
+        var template = $('#template-' + type + '-edit form').clone();
+
+        $("#modal").show();
+        $('#modal .modal-content').html(template);
+    });
 
     $(".delete-rule").unbind('click');
     $(".delete-rule").click(function(event) {
@@ -101,6 +108,7 @@ function clickHandlers() {
                     ul.find('#exceptionview').appendTo(ul);
                     ul.find('.new-exception').appendTo(ul);
                     clickHandlers();
+                    $('#exception').val('');
                 } else {
                     alert("The exception field can’t be empty.");
                 }
@@ -114,8 +122,7 @@ function clickHandlers() {
 
 function updateRuleTemplate() {
     rule_type = $('#addrule_type :selected').val();
-    $('#template').empty();
-    var res = $('#template-' + rule_type + ' div').clone();
+    var res = $('#template-' + rule_type + ' form').clone();
     res.show();
     $('#template').html(res);
 };
@@ -173,7 +180,7 @@ $('#submitRule').click(function(event) {
     comment = $('#comment').val();
     placeholder = $('#addrule_type :selected').text();
     var inputs = new Array();
-    $('input[type=text]').each(function(){
+    $('#template input[type=text]').each(function(){
         var input = $(this);
         if(input.attr('name').toLowerCase().indexOf("input") >= 0) {
             inputs.push(input.val());
@@ -189,7 +196,7 @@ $('#submitRule').click(function(event) {
                 $("#results").html(response);
                 $('#comment').val('');
                 $('#rule').val(placeholder);
-                $('input[type=text]').each(function(){
+                $('#template input[type=text]').each(function(){
                     var input = $(this);
                     if(input.attr('name').toLowerCase().indexOf("input") >= 0) {
                         input.val('');

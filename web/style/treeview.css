@@ -9,13 +9,14 @@
     margin-bottom: 5px;
 }
 
-.treeview span.comment {
-    font-size: 1.0em;
-    color: rgba(255, 0, 0, 1);
-    font-style: italic; 
+.treeview .comment {
+    display: inline-block;
+    margin-bottom: 1em;
     height: 1em;
     line-height: 1em;
-    bottom: 2.0em;
+    font-size: 1.0em;
+    color: #666;
+    font-style: italic;
 }
 
 .treeview ul,
@@ -32,7 +33,7 @@
     opacity: 0;
 }
 
-.treeview .exceptions input
+.treeview .exceptions input, input.delete-rule, input.edit-rule
 {
     position: relative;
     min-width: 0;
@@ -47,7 +48,8 @@
 }
 
 .treeview .exceptions li:hover .button,
-.treeview .rules li:hover label+input.button
+.treeview .rules li:hover .edit-rule,
+.treeview .rules li:hover .delete-rule
 {
     opacity: 1;
 }
