@@ -100,8 +100,8 @@ class Code
     {
         $folder = DATA_ROOT . RULES_STAGING . "/$locale/$name";
 
+        $repo_mgr = new RepoManager();
         if (Utils::deleteFolder($folder)) {
-            $repo_mgr = new RepoManager();
             $repo_mgr->commitAndPush('Deleting "' . $name . '" code.');
 
             return true;
