@@ -43,7 +43,7 @@ function clickHandlers() {
         var li = $(this).parent();
         id_rule = li.find('.rule').data('id-rule');
         $.ajax({
-            url: "api/",
+            url: "/api/",
             type: "GET",
             data: "action=deleting_rule&locale=" + locale + "&code=" + code + "&id_rule=" + id_rule,
             dataType: "html",
@@ -70,7 +70,7 @@ function clickHandlers() {
         var rule = li.parent().parent();
         id_rule = rule.find('.rule').data('id-rule');
         $.ajax({
-            url: "api/",
+            url: "/api/",
             type: "GET",
             data: "action=deleting_exception&locale=" + locale + "&code=" + code + "&id_rule=" + id_rule + "&id_exception=" + id_exception,
             dataType: "html",
@@ -97,7 +97,7 @@ function clickHandlers() {
         exception = $('#exception').val();
         id_rule = $('#exceptionview').parent().parent().find('.rule').data('id-rule');
         $.ajax({
-            url: "api/",
+            url: "/api/",
             type: "GET",
             data: "action=adding_exception&locale=" + locale + "&code=" + code + "&id_rule=" + id_rule + "&content=" + exception,
             dataType: "html",
@@ -135,9 +135,9 @@ updateRuleTemplate();
 
 $('#locale_selector').on('change', function() {
     $.ajax({
-        url: "api/",
+        url: "/api/",
         type: "GET",
-        data: "action=get_codes&locale=" + this.value,
+        data: "action=get_codes&locale=" + this.value + "&mode=1" ,
         dataType: "html",
         success: function(response) {
             $("#code_selector").html(response);
@@ -153,9 +153,9 @@ $('#locale_selector').on('change', function() {
 $('#code_selector').on('change', function() {
     locale = $('#locale_selector').val();
     $.ajax({
-        url: "api/",
+        url: "/api/",
         type: "GET",
-        data: "action=get_rules&locale=" + locale + "&code=" + this.value,
+        data: "action=get_rules&locale=" + locale + "&code=" + this.value + "&mode=1" ,
         dataType: "html",
         success: function(response) {
             $("#results").html(response);
@@ -187,7 +187,7 @@ $('#submitRule').click(function(event) {
         }
     });
     $.ajax({
-        url: "api/",
+        url: "/api/",
         type: "GET",
         data: "action=adding_rule&locale=" + locale + "&code=" + code + "&type=" + rule_type + "&comment=" + comment + "&array=" + JSON.stringify(inputs),
         dataType: "html",

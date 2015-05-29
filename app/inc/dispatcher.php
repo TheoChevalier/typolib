@@ -45,6 +45,11 @@ switch ($url['path']) {
         $page_title = 'Check text';
         $page_descr = '';
         break;
+    case 'display':
+        $controller = 'display';
+        $page_title = 'Display rules';
+        $page_descr = '';
+        break;
     default:
         $controller = 'view';
         $page_title = 'Adding new rules';
