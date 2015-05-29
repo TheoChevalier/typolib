@@ -1,22 +1,31 @@
 
+.treeview {
+    padding: 30px;
+}
+
 .treeview label.rule {
     font-size: 1.5em;
     background-color: rgba(255, 255, 255, 0.5);
     height: 2em;
     line-height: 2em;
-    padding-right: 10px;
+    padding: 0 10px;
     border-radius: 3px;
     margin-bottom: 5px;
 }
 
 .treeview .comment {
     display: inline-block;
-    margin-bottom: 1em;
+    margin: 0 0 1em 45px;
     height: 1em;
     line-height: 1em;
     font-size: 1.0em;
     color: #666;
     font-style: italic;
+}
+
+.treeview .new-exception,
+#exceptionview {
+    margin: 10px 0;
 }
 
 .treeview ul,
@@ -27,13 +36,21 @@
     list-style: none;
 }
 
-.treeview input
+.treeview input,
+.delete-rule,
+.edit-rule,
+.delete-exception,
+.edit-exception
 {
     position: absolute;
     opacity: 0;
 }
 
-.treeview .exceptions input, input.delete-rule, input.edit-rule
+.treeview .exceptions input,
+.delete-rule,
+.edit-rule,
+.delete-exception,
+.edit-exception
 {
     position: relative;
     min-width: 0;
@@ -89,20 +106,15 @@
     cursor: pointer;
 }
 
-.treeview input:disabled + label
+.treeview .switch:disabled + label
 {
     cursor: default;
     opacity: .6;
 }
 
-.treeview input:checked:not(:disabled) ~ ul
+.treeview .switch:checked:not(:disabled) ~ ul
 {
     display: block;
-}
-
-.treeview label::before
-{
-    background: url("../img/icons.png") no-repeat;
 }
 
 .treeview label,
@@ -115,23 +127,18 @@
     vertical-align: middle;
 }
 
-.treeview label
-{
-    background-position: 18px 0;
-}
 
 .treeview label::before
 {
-    content: "";
-    width: 16px;
+    font-family: FontAwesome;
+    content: "\f196";
     margin: 0 22px 0 0;
-    vertical-align: middle;
-    background-position: 0 -32px;
 }
 
-.treeview input:checked + label::before
+.treeview .switch:checked + label::before
 {
-    background-position: 0 -16px;
+    font-family: FontAwesome;
+    content: "\f147";
 }
 
 /* Overrides for the Exception form */

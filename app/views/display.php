@@ -4,18 +4,22 @@
         <?php if (isset($locale_selector)) : ?>
         <fieldset>
             <label>Locale</label>
-            <select name="locale" title="Locale" id="locale_selector">
-            <?=$locale_selector?>
-            </select>
+            <div class="select-style">
+                <select name="locale" title="Locale" id="locale_selector">
+                <?=$locale_selector?>
+                </select>
+            </div>
         </fieldset>
         <?php endif; ?>
 
         <?php if (isset($code_selector)) : ?>
         <fieldset>
             <label>Code</label>
-            <select name="code" title="Code" id="code_selector">
-            <?=$code_selector?>
-            </select>
+            <div class="select-style">
+                <select name="code" title="Code" id="code_selector">
+                <?=$code_selector?>
+                </select>
+            </div>
         </fieldset>
         <?php endif; ?>
     </fieldset>

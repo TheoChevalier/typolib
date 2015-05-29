@@ -5,7 +5,7 @@
         include VIEWS . 'rule_forms/' . $id_type . '.php';
 
         if ($edit_mode) : ?>
-            <input type="submit" value="Edit" />
+            <input type="submit" class="button" value="Edit" />
         <?php endif; ?>
     </form>
 </div>

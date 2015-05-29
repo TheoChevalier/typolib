@@ -18,6 +18,7 @@ function clickHandlers() {
 
     $(".edit-exception").unbind('click');
     $(".edit-exception").click(function(event) {
+        event.preventDefault();
         var li = $(this).parent();
         var span = li.find('span');
 
@@ -28,6 +29,7 @@ function clickHandlers() {
 
     $(".edit-rule").unbind('click');
     $(".edit-rule").click(function(event) {
+        event.preventDefault();
         var li = $(this).parent();
         var type = li.find('.rule').data('id-type');
         var template = $('#template-' + type + '-edit form').clone();
@@ -38,6 +40,7 @@ function clickHandlers() {
 
     $(".delete-rule").unbind('click');
     $(".delete-rule").click(function(event) {
+        event.preventDefault();
         code = $('#code_selector').val();
         locale = $('#locale_selector').val();
         var li = $(this).parent();
@@ -63,6 +66,7 @@ function clickHandlers() {
 
     $(".delete-exception").unbind('click');
     $(".delete-exception").click(function(event) {
+        event.preventDefault();
         code = $('#code_selector').val();
         locale = $('#locale_selector').val();
         var li = $(this).parent();
