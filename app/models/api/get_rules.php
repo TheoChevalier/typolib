@@ -14,5 +14,6 @@ if (array_key_exists('rules', $rules)) {
 } else {
     $buildRule = '';
 }
-$edit_mode = $_GET['mode'];
+
+$edit_mode = $_GET['mode'] == '1';
 include VIEWS . 'view_treeview.php';

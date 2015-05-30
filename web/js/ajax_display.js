@@ -6,7 +6,6 @@ $('#locale_selector').on('change', function() {
         dataType: "html",
         success: function(response) {
             $("#code_selector").html(response);
-            clickHandlers();
             $('#exceptionview').hide();
         },
         error: function() {
@@ -24,7 +23,6 @@ $('#code_selector').on('change', function() {
         dataType: "html",
         success: function(response) {
             $("#results").html(response);
-            clickHandlers();
             $('#exceptionview').hide();
         },
         error: function() {

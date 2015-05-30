@@ -86,8 +86,8 @@ html[lang^='en'] .button-flat-inverted {
   padding: 5px 10px;
   line-height: 1.1;
   text-decoration: none;
-  min-width: 80px;
   border: 0;
+  cursor: pointer;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
   font-family: 'Open Sans', X-LocaleSpecific, sans-serif;
   -webkit-transition: all linear 0.25s;
@@ -177,7 +177,6 @@ html[lang^='en'] .button-flat-inverted {
   padding: 5px 10px;
   line-height: 1.1;
   text-decoration: none;
-  min-width: 80px;
   border: 0;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
   font-family: 'Open Sans', X-LocaleSpecific, sans-serif;
@@ -292,7 +291,6 @@ html[lang^='en'] .button-flat-inverted {
   padding: 5px 10px;
   line-height: 1.1;
   text-decoration: none;
-  min-width: 80px;
   border: 0;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
   font-family: 'Open Sans', X-LocaleSpecific, sans-serif;
@@ -407,7 +405,6 @@ html[lang^='en'] .button-flat-inverted {
   padding: 5px 10px;
   line-height: 1.1;
   text-decoration: none;
-  min-width: 80px;
   border: 0;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
   font-family: 'Open Sans', X-LocaleSpecific, sans-serif;

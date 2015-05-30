@@ -1,5 +1,11 @@
 <li data-id-exception="<?=$id_exception;?>">
     <span><?=$exception?></span>
-    <input type="button" class="button edit-exception" value="Edit">
-    <input type="button" class="button button-negative delete-exception close" value="×">
+    <?php if ($edit_mode) : ?>
+        <button class="button edit-exception" title="Edit this exception">
+            <i class="fa fa-edit"></i>
+        </button>
+        <button class="button button-negative delete-exception close" title="Delete this exception">
+            <i class="fa fa-times"></i>
+        </button>
+    <?php endif; ?>
 </li>

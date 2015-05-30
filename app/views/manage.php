@@ -1,6 +1,6 @@
 <form name="addform" id="mainform" method="get" action="">
-
-     <fieldset id="main">
+    <h2>You can edit an existing code</h2>
+    <fieldset id="main">
         <?php if (isset($locale_selector)) : ?>
         <fieldset>
             <label>Locale</label>
@@ -21,21 +21,19 @@
                 </select>
             </div>
         </fieldset>
+        <?php endif; ?>
+    </fieldset>
 
-        <p>
-            <fieldset>
-                <label for="enterText"> Enter your text:</label>
-            </fieldset>
+    <a href="/edit" class="button" title="Edit current code">
+        <i class="fa fa-edit fa-15x"></i> Edit code
+    </a>
+    <br/>
 
-            <fieldset>
-                <label for="identifiedMistakes">Identified Mistakes:</label>
-            </fieldset>
-            <br/>
-            <textarea name="enterText" rows="3" cols="15"></textarea>
-            <textarea name="IdentifiedMistakes: " rows="3" cols="15"></textarea>
-        </p>
-
-        <input type="submit" class="button-flat" name="check" value="Check" alt="Check" />
-
-      <?php endif; ?>
+    <h2>Or create a new one</h2>
+    <p>
+        <a href="/insert" class="button button-green" role="button" title="Add a new code">
+            <i class="fa fa-plus fa-15x"></i> Create a new code
+        </a>
+    </p>
 </form>
+

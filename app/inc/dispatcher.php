@@ -16,44 +16,49 @@ $show_title   = true;
 
 switch ($url['path']) {
     case '/':
-        $controller = 'view';
-        $page_title = 'View rules';
-        $page_descr = '';
+        $controller = 'check';
+        $page_title = 'Check text';
+        $page_descr = 'Enter text, select a set of rules to apply and you’re good to go!';
         break;
     case 'api':
         $template = false;
         $controller = 'api';
         $show_title = false;
         break;
+    case 'check':
+        $controller = 'check';
+        $page_title = 'Check text';
+        $page_descr = 'Enter text, select a set of rules to apply and you’re good to go!';
+        break;
+    case 'display':
+        $controller = 'display';
+        $page_title = 'Rules viewer';
+        $page_descr = 'Display any rule used by Typolib’ and all its comments and exceptions.';
+        break;
+    case 'edit':
+        $controller = 'view';
+        $page_title = 'Rules editor';
+        $page_descr = '';
+        break;
     case 'insert':
         $controller = 'insert';
         $page_title = 'Create a code';
         $page_descr = '';
+        break;
+    case 'manage':
+        $controller = 'manage';
+        $page_title = 'Rules manager';
+        $page_descr = 'Create new set of rules, edit or delete existing rules.';
         break;
     case 'test':
         $view       = 'test';
         $page_title = 'Test page';
         $page_descr = 'This is a page for test purposes only.';
         break;
-    case 'view':
-        $controller = 'view';
-        $page_title = 'View rules';
-        $page_descr = '';
-        break;
-    case 'check':
+    default:
         $controller = 'check';
         $page_title = 'Check text';
-        $page_descr = '';
-        break;
-    case 'display':
-        $controller = 'display';
-        $page_title = 'Display rules';
-        $page_descr = '';
-        break;
-    default:
-        $controller = 'view';
-        $page_title = 'Adding new rules';
-        $page_descr = '';
+        $page_descr = 'Enter text, select a set of rules to apply and you’re good to go!';
         break;
 }
 
@@ -79,5 +84,5 @@ if ($template) {
     }
 }
 
-// Log script performance in PHP integrated developement server console
+// Log script performance in PHP integrated development server console
 Utils::logScriptPerformances();

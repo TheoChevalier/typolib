@@ -4,9 +4,11 @@
         <?php if (isset($locale_selector)) : ?>
         <fieldset>
             <label>Locale</label>
-            <select name="locale" title="Locale" id="locale_selector">
-            <?=$locale_selector?>
-            </select>
+            <div class="select-style">
+                <select name="locale" title="Locale" id="locale_selector">
+                <?=$locale_selector?>
+                </select>
+            </div>
         </fieldset>
         <br/>
         <?php endif; ?>
@@ -20,6 +22,6 @@
             <input type="checkbox" name="common" id="common"/><label for="common">Use the common code</label>
         </fieldset>
         <br/>
-        <input type="submit" value="Create" alt="Create" />
+        <input type="submit" class=" button-flat" value="Create" alt="Create" />
     </fieldset>
 </form>

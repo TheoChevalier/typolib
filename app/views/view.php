@@ -4,45 +4,52 @@
         <?php if (isset($locale_selector)) : ?>
         <fieldset>
             <label>Locale</label>
-            <select name="locale" title="Locale" id="locale_selector">
-            <?=$locale_selector?>
-            </select>
+            <div class="select-style">
+                <select name="locale" title="Locale" id="locale_selector">
+                <?=$locale_selector?>
+                </select>
+            </div>
         </fieldset>
         <?php endif; ?>
 
         <?php if (isset($code_selector)) : ?>
         <fieldset>
             <label>Code</label>
-            <select name="code" title="Code" id="code_selector">
-            <?=$code_selector?>
-            </select>
+            <div class="select-style">
+                <select name="code" title="Code" id="code_selector">
+                <?=$code_selector?>
+                </select>
+            </div>
         </fieldset>
         <?php endif; ?>
 
+        <fieldset>
+            <button type="submit" name="edit_code" class="button" title="Edit current code">
+                <i class="fa fa-edit fa-15x"></i> Edit code name and options
+            </button>
+            <button type="submit" name="delete_code" class="button button-negative" title="Delete current code">
+                <i class="fa fa-times fa-15x"></i> Delete this code
+            </button>
+        </fieldset>
+        <br/>
         <?php if (isset($ruletypes_selector)) : ?>
         <fieldset>
             <label>Rule type</label>
-            <select name="type" title="Rule type" id="addrule_type">
-            <?=$ruletypes_selector?>
-            </select>
+            <div class="select-style">
+                <select name="type" title="Rule type" id="addrule_type">
+                <?=$ruletypes_selector?>
+                </select>
+            </div>
         </fieldset>
         <?php endif; ?>
 
-        <a href="/insert" class="button button-green" role="button">Add</a>
-        <input type="submit" name="edit_code" value="Edit" alt="Edit" />
-        <input type="submit" name="delete_code" value="Delete" alt="Delete" />
+        <div id="template"></div>
 
-        <div id="template">
-
-        </div>
-
-        <fieldset>
-            <p>Enter a comment:<br />
-            <input type="text" name="comment" id="comment"/></p>
-        </fieldset>
+        <p>Enter a comment:<br />
+        <input type="text" name="comment" id="comment" class="big-input"/></p>
 
         <br/>
-        <input type="submit" id="submitRule" value="Add" alt="Add" />
+        <input type="submit" id="submitRule" class="button-flat" value="Add" />
     </fieldset>
     <div id="results"><?php include VIEWS . 'view_treeview.php'; ?></div>
 </form>
@@ -50,12 +57,12 @@
 
 include VIEWS . 'modal.php';
 
-$edit_mode = false;
+$edit = false;
 foreach ($ruletypes as $id_type => $pretty_name) {
     include VIEWS . 'rule_form_template.php';
 }
 
-$edit_mode = true;
+$edit = true;
 foreach ($ruletypes as $id_type => $pretty_name) {
     include VIEWS . 'rule_form_template.php';
 }
