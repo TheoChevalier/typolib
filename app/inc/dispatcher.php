@@ -32,7 +32,7 @@ switch ($url['path']) {
         break;
     case 'display':
         $controller = 'display';
-        $page_title = 'Display rules';
+        $page_title = 'Rules viewer';
         $page_descr = 'Display any rule used by Typolib’ and all its comments and exceptions.';
         break;
     case 'edit':
@@ -84,5 +84,5 @@ if ($template) {
     }
 }
 
-// Log script performance in PHP integrated developement server console
+// Log script performance in PHP integrated development server console
 Utils::logScriptPerformances();
