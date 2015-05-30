@@ -30,6 +30,7 @@ if (strpos(VERSION, 'dev') !== false) {
         echo "<link rel=\"stylesheet\" href=\"/style/{$css_file}?" . VERSION . "\" type=\"text/css\" media=\"all\" />\n";
     }
     ?>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v1" />
   </head>
 <body id="<?=$page?>">
   <header>
