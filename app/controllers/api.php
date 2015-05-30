@@ -8,7 +8,7 @@ header('Access-Control-Allow-Headers: Content-Type');
 header('Content-type: text/html; charset=utf-8');
 
 $locale = $_GET['locale'];
-$code = $_GET['code'];
+$code = isset($_GET['code']) ? $_GET['code'] : '';
 
 // We must only allow those files, otherwise, any .php file on the server could be
 // included below.
