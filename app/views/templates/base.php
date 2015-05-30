@@ -41,6 +41,15 @@ if (strpos(VERSION, 'dev') !== false) {
     <h1 id="logo"><a href="/" id="typolib-title"><?php echo PRODUCT; ?></a></h1>
   </header>
 
+  <div id='cssmenu'>
+    <ul>
+       <li><a href='/'>Home</a></li>
+       <li><a href='/manage'>Rules manager</a></li>
+       <li><a href='/about'>About</a></li>
+       <li><a href='/contact'>Contact</a></li>
+    </ul>
+  </div>
+
   <div id="content-wrap">
 
     <?php if ($show_title == true): ?>
