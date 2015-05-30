@@ -24,9 +24,13 @@
                             <label for="item-<?=$type_number;?>-<?=$rule_number;?>" class="rule" data-id-rule="<?=$id_rule;?>" data-id-type="<?=$id_type;?>">
                                 <?=$buildRule[$id_rule]?>
                             </label>
-                            <input type="button" class="button edit-rule" value="Edit">
-                            <input type="button" class="button button-negative delete-rule close" value="×">
-                            <?php if (isset($rule['comment'])) : ?>
+                            <?php if ($edit_mode == 1) {
+    ?>
+                                <input type="button" class="button edit-rule" value="Edit">
+                                <input type="button" class="button button-negative delete-rule close" value="×">
+                            <?php
+
+} if (isset($rule['comment'])) : ?>
                                 <br/><span class="comment">
                                     <?=$rule['comment']?>
                                 </span>
@@ -45,8 +49,12 @@
                                             }
                                         } // End level 3
                                     }
-                        ?>
+                                    if ($edit_mode == 1) {
+                                        ?>
                                 <a class="new-exception button button-green" href="#"><li>Add new exception</li></a>
+                                <?php
+
+                                    } ?>
                             </ul>
                         </li>
         <?php

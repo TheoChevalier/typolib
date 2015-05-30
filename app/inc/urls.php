@@ -6,4 +6,5 @@ $urls = [
     'insert'              => 'insert',
     'test'                => 'test',
     'view'                => 'view',
+    'display'             => 'display',
 ];

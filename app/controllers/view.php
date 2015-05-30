@@ -3,6 +3,7 @@
 $js = ['ajax_insert.js', 'modal.js'];
 $css = ['treeview.css', 'buttons.css', 'modal.css'];
 
+$edit_mode = 1;
 if (isset($_GET['edit_code'])) {
     include MODELS . 'edit_code.php';
     include VIEWS . 'edit_code.php';
