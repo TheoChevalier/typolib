@@ -1,6 +1,8 @@
 <?php
 namespace Typolib;
 
+$edit_mode = true;
+
 $type = $_GET['type'];
 $comment = $_GET['comment'];
 $content_array = json_decode($_GET['array']);

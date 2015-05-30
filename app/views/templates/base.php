@@ -45,6 +45,9 @@ if (strpos(VERSION, 'dev') !== false) {
     <ul>
        <li><a href='/'>Home</a></li>
        <li><a href='/manage'>Rules manager</a></li>
+       <li><a href='/display'>Rules viewer</a></li>
+       <li><a href='/check'>Check text</a></li>
+       <li><a href='/test'>Test</a></li>
        <li><a href='/about'>About</a></li>
        <li><a href='/contact'>Contact</a></li>
     </ul>

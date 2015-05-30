@@ -23,6 +23,15 @@
         </fieldset>
         <?php endif; ?>
 
+        <fieldset>
+            <button type="submit" name="edit_code" class="button" title="Edit current code">
+                <i class="fa fa-edit fa-15x"></i> Edit code name and options
+            </button>
+            <button type="submit" name="delete_code" class="button button-negative" title="Delete current code">
+                <i class="fa fa-times fa-15x"></i> Delete this code
+            </button>
+        </fieldset>
+        <br/>
         <?php if (isset($ruletypes_selector)) : ?>
         <fieldset>
             <label>Rule type</label>
@@ -34,13 +43,7 @@
         </fieldset>
         <?php endif; ?>
 
-        <a href="/insert" class="button button-green" role="button" title="Add a new code"><i class="fa fa-plus fa-15x"></i></a>
-        <button type="submit" name="edit_code" class="button" title="Edit current code"><i class="fa fa-edit fa-15x"></i></button>
-        <button type="submit" name="delete_code" class="button button-negative" title="Delete current code"><i class="fa fa-times fa-15x"></i></button>
-
-        <div id="template">
-
-        </div>
+        <div id="template"></div>
 
         <p>Enter a comment:<br />
         <input type="text" name="comment" id="comment" class="big-input"/></p>
@@ -54,6 +57,12 @@
 
 include VIEWS . 'modal.php';
 
+$edit = false;
+foreach ($ruletypes as $id_type => $pretty_name) {
+    include VIEWS . 'rule_form_template.php';
+}
+
+$edit = true;
 foreach ($ruletypes as $id_type => $pretty_name) {
     include VIEWS . 'rule_form_template.php';
 }

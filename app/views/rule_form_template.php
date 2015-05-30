@@ -1,10 +1,10 @@
-<div id="template-<?=$id_type?><?=$edit_mode ? '-edit' : '';?>" style="display: none;">
+<div id="template-<?=$id_type?><?=$edit ? '-edit' : '';?>" style="display: none;">
     <form>
         <?php
 
         include VIEWS . 'rule_forms/' . $id_type . '.php';
 
-        if ($edit_mode) : ?>
+        if ($edit) : ?>
             <input type="submit" class="button" value="Edit" />
         <?php endif; ?>
     </form>
