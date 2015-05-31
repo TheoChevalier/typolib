@@ -27,6 +27,8 @@
             <button type="submit" name="edit_code" class="button" title="Edit current code">
                 <i class="fa fa-edit fa-15x"></i> Edit code name and options
             </button>
+        </fieldset>
+        <fieldset>
             <button type="submit" name="delete_code" class="button button-negative" title="Delete current code">
                 <i class="fa fa-times fa-15x"></i> Delete this code
             </button>

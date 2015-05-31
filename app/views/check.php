@@ -21,20 +21,18 @@
                 </select>
             </div>
         </fieldset>
-
-        <p>
-            <fieldset>
-                <label for="enterText"> Enter your text:</label>
-            </fieldset>
-
-            <fieldset>
-                <label for="identifiedMistakes">Identified Mistakes:</label>
-            </fieldset>
+        <br/>
+        <fieldset>
+            <label for="enterText">Enter your text</label>
             <br/>
             <textarea name="enterText" rows="3" cols="15"></textarea>
-            <textarea name="IdentifiedMistakes: " rows="3" cols="15"></textarea>
-        </p>
-
+        </fieldset>
+        <fieldset>
+            <label for="potentialErrors">Potential errors</label>
+            <br/>
+            <textarea name="potentialErrors" rows="3" cols="15"></textarea>
+        </fieldset>
+        <br/>
         <input type="submit" class="button-flat" name="check" value="Check" alt="Check" />
 
       <?php endif; ?>

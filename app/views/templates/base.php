@@ -22,6 +22,8 @@ if (strpos(VERSION, 'dev') !== false) {
 } ?><?=$title_productname?></title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/buttons.css?<?php echo VERSION; ?>" type="text/css" media="all" />
+    <link rel="stylesheet" href="/style/menu.css?<?php echo VERSION; ?>" type="text/css" media="all" />
     <link rel="stylesheet" href="/style/typolib.css?<?php echo VERSION; ?>" type="text/css" media="all" />
     <link rel="stylesheet" href="/assets/font-awesome/font-awesome-built.css?<?php echo VERSION; ?>" type="text/css" media="all" />
 
@@ -30,7 +32,7 @@ if (strpos(VERSION, 'dev') !== false) {
         echo "<link rel=\"stylesheet\" href=\"/style/{$css_file}?" . VERSION . "\" type=\"text/css\" media=\"all\" />\n";
     }
     ?>
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v1" />
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v2" />
   </head>
 <body id="<?=$page?>">
   <header>
@@ -44,13 +46,17 @@ if (strpos(VERSION, 'dev') !== false) {
 
   <div id='cssmenu'>
     <ul>
-       <li><a href='/'>Home</a></li>
-       <li><a href='/manage'>Rules manager</a></li>
-       <li><a href='/display'>Rules viewer</a></li>
-       <li><a href='/check'>Check text</a></li>
-       <li><a href='/test'>Test</a></li>
-       <li><a href='/about'>About</a></li>
-       <li><a href='/contact'>Contact</a></li>
+       <li <?=$page == 'root' ? 'class="active"' : ''?>><a href='/'>Home</a></li>
+       <li class='<?=$page == 'manage' || $page == 'display' ? 'active ' : ''?>has-sub'><a href='/display'>Rules</a>
+          <ul>
+               <li><a href='/display'>Rules viewer</a></li>
+               <li><a href='/manage'>Rules manager</a></li>
+          </ul>
+       </li>
+       <li <?=$page == 'check' ? 'class="active"' : ''?>><a href='/check'>Check text</a></li>
+       <li <?=$page == 'test' ? 'class="active"' : ''?>><a href='/test'>Test</a></li>
+       <li <?=$page == 'about' ? 'class="active"' : ''?>><a href='/about'>About</a></li>
+       <li <?=$page == 'contact' ? 'class="active"' : ''?>><a href='/contact'>Contact</a></li>
     </ul>
   </div>
 
