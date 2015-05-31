@@ -16,6 +16,6 @@ if (isset($_GET['edit_code'])) {
     include MODELS . 'view.php';
     include VIEWS . 'manage.php';
 } else {
-include MODELS . 'view.php';
-include VIEWS . 'view.php';
+    include MODELS . 'view.php';
+    include VIEWS . 'view.php';
 }
