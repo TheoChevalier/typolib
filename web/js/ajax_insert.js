@@ -122,6 +122,17 @@ function clickHandlers() {
             }
         });
     });
+
+    $(".ruletype").unbind('click');
+    $(".ruletype").click(function() {
+        closeRules($(this), '.ruletype');
+    });
+
+    $(".rule").unbind('click');
+    $(".rule").click(function() {
+        closeRules($(this), '.rule');
+    });
+
 };
 
 function updateRuleTemplate() {

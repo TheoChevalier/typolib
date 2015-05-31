@@ -3,6 +3,21 @@ $(document).ready(function() {
     $('#noscript-warning').hide();
 });
 
+function closeRules(elm, nodeType) {
+    var li = $(elm).parent();
+
+    if (! li.find(nodeType).prev().is(':checked')) {
+        if (li.has('#exceptionview').length == 1) {
+            $('#exceptionview').hide();
+        }
+
+        li.find('.new-exception').show();
+        li.find('ul input[type=checkbox]').each(function() {
+            this.checked = false;
+        });
+    }
+}
+
 (function($) {
 
   $.fn.menumaker = function(options) {

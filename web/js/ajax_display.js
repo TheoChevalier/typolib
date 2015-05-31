@@ -1,3 +1,10 @@
+function clickHandlers() {
+    $(".ruletype").unbind('click');
+    $(".ruletype").click(function() {
+        closeRules($(this), '.ruletype');
+    });
+}
+
 $('#locale_selector').on('change', function() {
     $.ajax({
         url: "/api/",
@@ -24,9 +31,12 @@ $('#code_selector').on('change', function() {
         success: function(response) {
             $("#results").html(response);
             $('#exceptionview').hide();
+            clickHandlers();
         },
         error: function() {
             console.error("AJAX failure - get rules");
         }
     });
 });
+
+clickHandlers();

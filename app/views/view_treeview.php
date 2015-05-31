@@ -8,7 +8,7 @@
 ?>
         <li>
             <input type="checkbox" id="item-<?=$type_number;?>" class="switch" />
-            <label for="item-<?=$type_number;?>">
+            <label for="item-<?=$type_number;?>" class="ruletype">
                 <?=$pretty_name?>
             </label>
             <ul class="rules">
