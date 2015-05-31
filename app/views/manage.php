@@ -22,12 +22,12 @@
             </div>
         </fieldset>
         <?php endif; ?>
+        <fieldset>
+            <a href="/edit" class="button" title="Edit current code">
+                <i class="fa fa-edit fa-15x"></i> Edit code
+            </a>
+        </fieldset>
     </fieldset>
-
-    <a href="/edit" class="button" title="Edit current code">
-        <i class="fa fa-edit fa-15x"></i> Edit code
-    </a>
-    <br/>
 
     <h2>Or create a new one</h2>
     <p>
@@ -36,4 +36,3 @@
         </a>
     </p>
 </form>
-

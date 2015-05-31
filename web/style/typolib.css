@@ -1,6 +1,3 @@
-@import url('buttons.css');
-@import url('menu.css');
-
 /* Fonts */
 
 @font-face {
@@ -260,6 +257,7 @@ footer {
     padding: 5px 8px;
     display: block;
     min-width: 120px;
+    width: 100%;
     font-size: 1em;
     border: none;
     box-shadow: none;
@@ -390,9 +388,17 @@ textarea {
         font-size: 0.8em;
     }
 
+    #beta-badge {
+        top: -30px;
+        left: -55px;
+    }
+
     #logo {
         width: 125px;
         height: 40px;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
     }
 
     #typolib-title::before {
@@ -401,6 +407,10 @@ textarea {
 
     h2 {
         font-size: 1.2em;
+    }
+
+    textarea {
+        width: 250px;
     }
 
 }

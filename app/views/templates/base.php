@@ -22,6 +22,8 @@ if (strpos(VERSION, 'dev') !== false) {
 } ?><?=$title_productname?></title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/buttons.css?<?php echo VERSION; ?>" type="text/css" media="all" />
+    <link rel="stylesheet" href="/style/menu.css?<?php echo VERSION; ?>" type="text/css" media="all" />
     <link rel="stylesheet" href="/style/typolib.css?<?php echo VERSION; ?>" type="text/css" media="all" />
     <link rel="stylesheet" href="/assets/font-awesome/font-awesome-built.css?<?php echo VERSION; ?>" type="text/css" media="all" />
 
@@ -30,7 +32,7 @@ if (strpos(VERSION, 'dev') !== false) {
         echo "<link rel=\"stylesheet\" href=\"/style/{$css_file}?" . VERSION . "\" type=\"text/css\" media=\"all\" />\n";
     }
     ?>
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v1" />
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v2" />
   </head>
 <body id="<?=$page?>">
   <header>

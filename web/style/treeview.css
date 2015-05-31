@@ -6,7 +6,7 @@
 .treeview label.rule {
     font-size: 1.5em;
     background-color: rgba(255, 255, 255, 0.5);
-    height: 2em;
+    height: auto;
     line-height: 2em;
     padding: 0 10px;
     border-radius: 3px;
