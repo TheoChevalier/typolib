@@ -11,12 +11,13 @@ class Utils extends atoum\test
     public function sanitizeFileNameDP()
     {
         return [
-            ['[test]', 'test'],
-            ['te st', 'test'],
-            ['test../', 'test..'],
-            ['st@te', 'stte'],
+            ['[test]', '#test#'],
+            ['te st', 'te_st'],
+            ['test../', 'test..#'],
+            ['st@te', 'st#te'],
             ['te_st', 'te_st'],
             ['Test9', 'Test9'],
+            ['Mon code!!!', 'Mon_code###'],
         ];
     }
 
