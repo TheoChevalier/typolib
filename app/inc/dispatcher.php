@@ -42,13 +42,8 @@ switch ($url['path']) {
         break;
     case 'insert':
         $controller = 'insert';
-        $page_title = 'Create a code';
+        $page_title = 'New set of rules';
         $page_descr = '';
-        break;
-    case 'manage':
-        $controller = 'manage';
-        $page_title = 'Rules manager';
-        $page_descr = 'Create new set of rules, edit or delete existing rules.';
         break;
     case 'test':
         $view       = 'test';

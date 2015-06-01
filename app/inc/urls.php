@@ -7,7 +7,6 @@ $urls = [
     'display'             => 'display',
     'edit'                => 'edit',
     'insert'              => 'insert',
-    'manage'              => 'manage',
     'test'                => 'test',
     'view'                => 'view',
 ];

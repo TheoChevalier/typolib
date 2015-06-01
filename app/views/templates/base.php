@@ -50,7 +50,8 @@ if (strpos(VERSION, 'dev') !== false) {
        <li class='<?=$page == 'manage' || $page == 'display' ? 'active ' : ''?>has-sub'><a href='/display'>Rules</a>
           <ul>
                <li><a href='/display'>Rules viewer</a></li>
-               <li><a href='/manage'>Rules manager</a></li>
+               <li><a href='/edit'>Rules editor</a></li>
+               <li><a href='/insert'>New set of rules</a></li>
           </ul>
        </li>
        <li <?=$page == 'check' ? 'class="active"' : ''?>><a href='/check'>Check text</a></li>
