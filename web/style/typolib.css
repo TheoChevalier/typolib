@@ -341,7 +341,7 @@ textarea {
 }
 
 #template input[type='text'].little-input {
-    width: 10px;
+    width: 30px;
 }
 
 #main fieldset {

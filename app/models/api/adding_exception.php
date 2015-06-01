@@ -1,6 +1,7 @@
 <?php
 namespace Typolib;
 
+$edit_mode = true;
 $exception = $_GET['content'];
 $id_rule = $_GET['id_rule'];
 
