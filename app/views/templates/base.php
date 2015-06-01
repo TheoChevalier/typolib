@@ -47,7 +47,7 @@ if (strpos(VERSION, 'dev') !== false) {
   <div id='cssmenu'>
     <ul>
        <li <?=$page == 'root' ? 'class="active"' : ''?>><a href='/'>Home</a></li>
-       <li class='<?=$page == 'manage' || $page == 'display' ? 'active ' : ''?>has-sub'><a href='/display'>Rules</a>
+       <li class='<?=$page == 'manage' || $page == 'display' || $page == 'insert' ? 'active ' : ''?>has-sub'><a href='/display'>Rules</a>
           <ul>
                <li><a href='/display'>Rules viewer</a></li>
                <li><a href='/edit'>Rules editor</a></li>
