@@ -10,7 +10,9 @@ class Utils
 {
     public static function sanitizeFileName($name)
     {
-        return preg_replace('/[^a-zA-Z0-9-_\.]/', '', $name);
+        $name = str_replace(' ', '_', $name);
+
+        return preg_replace('/[^a-zA-Z0-9-_\.]/', '#', $name);
     }
 
     public static function deleteFolder($folder)
