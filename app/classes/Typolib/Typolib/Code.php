@@ -24,11 +24,11 @@ class Code
      * Constructor that initializes all the arguments then call the method
      * to create the code if the locale is supported.
      *
-     * @param  String  $name            The name of the new code.
-     * @param  String  $locale          The locale of the new code.
-     * @param  boolean $use_common_code True if the code must use the common
-     *                                  code of the locale
-     * @return boolean True if the code has been created.
+     * @param  String    $name            The name of the new code.
+     * @param  String    $locale          The locale of the new code.
+     * @param  boolean   $use_common_code True if the code must use the common
+     *                                    code of the locale.
+     * @throws Exception if code creation failed.
      */
     public function __construct($name, $locale, $use_common_code)
     {

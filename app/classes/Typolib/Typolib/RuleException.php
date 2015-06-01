@@ -21,11 +21,11 @@ class RuleException
      * Constructor that initializes all the arguments then call the method to create
      * the exception if the code and rule exist.
      *
-     * @param  String  $code_name   The code name from which the exception depends.
-     * @param  String  $code_locale The locale code from which the exception depends.
-     * @param  integer $rule_id     The rule identity from which the exception depends.
-     * @param  String  $content     The content of the new exception.
-     * @return boolean True if the exception has been created.
+     * @param  String    $code_name   The code name from which the exception depends.
+     * @param  String    $code_locale The locale code from which the exception depends.
+     * @param  integer   $rule_id     The rule identity from which the exception depends.
+     * @param  String    $content     The content of the new exception.
+     * @throws Exception if rule exception creation failed.
      */
     public function __construct($code_name, $code_locale, $rule_id, $content)
     {
