@@ -158,6 +158,21 @@ $('#locale_selector').on('change', function() {
             $("#code_selector").html(response);
             clickHandlers();
             $('#exceptionview').hide();
+            if (response == '') {
+                 $('#edit_code').hide();
+                 $('#delete_code').hide();
+                 $('#template').hide();
+                 $('#rule_type').hide();
+                 $('#add_comment').hide();
+                 $('.treeview').hide();
+            } else {
+                $('#edit_code').show();
+                $('#delete_code').show();
+                $('#template').show();
+                $('#rule_type').show();
+                $('#add_comment').show();
+                $('.treeview').show();
+            }
         },
         error: function() {
             console.error("AJAX failure - get codes");

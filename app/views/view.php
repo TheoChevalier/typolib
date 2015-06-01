@@ -23,19 +23,19 @@
         </fieldset>
         <?php endif; ?>
 
-        <fieldset>
+        <fieldset id="edit_code">
             <button type="submit" name="edit_code" class="button" title="Edit current code">
                 <i class="fa fa-edit fa-15x"></i> Edit code name and options
             </button>
         </fieldset>
-        <fieldset>
+        <fieldset id="delete_code">
             <button type="submit" name="delete_code" class="button button-negative" title="Delete current code">
                 <i class="fa fa-times fa-15x"></i> Delete this code
             </button>
         </fieldset>
         <br/>
         <?php if (isset($ruletypes_selector)) : ?>
-        <fieldset>
+        <fieldset id="rule_type">
             <label>Rule type</label>
             <div class="select-style">
                 <select name="type" title="Rule type" id="addrule_type">
@@ -47,11 +47,15 @@
 
         <div id="template"></div>
 
-        <p>Enter a comment:<br />
-        <input type="text" name="comment" id="comment" class="big-input"/></p>
-
         <br/>
-        <input type="submit" id="submitRule" class="button-flat" value="Add" />
+
+        <fieldset id="add_comment">
+            Enter a comment:<br />
+            <input type="text" name="comment" id="comment" class="big-input"/><br/>
+
+            <br/>
+            <input type="submit" id="submitRule" class="button-flat" value="Add" />
+        </fieldset>
     </fieldset>
     <div id="results"><?php include VIEWS . 'view_treeview.php'; ?></div>
 </form>
