@@ -329,19 +329,41 @@ fieldset {
     margin: 0.5em 0 0;
 }
 
-textarea {
+textarea,
+.hiddendiv {
     width: 300px;
-    height: 120px;
+    min-height: 100px;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 13px;
+    color: #444;
     padding: 5px;
-    font-size: 1.3em;
+}
+
+.noscroll {
+    overflow: hidden;
+}
+
+.hiddendiv {
+    display: none;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+#checkResponse {
+    min-height: 100px;
 }
 
 #template input[type='text'] {
     width: auto;
 }
 
-#template input[type='text'].little-input {
+#template input[type='text'].little-input,
+.window input[type='text'].little-input {
     width: 30px;
+}
+
+.window form {
+    text-align: center;
 }
 
 #main fieldset {

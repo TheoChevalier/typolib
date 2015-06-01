@@ -18,6 +18,27 @@ function closeRules(elm, nodeType) {
     }
 }
 
+$(function() {
+    var txt = $('#enterText'),
+        hiddenDiv = $(document.createElement('div')),
+        content = null;
+
+    hiddenDiv.addClass('hiddendiv');
+
+    $('body').append(hiddenDiv);
+
+    txt.on('keyup', function () {
+
+        content = $(this).val();
+
+        content = content.replace(/\n/g, '<br>');
+        hiddenDiv.html(content + '<br class="lbr">');
+
+        $(this).css('height', hiddenDiv.height());
+
+    });
+});
+
 (function($) {
 
   $.fn.menumaker = function(options) {

@@ -25,15 +25,15 @@
         <fieldset>
             <label for="enterText">Enter your text</label>
             <br/>
-            <textarea name="enterText" rows="3" cols="15"></textarea>
+            <textarea id="enterText" name="enterText" rows="3" cols="15"></textarea>
         </fieldset>
         <fieldset>
             <label for="potentialErrors">Potential errors</label>
             <br/>
-            <textarea name="potentialErrors" rows="3" cols="15"></textarea>
+            <textarea id="checkResponse"></textarea>
         </fieldset>
         <br/>
         <input type="submit" class="button-flat" name="check" value="Check" alt="Check" />
 
-      <?php endif; ?>
+        <?php endif; ?>
 </form>
