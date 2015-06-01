@@ -114,7 +114,7 @@ class Rule
      *                              is 'delete' the value must be empty.
      * @return boolean True if the function succeeds.
      */
-    public static function manageRule($name_code, $locale_code, $id, $action, $value = '')
+    public static function manageRule($name_code, $locale_code, $id, $action, $value = '', $comment = '')
     {
         $file = DATA_ROOT . RULES_STAGING . "/$locale_code/$name_code/rules.php";
 
@@ -144,6 +144,7 @@ class Rule
 
                 case 'update_content':
                     $code['rules'][$id]['content'] = $value;
+                    $code['rules'][$id]['comment'] = $comment;
                     break;
 
                 case 'update_type':
@@ -152,9 +153,6 @@ class Rule
                     } else {
                         return false;
                     }
-                    break;
-                case 'update_comment':
-                    $code['rules'][$id]['comment'] = $value;
                     break;
             }
 
@@ -523,6 +521,15 @@ class Rule
     public static function getRulesTypeList()
     {
         return self::$rules_type;
+    }
+
+    public static function getPrettyRulesTypeList()
+    {
+        foreach (self::getRulesTypeList() as $key => $value) {
+            $ruletypes[$key] = sprintf(str_replace('%s', '%1$s', $value), '[…]');
+        }
+
+        return $ruletypes;
     }
 
     public static function buildRuleString($type, $rule)

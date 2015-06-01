@@ -10,9 +10,7 @@ $locale_selector = Utils::getHtmlSelectOptions(
 
 $rules = Rule::getRulesTypeList();
 reset($rules);
-foreach (Rule::getRulesTypeList() as $key => $value) {
-    $ruletypes[$key] = sprintf(str_replace('%s', '%1$s', $value), '[…]');
-}
+$ruletypes = Rule::getPrettyRulesTypeList();
 $ruletypes_selector = Utils::getHtmlSelectOptions(
                                 $ruletypes,
                                 key($rules),
