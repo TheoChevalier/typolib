@@ -10,11 +10,11 @@ if (isset($_GET['edit_code'])) {
 } elseif (isset($_GET['edit_code_sent'])) {
     include MODELS . 'edit_code_sent.php';
     include MODELS . 'view.php';
-    include VIEWS . 'manage.php';
+    include VIEWS . 'view.php';
 } elseif (isset($_GET['delete_code'])) {
     include MODELS . 'delete_code.php';
     include MODELS . 'view.php';
-    include VIEWS . 'manage.php';
+    include VIEWS . 'view.php';
 } else {
     include MODELS . 'view.php';
     include VIEWS . 'view.php';

@@ -1,11 +1,9 @@
 <?php
 namespace Typolib;
 
-Code::editCode('test', 'test2', 'fr', true);
-
 if (isset($_GET['locale'])) {
     include MODELS . 'inserted.php';
-    include VIEWS . 'inserted.php';
+    include VIEWS . 'insert.php';
 } else {
     include MODELS . 'insert.php';
     include VIEWS . 'insert.php';

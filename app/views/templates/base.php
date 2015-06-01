@@ -4,6 +4,8 @@ ob_start();
 
 $javascript_include = isset($javascript_include) ? $javascript_include : [];
 $css_include = isset($css_include) ? $css_include : [];
+$success_msg = isset($success_msg) ? $success_msg : [];
+$error_msg = isset($error_msg) ? $error_msg : [];
 if (strpos(VERSION, 'dev') !== false) {
     $beta_version = true;
     $title_productname = PRODUCT . ' Beta';
@@ -68,20 +70,20 @@ if (strpos(VERSION, 'dev') !== false) {
     <h3 id="page-descrition"><?=$page_descr?></h3>
     <?php endif; ?>
 
-    <?php if (array_filter($success)): ?>
+    <?php if (array_filter($success_msg)): ?>
     <div id="success">
         <ul>
-        <?php foreach ($success as $s) : ?>
+        <?php foreach ($success_msg as $s) : ?>
             <li><?=$s?></li>
         <?php endforeach; ?>
         </ul>
     </div>
     <?php endif; ?>
 
-    <?php if (array_filter($errors)): ?>
+    <?php if (array_filter($error_msg)): ?>
     <div id="errors">
         <ul>
-        <?php foreach ($errors as $error) : ?>
+        <?php foreach ($error_msg as $error) : ?>
             <li><?=$error?></li>
         <?php endforeach; ?>
         </ul>
