@@ -7,8 +7,6 @@ use Transvision\Utils;
 $l10n = new \tinyl10n\ChooseLocale(Locale::getLocaleList());
 $locale = $l10n->getCompatibleLocale();
 
-$success = $errors = [];
-
 $template     = true;
 $page         = $urls[$url['path']];
 $extra        = null;

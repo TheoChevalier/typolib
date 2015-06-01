@@ -46,12 +46,12 @@ class Rule
      * Constructor that initializes all the arguments then call the method to
      * create the rule if the code exists.
      *
-     * @param  String  $name_code   The code name from which the rule depends.
-     * @param  String  $locale_code The locale code from which the rule depends.
-     * @param  array   $content     The content of the new rule.
-     * @param  String  $type        The type of the new rule.
-     * @param  String  $comment     The comment of the new rule.
-     * @return boolean True if the rule has been created.
+     * @param  String    $name_code   The code name from which the rule depends.
+     * @param  String    $locale_code The locale code from which the rule depends.
+     * @param  array     $content     The content of the new rule.
+     * @param  String    $type        The type of the new rule.
+     * @param  String    $comment     The comment of the new rule.
+     * @throws Exception if rule creation failed.
      */
     public function __construct($name_code, $locale_code, $content, $type, $comment = '')
     {

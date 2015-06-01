@@ -5,4 +5,4 @@ namespace Typolib;
 
 $common = isset($_GET['common']);
 Code::editCode($_GET['old_code'], $_GET['name'], $_GET['locale'], $common);
-$success = 'Code successfully updated.';
+$success_msg[] = 'Code successfully updated.';

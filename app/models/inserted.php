@@ -1,19 +1,24 @@
 <?php
-use Typolib\Code;
+namespace Typolib;
+
+use Transvision\Utils;
 
 $locale = $_GET['locale'];
 $code_name = $_GET['name'];
 $use_common_code = isset($_GET['common']);
 
+$locale_selector = Utils::getHtmlSelectOptions(
+                                Locale::getLocaleList(),
+                                $locale
+                            );
+
 if ($code_name != '') {
     try {
         $code = new Code($code_name, $locale, $use_common_code);
-        $success = true;
+        $success_msg[] = 'Code successfully inserted.';
     } catch (Exception $e) {
-        $message = $e->getMessage();
-        $success = false;
+        $error_msg[] = $e->getMessage();
     }
 } else {
-    $message = 'code name is empty.';
-    $success = false;
+    $error_msg[] = 'Code name is empty.';
 }
