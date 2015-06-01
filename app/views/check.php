@@ -28,12 +28,12 @@
             <textarea id="enterText" name="enterText" rows="3" cols="15"></textarea>
         </fieldset>
         <fieldset>
-            <label for="potentialErrors">Potential errors</label>
+            <label for="checkResponse">Potential errors</label>
             <br/>
             <textarea id="checkResponse"></textarea>
         </fieldset>
         <br/>
-        <input type="submit" class="button" name="check" value="Check" alt="Check" />
+        <input type="submit" class="button" name="check" value="Check" alt="Check" id="submitCheck"/>
 
         <?php endif; ?>
 </form>

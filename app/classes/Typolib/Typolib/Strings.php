@@ -1,6 +1,8 @@
 <?php
 namespace Typolib;
 
+use IntlBreakIterator;
+
 /**
  * Strings class
  *
@@ -64,5 +66,19 @@ class Strings
         $string = $startString . $char . $endString;
 
         return $string;
+    }
+
+    public static function getArrayFromString($user_string)
+    {
+        $code_point_iterator = IntlBreakIterator::createCodePointInstance();
+        $code_point_iterator->setText($user_string);
+        $parts_iterator = $code_point_iterator->getPartsIterator();
+
+        $characters = [];
+        foreach ($parts_iterator as $part) {
+            $characters[] = $part;
+        }
+
+        return $characters;
     }
 }

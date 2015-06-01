@@ -24,17 +24,19 @@ class Rule
                                   'plural_separator'     => 'PLURAL SEPARATOR %s',
                                   'ignore_variable'      => 'IGNORE VARIABLE %s',
                                   'quotation_mark'       => 'QUOTATION MARK %s %s',
+                                  'check_before'         => 'CHECK %s BEFORE %s',
+                                  'check_after'          => 'CHECK %s AFTER %s',
                                 ];
     private static $ifThenRuleArray = [];
     private static $variable_to_ignore_array = [];
-    private static $start_variable_tag = '<-';
-    private static $end_variable_tag = '->';
+    private static $start_variable_tag = '😺';
+    private static $end_variable_tag = '💩';
     private static $plural_separator_array = [];
     private static $all_ids = [];
     private static $quotation_marks = [
                                             ['«','»'],
                                             ['“','”'],
-                                            ['"', '"'],
+                                            ['"','"'],
                                             ['‘','’'],
                                             ['»','«'],
                                             ['„','“'],
@@ -266,94 +268,40 @@ class Rule
      * @return array  $res         The text corrected and the position of the
      *                            quotation .
      */
-    public static function checkQuotationMarkRule($user_string, $before, $after)
+    public static function checkQuotationMarkRule($user_string, $rule)
     {
         $res = []; // var to be returned
         $array_quotation_marks = self::findQuotationMarks($user_string);
+        $before = $rule[0];
+        $after = $rule[1];
+
+        $characters = \Typolib\Strings::getArrayFromString($user_string);
+
+        $variable_to_ignore = self::getTagsPosition($characters);
 
         $positions = [];
         if ($array_quotation_marks != false) {
             $count = 0;
             foreach ($array_quotation_marks as $position => $quote) {
-                if ($count % 2 == 0 && $quote != $before) {
-                    $user_string = \Typolib\Strings::replaceString(
-                                                            $user_string,
-                                                            $before,
-                                                            $position
-                                                        );
-                    $positions[] = $position;
+                if (! self::ignoreCharacter($position, $variable_to_ignore)) {
+                    if ($count % 2 == 0 && $quote != $before) {
+                        $user_string = \Typolib\Strings::replaceString(
+                                                                $user_string,
+                                                                $before,
+                                                                $position
+                                                            );
+                        $positions[] = $position;
+                    }
+                    if ($count % 2 == 1 && $quote != $after) {
+                        $user_string = \Typolib\Strings::replaceString(
+                                                                $user_string,
+                                                                $after,
+                                                                $position
+                                                            );
+                        $positions[] = $position;
+                    }
+                    $count++;
                 }
-                if ($count % 2 == 1 && $quote != $after) {
-                    $user_string = \Typolib\Strings::replaceString(
-                                                            $user_string,
-                                                            $after,
-                                                            $position
-                                                        );
-                    $positions[] = $position;
-                }
-                $count++;
-            }
-
-            array_push($res, $user_string);
-            array_push($res, $positions);
-
-            return $res;
-        }
-
-        return false;
-    }
-
-    /**
-     * Add a "if x then y" rule to the global array
-     *
-     * @param string $user_string the string entered by the user
-     */
-    public function addRuleToIfThenArrayRule($user_string)
-    {
-        $pieces = explode(' ', $user_string);
-        $input_character = $pieces[1];
-        $new_character = $pieces[3];
-
-        // if a value with the same key is added, the previous value will be
-        // replaced by the new one
-        self::$ifThenRuleArray[$input_character] = $new_character;
-    }
-
-    /**
-     * Display all the rules of the "if then" array
-     */
-    public static function displayIfThenArrayRule()
-    {
-        foreach (self::$ifThenRuleArray as $key => $value) {
-            echo "Input character: $key => New character: $value<br />\n";
-        }
-    }
-
-    /**
-     * Check a "if x then y" rule (just for ellipsis character)
-     * TODO : generic method for any character of the ifThen rule array
-     *
-     * @param string $user_string the string entered by the user
-     */
-    public static function checkIfThenRule($user_string)
-    {
-        $res = []; // var to be returned
-        $searches = self::$ifThenRuleArray;
-        $positions = []; // array containing the positions of the errors detected in the source string
-
-        foreach ($searches as $search => $replace) {
-            $last_position = 0;
-
-            // save all the positions of the errors
-            while (($last_position = strpos($user_string, $search, $last_position)) !== false) {
-                $$next_position = $last_position + strlen($search);
-                $positions[$last_position] = $$next_position;
-                $last_position = $$next_position;
-            }
-
-            // replace all the errors by the characters entered by the user
-            if (strpos($user_string, $search) !== false) {
-                $user_string = str_replace($search, $replace, $user_string);
             }
         }
 
@@ -364,89 +312,98 @@ class Rule
     }
 
     /**
-     * Add a variable to the global array of variables to ignore
+     * Check a "if x then y" rule (just for ellipsis character)
+     * TODO : generic method for any character of the ifThen rule array
      *
      * @param string $user_string the string entered by the user
      */
-    public static function addRuleToVariableToIgnoreArray($user_string)
+    public static function checkIfThenRule($user_string, $rule)
     {
-        $var_array = preg_split('/[\s]+/', $user_string);
+        $res = []; // var to be returned
+        $search = $rule[0];
+        $replace = $rule[1];
 
-        self::$variable_to_ignore_array = array_merge(
-                                            self::$variable_to_ignore_array,
-                                            $var_array
-                                        );
+        $replacements = [];
 
-        //self::$variable_to_ignore_array[$user_string] = self::$start_variable_tag . $user_string . self::$end_variable_tag;
-    }
+        $characters = \Typolib\Strings::getArrayFromString($user_string);
 
-    /**
-     * Display all the rules of the global array of variables to ignore
-     */
-    public static function displayVariableToIgnoreArray()
-    {
-        foreach (self::$variable_to_ignore_array as $key => $value) {
-            echo "Variable to ignore: $key<br />\n";
+        $variable_to_ignore = self::getTagsPosition($characters);
+
+        $positions = []; // array containing the positions of the errors detected in the source string
+
+        $last_position = 0;
+
+        // save all the positions of the errors
+        while (($last_position = strpos($user_string, $search, $last_position)) !== false) {
+            $next_position = $last_position + strlen($search);
+            if (! self::ignoreCharacter($last_position, $variable_to_ignore)) {
+                $positions[] = [$last_position, $next_position];
+                $replacements[] = $last_position;
+            }
+            $last_position = $next_position;
         }
+
+        if (! empty(($replacements))) {
+            $replacements = array_reverse($replacements, true);
+            foreach ($replacements as $key => $value) {
+                $user_string = \Typolib\Strings::replacementstring(
+                                                                $user_string,
+                                                                $replace,
+                                                                $value,
+                                                                strlen($search)
+                                                            );
+            }
+        }
+
+        array_push($res, $user_string);
+        array_push($res, $positions);
+
+        return $res;
     }
 
     /**
-     * Add a separator to the global array of plural separators
+     * Check a "separator" rule.
      *
-     * @param string $user_string the string entered by the user
+     * @param  string $user_string The string entered by the user.
+     * @param  array  $rule        The rule with the separator.
+     * @return string $user_string The string with the tags arround the
+     *                            separator.
      */
-    public static function addRuleToPluralSeparatorArray($user_string)
+    private static function checkSeparatorRule($user_string, $rule)
     {
-        self::$plural_separator_array[] = $user_string;
-    }
+        $separator = $rule[0];
+        $pos = strpos($user_string, $separator);
 
-    /**
-     * Display all the rules of the global array of plural separators
-     */
-    public static function displayPluralSeparatorArray()
-    {
-        foreach (self::$plural_separator_array as $key => $value) {
-            echo "Plural separator: $value<br />\n";
-        }
-    }
+        if ($pos !== false) {
+            $split_strings = explode($separator, $user_string);
+            $levenshtein_results = [];
+            $acceptance_level = 90;
 
-    public static function checkSeparatorRule($user_string)
-    {
-        foreach (self::$plural_separator_array as $key => $separator) {
-            $pos = strpos($user_string, $separator);
-
-            if ($pos !== false) {
-                //$separator = ';';
-                $split_strings = explode($separator, $user_string);
-                $levenshtein_results = [];
-                $acceptance_level = 90;
-
-                $arr_length = count($split_strings);
-                for ($i = 0;$i < $arr_length;$i++) {
-                    if ($i + 1 < $arr_length) {
-                        $levenshtein_results[] = Strings::levenshteinQuality(
-                                                            $split_strings[$i],
-                                                            $split_strings[$i + 1]
-                                                        );
-                    }
+            $arr_length = count($split_strings);
+            for ($i = 0;$i < $arr_length;$i++) {
+                if ($i + 1 < $arr_length) {
+                    $levenshtein_results[] = Strings::levenshteinQuality(
+                                                        $split_strings[$i],
+                                                        $split_strings[$i + 1]
+                                                    );
                 }
+            }
 
-                $levenshtein_results_average = 0;
+            $levenshtein_results_average = 0;
 
-                foreach ($levenshtein_results as $key => $value) {
-                    $levenshtein_results_average += $value;
-                }
+            foreach ($levenshtein_results as $key => $value) {
+                $levenshtein_results_average += $value;
+            }
 
-                $levenshtein_results_average =
-                        $levenshtein_results_average / count($levenshtein_results);
+            $levenshtein_results_average =
+                    $levenshtein_results_average / count($levenshtein_results);
 
-                if ($levenshtein_results_average > $acceptance_level) {
-                    $user_string = str_replace(
-                                $separator,
-                                $start_variable_tag . $separator . $end_variable_tag,
-                                $user_string
-                            );
-                }
+            if ($levenshtein_results_average > $acceptance_level) {
+                $user_string = str_replace(
+                            $separator,
+                            self::$start_variable_tag . $separator . self::$end_variable_tag,
+                            $user_string
+                        );
             }
         }
 
@@ -454,13 +411,145 @@ class Rule
     }
 
     /**
+     * Check a "check_before" or "check_after" rule.
+     *
+     * @param  string $user_string The string entered by the user.
+     * @param  array  $rule        The rule to check.
+     * @param  string $mode        The type of the rule: "check_before" or
+     *                             "check_after".
+     * @return array  $res         The text corrected and the position of the
+     *                            mistakes.
+     */
+    private static function checkBeforeAfter($user_string, $rule, $mode)
+    {
+        $res = [];
+        $replacements = [];
+        $searched_character = $rule[1];
+        $check = $rule[0];
+        $positions = [];
+        $ignore = false;
+
+        $characters = \Typolib\Strings::getArrayFromString($user_string);
+        $check_array = \Typolib\Strings::getArrayFromString($check);
+
+        $variable_to_ignore = self::getTagsPosition($characters);
+
+        $searched_characters_positions = [];
+        if (in_array($searched_character, $characters)) {
+            $searched_characters_positions = array_keys(
+                                                    $characters,
+                                                    $searched_character
+                                                );
+
+            foreach ($searched_characters_positions as $key => $position) {
+                if (! self::ignoreCharacter($position, $variable_to_ignore)) {
+                    $found = false;
+                    $i = $mode == 'check_after'
+                                            ? $position + 1
+                                            : $position - strlen($check);
+
+                    if (! empty($check_array)) {
+                        foreach ($check_array as $key => $char) {
+                            if ($char != $characters[$i]) {
+                                if ($mode == 'check_before') {
+                                    $replacements[] = [$position, $char, 0];
+                                } elseif (! $found) {
+                                    $slice = implode(array_slice($check_array, $key));
+                                    $replacements[] = [$i, $slice, 0];
+                                }
+                                $found = true;
+                            }
+                            $i++;
+                        }
+                    } else {
+                        if ($mode == 'check_before') {
+                            $i--;
+                        }
+                        if ($characters[$i] == NBSP || $characters[$i] == WHITE_SP || $characters[$i] == NARROW_NBSP) {
+                            $replacements[] = [$i, '', 1];
+                            $found = true;
+                        }
+                    }
+
+                    if ($found) {
+                        $positions[] = $position;
+                    }
+                }
+            }
+        }
+
+        $replacements = array_reverse($replacements, true);
+        foreach ($replacements as $key => $value) {
+            $user_string = \Typolib\Strings::replaceString(
+                                                            $user_string,
+                                                            $value[1],
+                                                            $value[0],
+                                                            $value[2]
+                                                        );
+        }
+
+        array_push($res, $user_string);
+        array_push($res, $positions);
+
+        return $res;
+    }
+
+    /**
+     * Check a "ignore_variable" rule.
+     *
+     * @param  string $user_string The string entered by the user.
+     * @param  array  $rule        The rule to check.
+     * @return array  $string_with_tag The text corrected and the position of the
+     *                            mistakes.
+     */
+    private static function checkIgnoreVariables($user_string, $rule)
+    {
+        $res = [];
+        $positions = [];
+        $variable_to_ignore = $rule[0];
+        $offset = 0;
+        $found = true;
+        $string_with_tag = $user_string;
+
+        if (strpos($user_string, $variable_to_ignore, $offset) !== false) {
+            $string_with_tag = str_replace(
+                            $variable_to_ignore,
+                            self::$start_variable_tag . $variable_to_ignore . self::$end_variable_tag,
+                            $user_string
+                        );
+        }
+
+        return $string_with_tag;
+    }
+
+    /**
+     * Check if the character has to be ignore or not.
+     *
+     * @param  int     $position           The position of the character we want to check.
+     * @param  array   $variable_positions The positions of the variable to ignore.
+     * @return boolean $ignore True if the character has to be ignore.
+     */
+    private static function ignoreCharacter($position, $variable_positions)
+    {
+        $ignore = false;
+        if (! empty($variable_positions)) {
+            foreach ($variable_positions as $key => $value) {
+                if ($position > $value[0] && $position < $value[1]) {
+                    $ignore = true;
+                }
+            }
+        }
+
+        return $ignore;
+    }
+    /**
      * Ignore all the variables of the variable_to_ignore_array in the user string
      *
      * @param string $user_string the string entered by the user
      */
     public static function ignoreVariables($user_string)
     {
-        strtr($user_string, $variable_to_ignore_array);
+        strtr($user_string, self::$variable_to_ignore_array);
     }
 
     /**
@@ -537,5 +626,97 @@ class Rule
         if (self::isSupportedType($type)) {
             return vsprintf(self::$rules_type[$type], $rule);
         }
+    }
+
+    /**
+     * Return the positions of characters between the tags in a string.
+     *
+     * @param  array $characters The string we want to get the variable to ignore.
+     * @return array $variable_to_ignore The positions of all the tags.
+     */
+    private static function getTagsPosition($characters)
+    {
+        $variable_to_ignore = [];
+
+        if (in_array(self::$start_variable_tag, $characters)) {
+            $start_tags = array_keys($characters, self::$start_variable_tag);
+        }
+
+        if (in_array(self::$end_variable_tag, $characters)) {
+            $end_tags = array_keys($characters, self::$end_variable_tag);
+        }
+
+        if (! empty($start_tags)) {
+            $count = 0;
+            foreach ($start_tags as $key => $position) {
+                $variable_to_ignore[] = [$position, $end_tags[$count]];
+                $count++;
+            }
+        }
+
+        return $variable_to_ignore;
+    }
+
+    /**
+     * Remove all the tags from a string.
+     *
+     * @param  string $string The string we want to remove tags.
+     * @return string $string The string without the tags.
+     */
+    private static function removeTagsFromString($string)
+    {
+        $string = str_replace(self::$start_variable_tag, '', $string);
+        $string = str_replace(self::$end_variable_tag, '', $string);
+
+        return $string;
+    }
+
+    public static function process($string, $rules)
+    {
+        $processed_string = [];
+        $positions = [];
+        $result = [];
+        $rule_comment;
+        foreach ($rules['rules'] as $id => $rule) {
+            if ($rule['type'] == 'plural_separator') {
+                $string = self::checkSeparatorRule($string, $rule['content']);
+            }
+        }
+        foreach ($rules['rules'] as $id => $rule) {
+            if ($rule['type'] == 'ignore_variable') {
+                $string = self::checkIgnoreVariables($string, $rule['content']);
+            }
+        }
+        foreach ($rules['rules'] as $id => $rule) {
+            if ($rule['type'] == 'replace_with') {
+                $result = self::checkIfThenRule($string, $rule['content']);
+                $comment = ! empty($rule['comment']) ? $rule['comment'] : '';
+                $positions[] = [$result[1], $comment];
+                $string = $result[0];
+            }
+        }
+        foreach ($rules['rules'] as $id => $rule) {
+            if ($rule['type'] == 'quotation_mark') {
+                $result = self::checkQuotationMarkRule($string, $rule['content']);
+                $comment = ! empty($rule['comment']) ? $rule['comment'] : '';
+                $positions[] = [$result[1], $comment];
+                $string = $result[0];
+            }
+        }
+        foreach ($rules['rules'] as $id => $rule) {
+            if (($rule['type'] == 'check_before') || ($rule['type'] == 'check_after')) {
+                $result = self::checkBeforeAfter($string, $rule['content'], $rule['type']);
+                $comment = ! empty($rule['comment']) ? $rule['comment'] : '';
+                $positions[] = [$result[1], $comment];
+                $string = $result[0];
+            }
+        }
+
+        $string = self::removeTagsFromString($string);
+
+        array_push($processed_string, $string);
+        array_push($processed_string, $positions);
+
+        return $processed_string;
     }
 }

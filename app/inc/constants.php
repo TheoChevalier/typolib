@@ -32,3 +32,7 @@ define('DEBUG', (strstr(VERSION, 'dev') || isset($_GET['debug'])) ? true : false
 
 // Set perf_check=true in config.ini to log page time generation and memory used while in DEBUG mode
 define('PERF_CHECK', isset($server_config['perf_check']) ? $server_config['perf_check'] : false);
+
+define('NBSP', ' ');
+define('WHITE_SP', ' ');
+define('NARROW_NBSP', ' ');
