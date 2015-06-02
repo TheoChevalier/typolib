@@ -67,8 +67,3 @@ $edit = false;
 foreach ($ruletypes as $id_type => $pretty_name) {
     include VIEWS . 'rule_form_template.php';
 }
-
-$edit = true;
-foreach ($ruletypes as $id_type => $pretty_name) {
-    include VIEWS . 'rule_form_template.php';
-}

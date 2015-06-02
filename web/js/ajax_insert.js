@@ -30,21 +30,72 @@ function clickHandlers() {
     $(".edit-rule").unbind('click');
     $(".edit-rule").click(function(event) {
         event.preventDefault();
+        var code = $('#code_selector').val();
+        var locale = $('#locale_selector').val();
         var li = $(this).parent();
-        var type = li.find('.rule').data('id-type');
-        var template = $('#template-' + type + '-edit form').clone();
+        var id_rule = li.find('.rule').data('id-rule');
 
         $("#modal").show();
-        $('#modal .modal-content').html(template);
+
+        $.ajax({
+            url: "/api/",
+            type: "GET",
+            data: "action=get_edit_rule&locale=" + locale + "&code=" + code + "&id_rule=" + id_rule,
+            dataType: "html",
+            context: this,
+            success: function(response) {
+                if (response != "0") {
+                    $('#modal .modal-content').html(response);
+                    $("#modal input[type='submit'").unbind('click');
+                    $("#modal input[type='submit'").click(function(event) {
+                        event.preventDefault();
+                        var code = $('#code_selector').val();
+                        var locale = $('#locale_selector').val();
+                        var id_rule = $('#modal input[name="id_rule"]').val();
+                        var comment = $('#modal input[name="comment"]').val();
+                        var inputs = new Array();
+                        $('#modal input[type=text]').each(function(){
+                            var input = $(this);
+                            if(input.attr('name').toLowerCase().indexOf("input") >= 0) {
+                                inputs.push(input.val());
+                            }
+                        });
+                        $.ajax({
+                            url: "/api/",
+                            type: "GET",
+                            data: "action=send_edit_rule&locale=" + locale + "&code=" + code + "&id_rule=" + id_rule + "&comment=" + comment + "&array=" + JSON.stringify(inputs),
+                            dataType: "html",
+                            success: function(response) {
+                                if (response != "0") {
+                                    $('#modal').hide();
+                                    $("#results").html(response);
+                                    clickHandlers();
+                                } else {
+                                    alert("The rule form can’t be empty.");
+                                }
+                            },
+                            error: function() {
+                                console.error("AJAX failure - send edit rule");
+                            }
+                        });
+                    });
+                } else {
+                    alert("Sorry, something went wrong while editing this rule. Try again later.");
+                }
+            },
+            error: function() {
+                console.error("AJAX failure - edit rule");
+            }
+        }); 
     });
 
     $(".delete-rule").unbind('click');
     $(".delete-rule").click(function(event) {
         event.preventDefault();
-        code = $('#code_selector').val();
-        locale = $('#locale_selector').val();
+        var code = $('#code_selector').val();
+        var locale = $('#locale_selector').val();
         var li = $(this).parent();
-        id_rule = li.find('.rule').data('id-rule');
+        var id_rule = li.find('.rule').data('id-rule');
         $.ajax({
             url: "/api/",
             type: "GET",
@@ -67,12 +118,12 @@ function clickHandlers() {
     $(".delete-exception").unbind('click');
     $(".delete-exception").click(function(event) {
         event.preventDefault();
-        code = $('#code_selector').val();
-        locale = $('#locale_selector').val();
+        var code = $('#code_selector').val();
+        var locale = $('#locale_selector').val();
         var li = $(this).parent();
-        id_exception = li.data('id-exception');
+        var id_exception = li.data('id-exception');
         var rule = li.parent().parent();
-        id_rule = rule.find('.rule').data('id-rule');
+        var id_rule = rule.find('.rule').data('id-rule');
         $.ajax({
             url: "/api/",
             type: "GET",
@@ -96,10 +147,10 @@ function clickHandlers() {
     $('#submitRuleException').unbind('click');
     $('#submitRuleException').click(function(event) {
         event.preventDefault();
-        code = $('#code_selector').val();
-        locale = $('#locale_selector').val();
-        exception = $('#exception').val();
-        id_rule = $('#exceptionview').parent().parent().find('.rule').data('id-rule');
+        var code = $('#code_selector').val();
+        var locale = $('#locale_selector').val();
+        var exception = $('#exception').val();
+        var id_rule = $('#exceptionview').parent().parent().find('.rule').data('id-rule');
         $.ajax({
             url: "/api/",
             type: "GET",
@@ -136,7 +187,7 @@ function clickHandlers() {
 };
 
 function updateRuleTemplate() {
-    rule_type = $('#addrule_type :selected').val();
+    var rule_type = $('#addrule_type :selected').val();
     var res = $('#template-' + rule_type + ' form').clone();
     res.show();
     $('#template').html(res);
@@ -204,11 +255,11 @@ $('#addrule_type').on('change', function() {
 
 $('#submitRule').click(function(event) {
     event.preventDefault();
-    code = $('#code_selector').val();
-    locale = $('#locale_selector').val();
-    rule_type = $('#addrule_type').val();
-    comment = $('#comment').val();
-    placeholder = $('#addrule_type :selected').text();
+    var code = $('#code_selector').val();
+    var locale = $('#locale_selector').val();
+    var rule_type = $('#addrule_type').val();
+    var comment = $('#comment').val();
+    var placeholder = $('#addrule_type :selected').text();
     var inputs = new Array();
     $('#template input[type=text]').each(function(){
         var input = $(this);

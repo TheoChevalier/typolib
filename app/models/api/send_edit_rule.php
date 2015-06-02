@@ -3,7 +3,7 @@ namespace Typolib;
 
 $edit_mode = true;
 
-$type = $_GET['type'];
+$id_rule = $_GET['id_rule'];
 $comment = $_GET['comment'];
 $content_array = array_filter(json_decode($_GET['array']));
 
@@ -14,16 +14,13 @@ if (! empty($content_array)) {
             $array_OK = false;
         }
     }
-    try {
-        if ($array_OK) {
-            $new_rule = new Rule($code, $locale, $content_array, $type, $comment);
+    if ($array_OK) {
+        Rule::manageRule($code, $locale, $id_rule, 'update_content', $content_array, $comment);
 
-            include MODELS . 'prepare_set_of_rules.php';
-            include VIEWS . 'view_treeview.php';
-        } else {
-            echo '0';
-        }
-    } catch (Exception $e) {
+        include MODELS . 'prepare_set_of_rules.php';
+        include VIEWS . 'view_treeview.php';
+    } else {
+        echo '0';
     }
 } else {
     echo '0';
