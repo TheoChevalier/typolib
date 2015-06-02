@@ -6,6 +6,7 @@ $javascript_include = isset($javascript_include) ? $javascript_include : [];
 $css_include = isset($css_include) ? $css_include : [];
 $success_msg = isset($success_msg) ? $success_msg : [];
 $error_msg = isset($error_msg) ? $error_msg : [];
+
 if (strpos(VERSION, 'dev') !== false) {
     $beta_version = true;
     $title_productname = PRODUCT . ' Beta';
@@ -72,6 +73,7 @@ if (strpos(VERSION, 'dev') !== false) {
 
     <?php if (array_filter($success_msg)): ?>
     <div id="success">
+        <button class="close-alert">×</button>
         <ul>
         <?php foreach ($success_msg as $s) : ?>
             <li><?=$s?></li>
@@ -82,6 +84,7 @@ if (strpos(VERSION, 'dev') !== false) {
 
     <?php if (array_filter($error_msg)): ?>
     <div id="errors">
+        <button class="close-alert">×</button>
         <ul>
         <?php foreach ($error_msg as $error) : ?>
             <li><?=$error?></li>

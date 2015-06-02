@@ -1,6 +1,11 @@
 $(document).ready(function() {
     // Javascript is enabled, hide the menu without transitions
     $('#noscript-warning').hide();
+
+    $('.close-alert').unbind('click');
+    $('.close-alert').click(function(event) {
+        $(this).parent().hide();
+    });
 });
 
 function closeRules(elm, nodeType) {

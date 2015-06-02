@@ -29,7 +29,7 @@
             </button>
         </fieldset>
         <fieldset id="delete_code">
-            <button type="submit" name="delete_code" class="button button-negative" title="Delete current code">
+            <button type="submit" name="delete_code" class="button button-red" title="Delete current code">
                 <i class="fa fa-times fa-15x"></i> Delete this code
             </button>
         </fieldset>
@@ -54,7 +54,7 @@
             <input type="text" name="comment" id="comment" class="big-input"/><br/>
 
             <br/>
-            <input type="submit" id="submitRule" class="button-flat" value="Add" />
+            <input type="submit" id="submitRule" class="button" value="Add" />
         </fieldset>
     </fieldset>
     <div id="results"><?php include VIEWS . 'view_treeview.php'; ?></div>

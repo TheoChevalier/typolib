@@ -33,7 +33,7 @@
             <textarea id="checkResponse"></textarea>
         </fieldset>
         <br/>
-        <input type="submit" class="button-flat" name="check" value="Check" alt="Check" />
+        <input type="submit" class="button" name="check" value="Check" alt="Check" />
 
         <?php endif; ?>
 </form>
