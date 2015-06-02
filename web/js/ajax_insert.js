@@ -1,4 +1,6 @@
 function clickHandlers() {
+    hideEmptyNodes();
+
     $("a.new-exception").unbind('click');
     $("a.new-exception").click(function(event) {
         event.preventDefault();
@@ -105,6 +107,7 @@ function clickHandlers() {
             success: function(response) {
                 if (response == "1") {
                     $(this).parent().remove();
+                    hideEmptyNodes();
                 } else {
                     alert("Sorry, something went wrong while deleting this rule. Try again later.");
                 }
@@ -183,7 +186,6 @@ function clickHandlers() {
     $(".rule").click(function() {
         closeRules($(this), '.rule');
     });
-
 };
 
 function updateRuleTemplate() {

@@ -1,4 +1,6 @@
 function clickHandlers() {
+    hideEmptyNodes();
+
     $(".ruletype").unbind('click');
     $(".ruletype").click(function() {
         closeRules($(this), '.ruletype');

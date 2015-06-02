@@ -76,7 +76,10 @@ html[lang^='en'] .button-inverted {
 
 .button-red:hover,
 .button-red:link:hover,
-.button-red:visited:hover {
+.button-red:visited:hover,
+.button-red:focus,
+.button-red:link:focus,
+.button-red:visited:focus {
   background: #d9342f;
 }
 
@@ -88,7 +91,10 @@ html[lang^='en'] .button-inverted {
 
 .button-green:hover,
 .button-green:link:hover,
-.button-green:visited:hover {
+.button-green:visited:hover,
+.button-green:focus,
+.button-green:link:focus,
+.button-green:visited:focus {
   background: #98cc4e;
 }
 

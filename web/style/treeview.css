@@ -134,10 +134,20 @@
     margin: 0 22px 0 0;
 }
 
+.treeview label.hidden::before
+{
+    opacity: 0;
+}
+
 .treeview .switch:checked + label::before
 {
     font-family: FontAwesome;
     content: "\f147";
+}
+
+.treeview .switch:checked + label.hidden::before
+{
+    opacity: 0;
 }
 
 /* Overrides for the Exception form */

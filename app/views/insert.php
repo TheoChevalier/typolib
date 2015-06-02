@@ -22,6 +22,6 @@
             <input type="checkbox" name="common" id="common"/><label for="common">Use the common code</label>
         </fieldset>
         <br/>
-        <input type="submit" class=" button-flat" value="Create" alt="Create" />
+        <input type="submit" class="button" value="Create" alt="Create" />
     </fieldset>
 </form>

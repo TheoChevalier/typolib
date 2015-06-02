@@ -8,6 +8,23 @@ $(document).ready(function() {
     });
 });
 
+    function hideEmptyNodes() {
+        $('.ruletype').each(function() {
+            var li = $(this).parent();
+            if (li.find('ul').children().length == 0) {
+                li.hide();
+            }
+        });
+        $('.rule').each(function() {
+            var li = $(this).parent();
+            if (li.find('ul').children().length == 0) {
+                $(this).addClass('hidden');
+            }
+        });
+    }
+
+    hideEmptyNodes();
+
 function closeRules(elm, nodeType) {
     var li = $(elm).parent();
 
