@@ -10,7 +10,7 @@
                 <input type="text" name="comment" id="comment" class="big-input" value="<?=$rule_comment?>"/><br/>
             </fieldset>
             <br/>
-            <input type="submit" class="button-flat" value="Edit" />
+            <input type="submit" class="button" value="Edit" />
             <input type="hidden" name="id_rule" value="<?=$id_rule?>" />
         <?php endif; ?>
     </form>

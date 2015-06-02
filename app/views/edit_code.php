@@ -12,6 +12,6 @@
         <br/>
         <input type="hidden" name="old_code" value="<?=isset($old_code) ? $old_code : '' ?>" />
         <input type="hidden" name="locale" value="<?=isset($locale) ? $locale : '' ?>" />
-        <input type="submit" class="button-flat" name="edit_code_sent" value="Edit" alt="Edit" />
+        <input type="submit" class="button" name="edit_code_sent" value="Edit" alt="Edit" />
     </fieldset>
 </form>

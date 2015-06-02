@@ -29,7 +29,7 @@
                                 <button class="button edit-rule" title="Edit this rule">
                                     <i class="fa fa-edit fa-15x"></i>
                                 </button>
-                                <button class="button button-negative delete-rule close" title="Delete this rule">
+                                <button class="button button-red delete-rule close" title="Delete this rule">
                                     <i class="fa fa-times fa-15x"></i>
                                 </button>
                             <?php endif; ?>
