@@ -1,3 +1,7 @@
+<?php if ($edit_mode) : ?>
+<br/><h2>Editing rules and exceptions</h2>
+<?php endif; ?>
+
 <div class="treeview">
     <ul>
 <?php

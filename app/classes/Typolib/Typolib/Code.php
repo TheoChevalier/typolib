@@ -162,8 +162,10 @@ class Code
     {
         if (Locale::isSupportedLocale($locale)) {
             $dir = DATA_ROOT . $repo . "/$locale";
+            $list = self::scanDirectory($dir);
+            natcasesort($list);
 
-            return self::scanDirectory($dir);
+            return $list;
         } else {
             return false;
         }

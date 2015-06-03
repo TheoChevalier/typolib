@@ -40,16 +40,15 @@ function closeRules(elm, nodeType) {
     }
 }
 
-$(function() {
-    var txt = $('#enterText'),
-        hiddenDiv = $(document.createElement('div')),
+function autoResizeTextarea(elm) {
+    var hiddenDiv = $(document.createElement('div')),
         content = null;
 
     hiddenDiv.addClass('hiddendiv');
 
     $('body').append(hiddenDiv);
 
-    txt.on('keyup', function () {
+    elm.on('keyup', function () {
 
         content = $(this).val();
 
@@ -59,7 +58,9 @@ $(function() {
         $(this).css('height', hiddenDiv.height());
 
     });
-});
+}
+
+autoResizeTextarea($('#enterText'));
 
 (function($) {
 

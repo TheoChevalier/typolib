@@ -101,3 +101,19 @@ html[lang^='en'] .button-inverted {
 .button-little {
     padding: 8px 10px;
 }
+
+/* Fixing alignment with font-awesome icons inside buttons */
+.button i.fa-15x {
+    vertical-align: bottom;
+    margin-bottom: -3px;
+    padding-right: 7px;
+}
+
+.button i.fa-2x {
+    vertical-align: bottom;
+    margin-bottom: -6px;
+}
+
+.treeview .button i {
+    padding-right: 0;
+}

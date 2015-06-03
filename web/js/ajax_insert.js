@@ -1,5 +1,6 @@
 function clickHandlers() {
     hideEmptyNodes();
+    autoResizeTextarea($('#comment'));
 
     $("a.new-exception").unbind('click');
     $("a.new-exception").click(function(event) {
@@ -48,13 +49,15 @@ function clickHandlers() {
             success: function(response) {
                 if (response != "0") {
                     $('#modal .modal-content').html(response);
+                    autoResizeTextarea($('#comment-edit'));
+
                     $("#modal input[type='submit'").unbind('click');
                     $("#modal input[type='submit'").click(function(event) {
                         event.preventDefault();
                         var code = $('#code_selector').val();
                         var locale = $('#locale_selector').val();
                         var id_rule = $('#modal input[name="id_rule"]').val();
-                        var comment = $('#modal input[name="comment"]').val();
+                        var comment = $('#modal textarea[name="comment"]').val();
                         var inputs = new Array();
                         $('#modal input[type=text]').each(function(){
                             var input = $(this);
@@ -106,6 +109,10 @@ function clickHandlers() {
             context: this,
             success: function(response) {
                 if (response == "1") {
+                    if ($(this).parent().has('#exceptionview').length == 1) {
+                        $('#exceptionview').hide();
+                        $('#exceptionview').appendTo('body');
+                    }
                     $(this).parent().remove();
                     hideEmptyNodes();
                 } else {
@@ -198,6 +205,7 @@ function updateRuleTemplate() {
 $('#exceptionview').hide();
 clickHandlers();
 updateRuleTemplate();
+autoResizeTextarea($('#comment'));
 
 
 
@@ -212,19 +220,17 @@ $('#locale_selector').on('change', function() {
             clickHandlers();
             $('#exceptionview').hide();
             if (response == '') {
-                 $('#edit_code').hide();
-                 $('#delete_code').hide();
-                 $('#template').hide();
-                 $('#rule_type').hide();
-                 $('#add_comment').hide();
-                 $('.treeview').hide();
+                $('#code_selector').parent().parent().hide();
+                $('#edit_code').parent().hide();
+                $('#delete_code').hide();
+                $('#new_rule').hide();
+                $('#results').hide();
             } else {
-                $('#edit_code').show();
+                $('#code_selector').parent().parent().show();
+                $('#edit_code').parent().show();
                 $('#delete_code').show();
-                $('#template').show();
-                $('#rule_type').show();
-                $('#add_comment').show();
-                $('.treeview').show();
+                $('#new_rule').show();
+                $('#results').show();
             }
         },
         error: function() {

@@ -7,7 +7,10 @@ class Locale
 
     public static function getLocaleList()
     {
-        return self::$locale_list;
+        $locales = self::$locale_list;
+        asort($locales);
+
+        return $locales;
     }
 
     public static function isSupportedLocale($locale)

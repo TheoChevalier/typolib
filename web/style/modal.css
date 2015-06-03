@@ -55,7 +55,7 @@ html.noscroll body {
   font-size: 30px;
   font-size: 1.875rem;
   vertical-align: middle;
-  margin-top: 0;
+  margin: 0;
 }
 #modal .window .inner #modal-close:hover a {
   text-decoration: underline;

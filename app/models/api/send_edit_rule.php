@@ -5,6 +5,7 @@ $edit_mode = true;
 
 $id_rule = $_GET['id_rule'];
 $comment = $_GET['comment'];
+
 $content_array = array_filter(json_decode($_GET['array']));
 
 $array_OK = true;
