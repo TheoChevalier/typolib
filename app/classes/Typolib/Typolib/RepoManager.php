@@ -173,14 +173,12 @@ class RepoManager
      */
     public function updateMaster()
     {
+        $this->logger->info(
+            exec("cd " . $this->path
+               . " && git pull " . $this->client_remote . " " . $this->branch)
+        );
 
-        // FIXME: actually update master instead of deleting + recloning everytime.
-        Utils::deleteFolder(DATA_ROOT . RULES_STAGING);
-        $this->cloneAndConfig();
-
-        /*
-        $this->git->fetch()->execute($this->client_remote, 'master');
-        $this->git->checkout('master');*/
+        $this->git->checkout($this->branch);
 
         $sha = $this->getMasterSha();
         if (! file_put_contents($this->update_file, $sha)) {
