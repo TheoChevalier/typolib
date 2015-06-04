@@ -16,6 +16,13 @@ $('#locale_selector').on('change', function() {
         success: function(response) {
             $("#code_selector").html(response);
             $('#exceptionview').hide();
+            if (response == '') {
+                $('#code_selector').parent().parent().hide();
+                $('.treeview').hide();
+            } else {
+                $('#code_selector').parent().parent().show();
+                $('.treeview').show();
+            }
         },
         error: function() {
             console.error("AJAX failure - get codes");

@@ -400,9 +400,12 @@ textarea,
     line-height: 1.9;
 }
 
-#exceptionview fieldset,
-#exceptionview input[type="text"] {
+#exceptionview fieldset {
     padding-left: 0;
+    margin-left: 0;
+}
+
+#exceptionview input[type="text"] {
     margin-left: 0;
 }
 

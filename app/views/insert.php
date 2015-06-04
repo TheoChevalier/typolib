@@ -14,12 +14,13 @@
         <?php endif; ?>
 
         <fieldset>
-            <p>Enter the name of the code:<br />
+            <p>Name of the set of rules<br />
             <input type="text" name="name" /></p>
         </fieldset>
         <br/>
         <fieldset>
-            <input type="checkbox" name="common" id="common"/><label for="common">Use the common code</label>
+            <input type="checkbox" name="common" id="common"/>
+            <label for="common">Use the common rules of this locale</label>
         </fieldset>
         <br/>
         <input type="submit" class="button" value="Create" alt="Create" />

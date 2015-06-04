@@ -15,11 +15,15 @@
 
 .treeview .comment {
     display: block;
-    margin: 0 0 1em 45px;
+    margin: 0 0 1em 0;
     line-height: 1em;
     font-size: 1.0em;
     color: #666;
     font-style: italic;
+}
+
+.treeview .exceptions {
+    margin-left: 60px;
 }
 
 .treeview .new-exception,

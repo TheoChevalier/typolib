@@ -9,3 +9,5 @@ $rules = Rule::getArrayRules($old_code, $locale, RULES_STAGING);
 $common = $rules['common'];
 $name = $rules['name'];
 unset($rules);
+
+$page_title = "Options for “{$name}”";

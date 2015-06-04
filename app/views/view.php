@@ -22,18 +22,22 @@
             </div>
         </fieldset>
         <?php endif; ?>
+        <fieldset>
+            <fieldset id="edit_code">
+                <button type="submit" name="edit_code" class="button" title="Edit current code">
+                    <i class="fa fa-cog fa-15x"></i> Options
+                </button>
+            </fieldset>
+        </fieldset>
+    </fieldset>
 
-        <fieldset id="edit_code">
-            <button type="submit" name="edit_code" class="button" title="Edit current code">
-                <i class="fa fa-edit fa-15x"></i> Edit code name and options
-            </button>
-        </fieldset>
-        <fieldset id="delete_code">
-            <button type="submit" name="delete_code" class="button button-red" title="Delete current code">
-                <i class="fa fa-times fa-15x"></i> Delete this code
-            </button>
-        </fieldset>
-        <br/>
+    <div id="results">
+        <?php include VIEWS . 'view_treeview.php'; ?>
+    </div>
+
+    <div id="new_rule">
+        <h2>Adding a new rule</h2>
+
         <?php if (isset($ruletypes_selector)) : ?>
         <fieldset id="rule_type">
             <label>Rule type</label>
@@ -46,18 +50,7 @@
         <?php endif; ?>
 
         <div id="template"></div>
-
-        <br/>
-
-        <fieldset id="add_comment">
-            Enter a comment:<br />
-            <input type="text" name="comment" id="comment" class="big-input"/><br/>
-
-            <br/>
-            <input type="submit" id="submitRule" class="button" value="Add" />
-        </fieldset>
-    </fieldset>
-    <div id="results"><?php include VIEWS . 'view_treeview.php'; ?></div>
+    </div>
 </form>
 <?php
 
