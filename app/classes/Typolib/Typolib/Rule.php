@@ -346,7 +346,7 @@ class Rule
         if (! empty(($replacements))) {
             $replacements = array_reverse($replacements, true);
             foreach ($replacements as $key => $value) {
-                $user_string = \Typolib\Strings::replacementstring(
+                $user_string = \Typolib\Strings::replaceString(
                                                                 $user_string,
                                                                 $replace,
                                                                 $value,
@@ -450,7 +450,7 @@ class Rule
 
                     if (! empty($check_array)) {
                         foreach ($check_array as $key => $char) {
-                            if ($char != $characters[$i]) {
+                            if (! isset($characters[$i]) || $char != $characters[$i]) {
                                 if ($mode == 'check_before') {
                                     $replacements[] = [$position, $char, 0];
                                 } elseif (! $found) {
