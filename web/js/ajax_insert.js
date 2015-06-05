@@ -184,6 +184,49 @@ function clickHandlers() {
         });
     });
 
+    $('#submitRule').unbind('click');
+    $('#submitRule').click(function(event) {
+        event.preventDefault();
+        var code = $('#code_selector').val();
+        var locale = $('#locale_selector').val();
+        var rule_type = $('#addrule_type').val();
+        var comment = $('#comment').val();
+        var placeholder = $('#addrule_type :selected').text();
+        var inputs = new Array();
+        $('#template input[type=text]').each(function(){
+            var input = $(this);
+            if(input.attr('name').toLowerCase().indexOf("input") >= 0) {
+                inputs.push(input.val());
+            }
+        });
+
+        $.ajax({
+            url: "/api/",
+            type: "GET",
+            data: "action=adding_rule&locale=" + locale + "&code=" + code + "&type=" + rule_type + "&comment=" + comment + "&array=" + JSON.stringify(inputs),
+            dataType: "html",
+            success: function(response) {
+                if (response != "0") {
+                    $("#results").html(response);
+                    $('#comment').val('');
+                    $('#rule').val(placeholder);
+                    $('#template input[type=text]').each(function(){
+                        var input = $(this);
+                        if(input.attr('name').toLowerCase().indexOf("input") >= 0) {
+                            input.val('');
+                        }
+                    });
+                    clickHandlers();
+                } else {
+                    alert("The rule field can’t be empty.");
+                }
+            },
+            error: function() {
+                console.error("AJAX failure - add rule");
+            }
+        });
+    });
+
     $(".ruletype").unbind('click');
     $(".ruletype").click(function() {
         closeRules($(this), '.ruletype');
@@ -200,6 +243,7 @@ function updateRuleTemplate() {
     var res = $('#template-' + rule_type + ' form').clone();
     res.show();
     $('#template').html(res);
+    clickHandlers();
 };
 
 $('#exceptionview').hide();
@@ -261,43 +305,3 @@ $('#addrule_type').on('change', function() {
     updateRuleTemplate();
 });
 
-$('#submitRule').click(function(event) {
-    event.preventDefault();
-    var code = $('#code_selector').val();
-    var locale = $('#locale_selector').val();
-    var rule_type = $('#addrule_type').val();
-    var comment = $('#comment').val();
-    var placeholder = $('#addrule_type :selected').text();
-    var inputs = new Array();
-    $('#template input[type=text]').each(function(){
-        var input = $(this);
-        if(input.attr('name').toLowerCase().indexOf("input") >= 0) {
-            inputs.push(input.val());
-        }
-    });
-    $.ajax({
-        url: "/api/",
-        type: "GET",
-        data: "action=adding_rule&locale=" + locale + "&code=" + code + "&type=" + rule_type + "&comment=" + comment + "&array=" + JSON.stringify(inputs),
-        dataType: "html",
-        success: function(response) {
-            if (response != "0") {
-                $("#results").html(response);
-                $('#comment').val('');
-                $('#rule').val(placeholder);
-                $('#template input[type=text]').each(function(){
-                    var input = $(this);
-                    if(input.attr('name').toLowerCase().indexOf("input") >= 0) {
-                        input.val('');
-                    }
-                });
-                clickHandlers();
-            } else {
-                alert("The rule field can’t be empty.");
-            }
-        },
-        error: function() {
-            console.error("AJAX failure - add rule");
-        }
-    });
-});
