@@ -1,6 +1,6 @@
 <?php
 
-$javascript_include = ['ajax_insert.js'];
+$javascript_include = ['ajax_check.js'];
 
 include MODELS . 'check.php';
 include VIEWS . 'check.php';
