@@ -3,5 +3,5 @@ namespace Typolib;
 
 /* Model we call to delete a Code */
 
-Code::deleteCode($_GET['code'], $_GET['locale']);
+Code::deleteCode($_GET['old_code'], $_GET['locale']);
 $success_msg[] = 'Code successfully deleted';
