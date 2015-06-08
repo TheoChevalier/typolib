@@ -1,6 +1,6 @@
 <form name="addform" id="mainform" method="get" action="">
 
-     <fieldset id="main">
+    <fieldset id="main">
         <?php if (isset($locale_selector)) : ?>
         <fieldset>
             <label>Locale</label>
@@ -27,13 +27,13 @@
             <br/>
             <textarea id="enterText" name="enterText" rows="3" cols="15"></textarea>
         </fieldset>
-        <fieldset>
-            <label for="checkResponse">Potential errors</label>
+        <fieldset disabled>
+            <label for="checkResponse">Corrected text</label>
             <br/>
             <textarea id="checkResponse"></textarea>
         </fieldset>
         <br/>
         <input type="submit" class="button" name="check" value="Check" alt="Check" id="submitCheck"/>
-
         <?php endif; ?>
+    </fieldset>
 </form>
