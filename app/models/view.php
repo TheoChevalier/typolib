@@ -17,15 +17,17 @@ $ruletypes_selector = Utils::getHtmlSelectOptions(
                                 true
                             );
 
-$codes = $code_key = Code::getCodeList($locale, RULES_STAGING);
+$repo = $page == 'display' ? RULES_PRODUCTION : RULES_STAGING;
+
+$codes = $code_key = Code::getCodeList($locale, $repo);
 reset($code_key);
 $code_key = key($code_key);
 $code_selector = Utils::getHtmlSelectOptions($codes, $code_key, true);
 
 $first_rule = array_values($rules)[0];
-$rules = Rule::getArrayRules($code_key, $locale, RULES_STAGING);
+$rules = Rule::getArrayRules($code_key, $locale, $repo);
 
-$rule_exceptions = RuleException::getArrayExceptions($code_key, $locale, RULES_STAGING);
+$rule_exceptions = RuleException::getArrayExceptions($code_key, $locale, $repo);
 
 if (array_key_exists('rules', $rules)) {
     foreach ($rules['rules'] as $key => $value) {
