@@ -180,14 +180,15 @@ class RepoManager
 
         $this->git->checkout($this->branch);
 
-        $sha = $this->getMasterSha();
-        if (! file_put_contents($this->update_file, $sha)) {
+        //$sha = $this->getMasterSha();
+        /*if (! file_put_contents($this->update_file, $sha)) {
             $this->logger->error('Can\'t write ' . $this->update_file . ' file');
 
             return false;
         }
 
-        return $sha;
+        return $sha;*/
+        return true;
     }
 
     /**
@@ -221,16 +222,16 @@ class RepoManager
      */
     public function checkForUpdates()
     {
-        $local_sha = file_get_contents($this->update_file);
-        $remote_sha = $this->getMasterSha();
+        //$local_sha = file_get_contents($this->update_file);
+        //$remote_sha = $this->getMasterSha();
 
-        if ($local_sha != $remote_sha) {
+        //if ($local_sha != $remote_sha) {
             $this->updateMaster();
 
-            return true;
-        }
+        return true;
+        //}
 
-        return false;
+        //return false;
     }
 
     /**
