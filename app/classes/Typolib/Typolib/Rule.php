@@ -701,8 +701,26 @@ class Rule
 
     public static function buildRuleString($type, $rule)
     {
+        $new_rule = [];
         if (self::isSupportedType($type)) {
-            return vsprintf(self::$rules_type[$type], $rule);
+            foreach ($rule as $key => $value) {
+                switch ($value) {
+                    case NBSP:
+                        $value = '<span>non-breaking space</span>';
+                        break;
+
+                    case WHITE_SP:
+                        $value = '<span>white-space</span>';
+                        break;
+
+                    case NARROW_NBSP:
+                        $value = '<span>narrow no-break space</span>';
+                        break;
+                }
+                $new_rule[$key] = $value;
+            }
+
+            return vsprintf(self::$rules_type[$type], $new_rule);
         }
     }
 

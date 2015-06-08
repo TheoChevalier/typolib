@@ -10,6 +10,8 @@ $exceptions = RuleException::getArrayExceptions('test_check', 'fr', RULES_STAGIN
 
 $result = Rule::process('" coucou " ', $rules, $exceptions);
 dump($result);
+
+dump(Rule::buildRuleString('check_before', [' ', ',']));
 ?>
 
 <form id="mainform">
