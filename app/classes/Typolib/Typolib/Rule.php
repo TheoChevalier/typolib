@@ -775,52 +775,94 @@ class Rule
     public static function process($string, $rules, $exceptions)
     {
         $processed_string = [];
+        $processed_common = [];
+        $positions = [];
+
+        if ($rules['common']) {
+            $common_rules = Rule::getArrayRules('common', $rules['locale'], RULES_STAGING);
+            $common_exceptions = RuleException::getArrayExceptions('common', $rules['locale'], RULES_STAGING);
+
+            if ($common_rules != false) {
+                $processed_common = self::checkAllRules($string, $common_rules, $common_exceptions);
+            }
+        }
+
+        $string = ! empty($processed_common[0]) ? $processed_common[0] : $string;
+
+        $processed_code = self::checkAllRules($string, $rules, $exceptions);
+
+        if (! empty($processed_common[1]) && ! empty($processed_code[1])) {
+            $positions = array_merge($processed_common[1], $processed_code[1]);
+        } elseif (! empty($processed_common[1])) {
+            $positions = $processed_common[1];
+        } else {
+            $positions = $processed_code[1];
+        }
+
+        $string = self::removeTagsFromString($processed_code[0],
+                                            self::$start_variable_tag,
+                                            self::$end_variable_tag);
+
+        array_push($processed_string, $string);
+        array_push($processed_string, $positions);
+
+        return $processed_string;
+    }
+
+    private static function checkAllRules($string, $rules, $exceptions)
+    {
+        $processed_string = [];
         $positions = [];
         $result = [];
         $exceptions_rule = [];
         $rule_comment;
-        foreach ($rules['rules'] as $id => $rule) {
-            if ($rule['type'] == 'plural_separator') {
-                $string = self::checkSeparatorRule($string, $rule['content']);
-            }
-        }
-        foreach ($rules['rules'] as $id => $rule) {
-            if ($rule['type'] == 'ignore_variable') {
-                $exceptions_rule = self::getRuleExceptions($exceptions, $id);
-                $string = self::checkIgnoreVariables($string, $rule['content'], $exceptions_rule);
-            }
-        }
-        foreach ($rules['rules'] as $id => $rule) {
-            if ($rule['type'] == 'replace_with') {
-                $exceptions_rule = self::getRuleExceptions($exceptions, $id);
-                $result = self::checkIfThenRule($string, $rule['content'], $exceptions_rule);
-                $comment = ! empty($rule['comment']) ? $rule['comment'] : '';
-                $positions[] = [$result[1], $comment];
-                $string = $result[0];
-            }
-        }
-        foreach ($rules['rules'] as $id => $rule) {
-            if ($rule['type'] == 'quotation_mark') {
-                $exceptions_rule = self::getRuleExceptions($exceptions, $id);
-                $result = self::checkQuotationMarkRule($string, $rule['content'], $exceptions_rule);
-                $comment = ! empty($rule['comment']) ? $rule['comment'] : '';
-                $positions[] = [$result[1], $comment];
-                $string = $result[0];
-            }
-        }
-        foreach ($rules['rules'] as $id => $rule) {
-            if (($rule['type'] == 'check_before') || ($rule['type'] == 'check_after')) {
-                $exceptions_rule = self::getRuleExceptions($exceptions, $id);
-                $result = self::checkBeforeAfter($string, $rule['content'], $exceptions_rule, $rule['type']);
-                $comment = ! empty($rule['comment']) ? $rule['comment'] : '';
-                $positions[] = [$result[1], $comment];
-                $string = $result[0];
-            }
-        }
 
-        $string = self::removeTagsFromString($string,
-                                            self::$start_variable_tag,
-                                            self::$end_variable_tag);
+        if (array_key_exists('rules', $rules)) {
+            foreach ($rules['rules'] as $id => $rule) {
+                if ($rule['type'] == 'plural_separator') {
+                    $string = self::checkSeparatorRule($string, $rule['content']);
+                }
+            }
+            foreach ($rules['rules'] as $id => $rule) {
+                if ($rule['type'] == 'ignore_variable') {
+                    $exceptions_rule = self::getRuleExceptions($exceptions, $id);
+                    $string = self::checkIgnoreVariables($string, $rule['content'], $exceptions_rule);
+                }
+            }
+            foreach ($rules['rules'] as $id => $rule) {
+                if ($rule['type'] == 'replace_with') {
+                    $exceptions_rule = self::getRuleExceptions($exceptions, $id);
+                    $result = self::checkIfThenRule($string, $rule['content'], $exceptions_rule);
+                    if (! empty($result[1])) {
+                        $comment = ! empty($rule['comment']) ? $rule['comment'] : '';
+                        $positions[] = [$result[1], $comment];
+                    }
+                    $string = $result[0];
+                }
+            }
+            foreach ($rules['rules'] as $id => $rule) {
+                if ($rule['type'] == 'quotation_mark') {
+                    $exceptions_rule = self::getRuleExceptions($exceptions, $id);
+                    $result = self::checkQuotationMarkRule($string, $rule['content'], $exceptions_rule);
+                    if (! empty($result[1])) {
+                        $comment = ! empty($rule['comment']) ? $rule['comment'] : '';
+                        $positions[] = [$result[1], $comment];
+                    }
+                    $string = $result[0];
+                }
+            }
+            foreach ($rules['rules'] as $id => $rule) {
+                if (($rule['type'] == 'check_before') || ($rule['type'] == 'check_after')) {
+                    $exceptions_rule = self::getRuleExceptions($exceptions, $id);
+                    $result = self::checkBeforeAfter($string, $rule['content'], $exceptions_rule, $rule['type']);
+                    if (! empty($result[1])) {
+                        $comment = ! empty($rule['comment']) ? $rule['comment'] : '';
+                        $positions[] = [$result[1], $comment];
+                    }
+                    $string = $result[0];
+                }
+            }
+        }
 
         array_push($processed_string, $string);
         array_push($processed_string, $positions);
