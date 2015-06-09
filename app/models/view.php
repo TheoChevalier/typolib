@@ -29,7 +29,7 @@ $rules = Rule::getArrayRules($code_key, $locale, $repo);
 
 $rule_exceptions = RuleException::getArrayExceptions($code_key, $locale, $repo);
 
-if (array_key_exists('rules', $rules)) {
+if ($rules != false && array_key_exists('rules', $rules)) {
     foreach ($rules['rules'] as $key => $value) {
         $buildRule[$key] = Rule::buildRuleString($value['type'], $value['content']);
     }

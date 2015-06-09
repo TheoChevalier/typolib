@@ -244,7 +244,7 @@ class Rule
     public static function getRuleExceptions($exceptions, $id)
     {
         $array = [];
-        if (! empty($exceptions)) {
+        if ($exceptions != false && array_key_exists('exceptions', $exceptions)) {
             foreach ($exceptions['exceptions'] as $id_exception => $exception) {
                 if ($exception['rule_id'] == $id) {
                     $array[$id_exception] = $exception['content'];
@@ -886,5 +886,10 @@ class Rule
         array_push($processed_string, $positions);
 
         return $processed_string;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 }

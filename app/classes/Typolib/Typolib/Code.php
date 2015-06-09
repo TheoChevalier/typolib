@@ -198,4 +198,51 @@ class Code
 
         return self::$code_list;
     }
+
+    /**
+     * Import a code.
+     *
+     * @param String $code_name        The name of the code where we want to import.
+     * @param String $locale_code      The locale of the code where we want to import.
+     * @param String $code_name_import The name of the imported code.
+     * @param String $repo             Repository of the code we want import (staging or production)
+     */
+    public static function importCode($code_name, $locale_code, $code_name_import, $repo)
+    {
+        $new_rule_exceptions = [];
+
+        $rules = Rule::getArrayRules($code_name, $locale_code, $repo);
+        $rules_to_import = Rule::getArrayRules($code_name_import, $locale_code, $repo);
+        $exceptions_to_import = RuleException::getArrayExceptions($code_name_import, $locale_code, $repo);
+
+        $has_exceptions = false;
+
+        if ($exceptions_to_import != false && array_key_exists('exceptions', $exceptions_to_import)) {
+            $has_exceptions = true;
+        }
+
+        if ($rules_to_import != false && array_key_exists('rules', $rules_to_import)) {
+            if ($rules != false && array_key_exists('rules', $rules)) {
+                end($rules['rules']);
+                $last_rule_id = key($rules['rules']);
+
+                foreach ($rules_to_import['rules'] as $id => $rule) {
+                    $comment = array_key_exists('comment', $rule) ? $rule['comment'] : '';
+                    $new_rule = new Rule($code_name, $locale_code, $rule['content'], $rule['type'], $comment);
+
+                    if ($has_exceptions) {
+                        $new_rule_exceptions[$new_rule->getId()] = Rule::getRuleExceptions($exceptions_to_import, $id);
+                    }
+                }
+            }
+        }
+
+        if (! empty($new_rule_exceptions)) {
+            foreach ($new_rule_exceptions as $id_rule => $exception) {
+                foreach ($exception as $id_exception => $content) {
+                    $new_exception = new RuleException($code_name, $locale_code, $id_rule, $content);
+                }
+            }
+        }
+    }
 }

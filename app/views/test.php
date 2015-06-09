@@ -5,13 +5,6 @@ namespace Typolib;
 $locales = Locale::getLocaleList();
 dump($locales);
 
-$rules = Rule::getArrayRules('test_check', 'fr', RULES_STAGING);
-$exceptions = RuleException::getArrayExceptions('test_check', 'fr', RULES_STAGING);
-
-$result = Rule::process('" coucou " ', $rules, $exceptions);
-dump($result);
-
-dump(Rule::buildRuleString('check_before', [' ', ',']));
 ?>
 
 <form id="mainform">
