@@ -227,10 +227,7 @@ class Code
         }
 
         if ($rules_to_import != false && array_key_exists('rules', $rules_to_import)) {
-            if ($rules != false && array_key_exists('rules', $rules)) {
-                end($rules['rules']);
-                $last_rule_id = key($rules['rules']);
-
+            if ($rules != false) {
                 $selected_rules = empty($selected_rules)
                                     ? array_keys($rules_to_import['rules'])
                                     : $selected_rules;
