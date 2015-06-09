@@ -202,12 +202,17 @@ class Code
     /**
      * Import a code.
      *
-     * @param String $code_name        The name of the code where we want to import.
-     * @param String $locale_code      The locale of the code where we want to import.
+     * @param String $code_name        The name of the code where we want to
+     *                                 import.
+     * @param String $locale_code      The locale of the code where we want to
+     *                                 import.
      * @param String $code_name_import The name of the imported code.
-     * @param String $repo             Repository of the code we want import (staging or production)
+     * @param array  $selected_rules   All the ids of the rules we want to export,
+     *                                 if empty we import all the rules.
+     * @param String $repo             Repository of the code we want import
+     *                                 (staging or production)
      */
-    public static function importCode($code_name, $locale_code, $code_name_import, $repo)
+    public static function importCode($code_name, $locale_code, $code_name_import, $selected_rules = '', $repo)
     {
         $new_rule_exceptions = [];
 
@@ -226,12 +231,18 @@ class Code
                 end($rules['rules']);
                 $last_rule_id = key($rules['rules']);
 
-                foreach ($rules_to_import['rules'] as $id => $rule) {
-                    $comment = array_key_exists('comment', $rule) ? $rule['comment'] : '';
-                    $new_rule = new Rule($code_name, $locale_code, $rule['content'], $rule['type'], $comment);
+                $selected_rules = empty($selected_rules)
+                                    ? array_keys($rules_to_import['rules'])
+                                    : $selected_rules;
 
-                    if ($has_exceptions) {
-                        $new_rule_exceptions[$new_rule->getId()] = Rule::getRuleExceptions($exceptions_to_import, $id);
+                foreach ($rules_to_import['rules'] as $id => $rule) {
+                    if (in_array($id, $selected_rules)) {
+                        $comment = array_key_exists('comment', $rule) ? $rule['comment'] : '';
+                        $new_rule = new Rule($code_name, $locale_code, $rule['content'], $rule['type'], $comment);
+
+                        if ($has_exceptions) {
+                            $new_rule_exceptions[$new_rule->getId()] = Rule::getRuleExceptions($exceptions_to_import, $id);
+                        }
                     }
                 }
             }
