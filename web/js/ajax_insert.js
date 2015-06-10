@@ -236,6 +236,38 @@ function clickHandlers() {
     $(".rule").click(function() {
         closeRules($(this), '.rule');
     });
+
+    $(".draggable").draggable({
+        revert: true,
+        helper: 'clone',
+        cursor: 'move',
+        start: function(event, ui) {
+            $(this).fadeTo('fast', 0.5);
+        },
+        stop: function(event, ui) {
+            $(this).fadeTo(0, 1);
+        }
+    });
+
+    $(".droppable").droppable({
+        hoverClass: 'active',
+        drop: function(event, ui) {
+            switch ($(ui.draggable).text()) {
+                case 'non-breaking space':
+                    this.value += ' ';
+                    break;
+                case 'white-space':
+                    this.value += ' ';
+                    break;
+                case 'narrow no-break space':
+                    this.value += ' ';
+                    break;
+                default:
+                    this.value += $(ui.draggable).text();
+                    break;
+            }
+        }
+    });
 };
 
 function updateRuleTemplate() {
