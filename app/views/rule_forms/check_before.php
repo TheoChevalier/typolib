@@ -1,10 +1,4 @@
-Key words:
-<ul>
-    <li><span class="draggable">∅</span></li>
-    <li><span class="draggable">non-breaking space</span></li>
-    <li><span class="draggable">white-space</span></li>
-    <li><span class="draggable">narrow no-break space</span></li>
-</ul>
+<?php include VIEWS . 'key_words.php'; ?>
 <fieldset>
     <label for="input_1">Check <input type="text" name="input_1" id="input_1" class="droppable little-input" <?=$edit ? 'value="' . $rule_content[0] . '"' : '' ?>/></label>
 </fieldset>

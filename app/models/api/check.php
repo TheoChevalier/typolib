@@ -7,7 +7,7 @@ if (!empty($user_string)) {
     $exceptions = RuleException::getArrayExceptions($code, $locale, RULES_STAGING);
 
     if (! empty($rules)) {
-        $result = Rule::process($user_string, $rules, $exceptions);
+        $result = Rule::process($user_string, $rules, $exceptions, $locale);
         echo $result[0];
     } else {
         echo '0';

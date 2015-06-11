@@ -487,3 +487,19 @@ textarea,
     }
 
 }
+
+#template input[type='text'].active {
+    border:solid 1.5px #93c54b;
+}
+
+.draggable {
+    display: inline-block;
+    border-radius: 6px;
+    text-align: center;
+    padding: 9px 15px;
+    margin-bottom: 10px;
+    background: #00A0DC none repeat scroll 0% 0%;
+    color: #FFF;
+    font-size: 0.875rem;
+    border: medium none;
+}

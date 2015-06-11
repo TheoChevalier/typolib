@@ -505,8 +505,7 @@ class Rule
                         $i = $mode == 'check_after'
                                                 ? $position + 1
                                                 : $position - strlen($check);
-
-                        if (! empty($check_array)) {
+                        if ($check != '∅') {
                             foreach ($check_array as $key => $char) {
                                 if (! isset($characters[$i]) || $char != $characters[$i]) {
                                     if ($mode == 'check_before') {
@@ -521,7 +520,7 @@ class Rule
                             }
                         } else {
                             if ($mode == 'check_before') {
-                                $i--;
+                                $i = $i + strlen($check) - 1;
                             }
                             if ($characters[$i] == NBSP || $characters[$i] == WHITE_SP || $characters[$i] == NARROW_NBSP) {
                                 $replacements[] = [$i, '', 1];
@@ -790,15 +789,15 @@ class Rule
         return $string_with_tag;
     }
 
-    public static function process($string, $rules, $exceptions)
+    public static function process($string, $rules, $exceptions, $locale)
     {
         $processed_string = [];
         $processed_common = [];
         $positions = [];
 
         if ($rules['common']) {
-            $common_rules = Rule::getArrayRules('common', $rules['locale'], RULES_STAGING);
-            $common_exceptions = RuleException::getArrayExceptions('common', $rules['locale'], RULES_STAGING);
+            $common_rules = Rule::getArrayRules('common', $locale, RULES_STAGING);
+            $common_exceptions = RuleException::getArrayExceptions('common', $locale, RULES_STAGING);
 
             if ($common_rules != false) {
                 $processed_common = self::checkAllRules($string, $common_rules, $common_exceptions);
