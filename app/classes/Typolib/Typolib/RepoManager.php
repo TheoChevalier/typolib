@@ -94,11 +94,6 @@ class RepoManager
             $this->logger->error('Failed to initialize Git repository. Error: '
                                  . $e->getMessage());
         }
-
-        // If repo already exists, check for updates.
-        if (! $this->cloneAndConfig()) {
-            $this->checkForUpdates();
-        }
     }
 
     /**
@@ -134,7 +129,7 @@ class RepoManager
      * Clone and setup a fresh Git repo if the folder is empty.
      * @return boolean Returns true if repo was not cloned, false if already exists.
      */
-    private function cloneAndConfig()
+    public function cloneAndConfig()
     {
         if (! is_dir($this->path)) {
             try {

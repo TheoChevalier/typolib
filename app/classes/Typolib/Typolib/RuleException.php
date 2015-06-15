@@ -64,6 +64,7 @@ class RuleException
         $this->id = key($exception['exceptions']);
 
         $repo_mgr = new RepoManager();
+        $repo_mgr->checkForUpdates();
 
         file_put_contents($file, serialize($exception));
 
@@ -99,6 +100,7 @@ class RuleException
             }
 
             $repo_mgr = new RepoManager();
+            $repo_mgr->checkForUpdates();
 
             file_put_contents($file, serialize($exception));
 

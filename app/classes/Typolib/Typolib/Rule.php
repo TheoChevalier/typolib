@@ -99,6 +99,7 @@ class Rule
         }
 
         $repo_mgr = new RepoManager();
+        $repo_mgr->checkForUpdates();
 
         file_put_contents($file, serialize($code));
 
@@ -160,6 +161,7 @@ class Rule
             }
 
             $repo_mgr = new RepoManager();
+            $repo_mgr->checkForUpdates();
 
             file_put_contents($file, serialize($code));
 

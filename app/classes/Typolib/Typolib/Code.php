@@ -73,6 +73,7 @@ class Code
             $path = $this->path;
 
             $repo_mgr = new RepoManager();
+            $repo_mgr->checkForUpdates();
 
             mkdir($path, 0777, true);
 
@@ -100,6 +101,7 @@ class Code
         $folder = DATA_ROOT . RULES_STAGING . "/$locale/$name";
 
         $repo_mgr = new RepoManager();
+        $repo_mgr->checkForUpdates();
         if (Utils::deleteFolder($folder)) {
             $repo_mgr->commitAndPush('Deleting "' . $name . '" code.');
 
@@ -128,6 +130,7 @@ class Code
             $content['common'] = $use_common_code;
 
             $repo_mgr = new RepoManager();
+            $repo_mgr->checkForUpdates();
 
             file_put_contents($folder . '/rules.php', serialize($content));
 

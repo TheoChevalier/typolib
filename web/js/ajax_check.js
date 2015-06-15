@@ -10,6 +10,7 @@ function check() {
         success: function(response) {
             if (response != "0") {
                 $("#checkResponse").val(response);
+                check();
             } else {
                 $("#checkResponse").val('');
             }
