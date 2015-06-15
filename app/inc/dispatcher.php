@@ -24,6 +24,11 @@ switch ($url['path']) {
         $page_title = 'Check text';
         $page_descr = 'Enter text, select a set of rules to apply and you’re good to go!';
         break;
+    case 'about':
+        $view = 'about';
+        $page_title = 'About ' . PRODUCT;
+        $page_descr = '';
+        break;
     case 'api':
         $template = false;
         $controller = 'api';

@@ -2,6 +2,7 @@
 
 $urls = [
     '/'                   => 'root',
+    'about'               => 'about',
     'api'                 => 'api',
     'check'               => 'check',
     'display'             => 'display',

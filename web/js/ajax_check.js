@@ -10,7 +10,6 @@ function check() {
         success: function(response) {
             if (response != "0") {
                 $("#checkResponse").val(response);
-                check();
             } else {
                 $("#checkResponse").val('');
             }
@@ -56,3 +55,7 @@ $('#locale_selector').on('change', function() {
         }
     });
 });
+
+$('#code_selector').on('change', function() {
+    check();
+})
