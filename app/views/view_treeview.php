@@ -84,5 +84,5 @@
 
 <span class="edit-exception-form" style="display: none;">
     <input type="text" />
-    <input type="button" id="submitUpdatedException" class="button" value="Send" title="Send" />
+    <input type="button" id="submitUpdatedException" class="button" value="Edit" title="Edit" />
 </span>

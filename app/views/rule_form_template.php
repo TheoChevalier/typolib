@@ -13,6 +13,7 @@
         <?php if ($edit) : ?>
             <input type="submit" class="button" value="Edit" />
             <input type="hidden" name="id_rule" value="<?=$id_rule?>" />
+            <input type="hidden" name="id_type" value="<?=$id_type?>" />
         <?php else : ?>
             <input type="submit" id="submitRule" class="button" value="Add" />
         <?php endif; ?>

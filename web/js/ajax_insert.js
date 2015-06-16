@@ -24,10 +24,38 @@ function clickHandlers() {
         event.preventDefault();
         var li = $(this).parent();
         var span = li.find('span');
+        var exception = span.html();
+        var id_exception = li.data('id-exception');
 
-        var exception = span.text;
-        li.html($('.edit-exception-form'));
-        li.find("input:text").val(exception);
+        $('#modal .modal-content').html($('.edit-exception-form'));
+        $(".edit-exception-form input[type='text']").val(exception);
+        $('.edit-exception-form').show();
+        $("#modal").show();
+        $("#submitUpdatedException").unbind('click');
+        $("#submitUpdatedException").click(function(event) {
+            event.preventDefault();
+            var code = $('#code_selector').val();
+            var locale = $('#locale_selector').val();
+            var exception = $("#modal input[type='text']").val();
+
+            $.ajax({
+                url: "/api/",
+                type: "GET",
+                data: "action=send_edit_exception&locale=" + locale + "&code=" + code + "&id_exception=" + id_exception + "&exception=" + exception,
+                dataType: "html",
+                success: function(response) {
+                    if (response != "0") {
+                        $('#modal').hide();
+                        span.html($(".edit-exception-form input[type='text']").val());
+                    } else {
+                        alert("The exception form can’t be empty.");
+                    }
+                },
+                error: function() {
+                    console.error("AJAX failure - send edit exception");
+                }
+            });
+        });
     });
 
     $(".edit-rule").unbind('click');
@@ -36,7 +64,8 @@ function clickHandlers() {
         var code = $('#code_selector').val();
         var locale = $('#locale_selector').val();
         var li = $(this).parent();
-        var id_rule = li.find('.rule').data('id-rule');
+        var rule = li.find('.rule');
+        var id_rule = rule.data('id-rule');
 
         $("#modal").show();
 
@@ -57,6 +86,7 @@ function clickHandlers() {
                         var code = $('#code_selector').val();
                         var locale = $('#locale_selector').val();
                         var id_rule = $('#modal input[name="id_rule"]').val();
+                        var id_type = $('#modal input[name="id_type"]').val()
                         var comment = $('#modal textarea[name="comment"]').val();
                         var inputs = new Array();
                         $('#modal input[type=text]').each(function(){
@@ -65,16 +95,16 @@ function clickHandlers() {
                                 inputs.push(input.val());
                             }
                         });
+
                         $.ajax({
                             url: "/api/",
                             type: "GET",
-                            data: "action=send_edit_rule&locale=" + locale + "&code=" + code + "&id_rule=" + id_rule + "&comment=" + comment + "&array=" + JSON.stringify(inputs),
+                            data: "action=send_edit_rule&locale=" + locale + "&code=" + code + "&id_rule=" + id_rule + "&id_type=" + id_type + "&comment=" + comment + "&array=" + JSON.stringify(inputs),
                             dataType: "html",
                             success: function(response) {
                                 if (response != "0") {
                                     $('#modal').hide();
-                                    $("#results").html(response);
-                                    clickHandlers();
+                                    rule.html(response);
                                 } else {
                                     alert("The rule form can’t be empty.");
                                 }

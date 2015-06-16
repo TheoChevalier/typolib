@@ -36,4 +36,24 @@ class Utils
 
         return false;
     }
+
+    /**
+     * Closes the connection with the browser so that we can do things in the
+     * background
+     *
+     * @param String $value What we want to return to the browser before we
+     *                      close the connection
+     */
+    public static function closeConnection($value = '')
+    {
+        ob_end_clean();
+        header("Connection: close");
+        ignore_user_abort(true);
+        ob_start();
+        echo $value;
+        $size = ob_get_length();
+        header("Content-Length: $size");
+        ob_end_flush();
+        flush();
+    }
 }

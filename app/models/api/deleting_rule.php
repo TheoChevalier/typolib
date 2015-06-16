@@ -3,6 +3,6 @@ namespace Typolib;
 
 $id_rule = $_GET['id_rule'];
 
-if (Rule::manageRule($code, $locale, $id_rule, 'delete')) {
-    echo '1';
-}
+Utils::closeConnection('1');
+
+Rule::manageRule($code, $locale, $id_rule, 'delete');
