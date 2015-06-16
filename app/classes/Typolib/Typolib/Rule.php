@@ -501,41 +501,44 @@ class Rule
                                                 );
 
             foreach ($searched_characters_positions as $key => $position) {
-                if (! self::ignoreCharacter($position, $variable_to_ignore)) {
-                    if (! self::ignoreCharacter($position, $exception_positions)) {
-                        $found = false;
-                        $i = $mode == 'check_after'
-                                                ? $position + 1
-                                                : $position - sizeof($check_array);
-                        if ($check != '∅') {
-                            foreach ($check_array as $key => $char) {
-                                if (! isset($characters[$i]) || $char != $characters[$i]) {
-                                    if ($mode == 'check_before') {
-                                        if ($characters[$i] == NBSP || $characters[$i] == WHITE_SP || $characters[$i] == NARROW_NBSP) {
-                                            $replacements[] = [$i, $char, 1];
-                                        } else {
-                                            $replacements[] = [$position, $char, 0];
+                //Don't check if it's the beginning or the end of the string
+                if (($position != 0 || $mode != 'check_before') && ($position != sizeof($characters) - 1 || $mode != 'check_after')) {
+                    if (! self::ignoreCharacter($position, $variable_to_ignore)) {
+                        if (! self::ignoreCharacter($position, $exception_positions)) {
+                            $found = false;
+                            $i = $mode == 'check_after'
+                                                    ? $position + 1
+                                                    : $position - sizeof($check_array);
+                            if ($check != '∅') {
+                                foreach ($check_array as $key => $char) {
+                                    if (! isset($characters[$i]) || $char != $characters[$i]) {
+                                        if ($mode == 'check_before') {
+                                            if ($characters[$i] == NBSP || $characters[$i] == WHITE_SP || $characters[$i] == NARROW_NBSP) {
+                                                $replacements[] = [$i, $char, 1];
+                                            } else {
+                                                $replacements[] = [$position, $char, 0];
+                                            }
+                                        } elseif (! $found) {
+                                            $slice = implode(array_slice($check_array, $key));
+                                            $replacements[] = [$i, $slice, 0];
                                         }
-                                    } elseif (! $found) {
-                                        $slice = implode(array_slice($check_array, $key));
-                                        $replacements[] = [$i, $slice, 0];
+                                        $found = true;
                                     }
+                                    $i++;
+                                }
+                            } else {
+                                if ($mode == 'check_before') {
+                                    $i = $i + sizeof($check_array);
+                                }
+                                if ($characters[$i] == NBSP || $characters[$i] == WHITE_SP || $characters[$i] == NARROW_NBSP) {
+                                    $replacements[] = [$i, '', 1];
                                     $found = true;
                                 }
-                                $i++;
                             }
-                        } else {
-                            if ($mode == 'check_before') {
-                                $i = $i + strlen($check) - 1;
-                            }
-                            if ($characters[$i] == NBSP || $characters[$i] == WHITE_SP || $characters[$i] == NARROW_NBSP) {
-                                $replacements[] = [$i, '', 1];
-                                $found = true;
-                            }
-                        }
 
-                        if ($found) {
-                            $positions[] = $position;
+                            if ($found) {
+                                $positions[] = $position;
+                            }
                         }
                     }
                 }
@@ -902,7 +905,10 @@ class Rule
     {
         $processed_array = [];
         foreach ($array as $key => $string) {
-            $processed_array[$string] = self::process($string, $rules, $exceptions, $locale);
+            $res = self::process($string, $rules, $exceptions, $locale);
+            if (! empty($res[1])) {
+                $processed_array[$string] = $res;
+            }
         }
 
         return $processed_array;
