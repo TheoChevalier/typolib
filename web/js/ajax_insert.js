@@ -236,6 +236,47 @@ function clickHandlers() {
     $(".rule").click(function() {
         closeRules($(this), '.rule');
     });
+
+    $(".draggable").unbind('draggable');
+    $(".draggable").draggable({
+        appendTo: "body",
+        helper: "clone",
+        cursor: "pointer",
+        revert: "invalid"
+    });
+
+    $(".droppable").unbind('droppable');
+    $(".droppable").droppable({
+        hoverClass: 'active',
+        tolerance: 'pointer',
+        drop: function(event, ui) {
+            var $this = $(this);
+            var tempid;
+            switch ($(ui.draggable).text()) {
+                case 'non-breaking space':
+                    tempid = ' ';
+                    break;
+                case 'white-space':
+                    tempid = ' ';
+                    break;
+                case 'narrow no-break space':
+                    tempid = ' ';
+                    break;
+                default:
+                    tempid = $(ui.draggable).text();
+                    break;
+            }
+            var dropText;
+            dropText = tempid;
+            var droparea = document.getElementById(event.target.id);
+            var range1 = droparea.selectionStart;
+            var range2 = droparea.selectionEnd;
+            var val = droparea.value;
+            var str1 = val.substring(0, range1);
+            var str3 = val.substring(range1, val.length);
+            droparea.value = str1 + dropText + str3;
+        }
+    });
 };
 
 function updateRuleTemplate() {
@@ -304,4 +345,3 @@ $('#code_selector').on('change', function() {
 $('#addrule_type').on('change', function() {
     updateRuleTemplate();
 });
-

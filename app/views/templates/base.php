@@ -109,6 +109,7 @@ if (strpos(VERSION, 'dev') !== false) {
   </footer>
 
   <script src="/assets/jquery/jquery.min.js"></script>
+  <script src="/assets/jquery-ui/jquery-ui.min.js"></script>
   <script src="/js/base.js"></script>
   <?php
     foreach ($javascript_include as $js_file) {

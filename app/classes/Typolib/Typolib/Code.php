@@ -44,6 +44,7 @@ class Code
                 if ($this->createCode()) {
                     $this->name = 'common';
                     if (! is_dir(DATA_ROOT . RULES_STAGING . "/$this->locale/$this->name")) {
+                        $this->path = DATA_ROOT . RULES_STAGING . "/$this->locale/$this->name";
                         $this->createCode();
                     }
                     $success = true;
@@ -68,10 +69,8 @@ class Code
 
             if ($this->name != 'common') {
                 $code['common'] = $this->use_common_code;
-                $path = $this->path;
-            } else {
-                $path = DATA_ROOT . RULES_STAGING . "/$this->locale/common";
             }
+            $path = $this->path;
 
             $repo_mgr = new RepoManager();
 
@@ -197,5 +196,93 @@ class Code
         }
 
         return self::$code_list;
+    }
+
+    /**
+     * Import a code.
+     *
+     * @param String $code_name        The name of the code where we want to
+     *                                 import.
+     * @param String $locale_code      The locale of the code where we want to
+     *                                 import.
+     * @param String $code_name_import The name of the imported code.
+     * @param array  $selected_rules   All the ids of the rules we want to export,
+     *                                 if empty we import all the rules.
+     * @param String $repo             Repository of the code we want import
+     *                                 (staging or production)
+     */
+    public static function importCode($code_name, $locale_code, $code_name_import, $selected_rules = '', $repo)
+    {
+        $repo_mgr = new RepoManager();
+
+        $new_rule_exceptions = [];
+
+        $rule_file = DATA_ROOT . RULES_STAGING . "/$locale_code/$code_name/rules.php";
+        $exception_file = DATA_ROOT . RULES_STAGING . "/$locale_code/$code_name/exceptions.php";
+
+        $rules = Rule::getArrayRules($code_name, $locale_code, $repo);
+        $exceptions = RuleException::getArrayExceptions($code_name, $locale_code, $repo);
+        $rules_to_import = Rule::getArrayRules($code_name_import, $locale_code, $repo);
+        $exceptions_to_import = RuleException::getArrayExceptions($code_name_import, $locale_code, $repo);
+
+        $has_exceptions = false;
+
+        if ($exceptions_to_import != false && array_key_exists('exceptions', $exceptions_to_import)) {
+            $has_exceptions = true;
+        }
+
+        if ($rules_to_import != false && array_key_exists('rules', $rules_to_import)) {
+            if ($rules != false) {
+                $selected_rules = empty($selected_rules)
+                                    ? array_keys($rules_to_import['rules'])
+                                    : $selected_rules;
+
+                foreach ($rules_to_import['rules'] as $id => $rule) {
+                    if (in_array($id, $selected_rules)) {
+                        $comment = array_key_exists('comment', $rule) ? $rule['comment'] : '';
+                        $rules['rules'][] = [
+                                                'content' => $rule['content'],
+                                                'type'    => $rule['type'],
+                                            ];
+
+                        //Get the last inserted id
+                        end($rules['rules']);
+                        $rule_id = key($rules['rules']);
+
+                        if ($comment != '') {
+                            $rules['rules'][$rule_id]['comment'] = $comment;
+                        }
+
+                        if ($has_exceptions) {
+                            $new_rule_exceptions[$rule_id] = Rule::getRuleExceptions($exceptions_to_import, $id);
+                        }
+                    }
+                }
+            }
+            if ($rules != Rule::getArrayRules($code_name, $locale_code, $repo)) {
+                $repo_mgr = new RepoManager();
+
+                file_put_contents($rule_file, serialize($rules));
+
+                $repo_mgr->commitAndPush("Importing rules in /$locale_code/$code_name");
+            }
+        }
+
+        if (! empty($new_rule_exceptions)) {
+            foreach ($new_rule_exceptions as $id_rule => $exception) {
+                foreach ($exception as $id_exception => $content) {
+                    $exceptions['exceptions'][] = ['rule_id' => $id_rule,
+                                                   'content' => $content, ];
+                }
+            }
+
+            if ($exceptions != RuleException::getArrayExceptions($code_name, $locale_code, $repo)) {
+                $repo_mgr = new RepoManager();
+
+                file_put_contents($exception_file, serialize($exceptions));
+
+                $repo_mgr->commitAndPush("Importing exceptions in /$locale_code/$code_name");
+            }
+        }
     }
 }

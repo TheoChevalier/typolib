@@ -17,6 +17,22 @@
         <input type="hidden" name="locale" value="<?=isset($locale) ? $locale : '' ?>" />
         <input type="submit" class="button" name="edit_code_sent" value="Edit" alt="Edit" />
     </fieldset>
+    <br/>
+    <?php if (isset($code_selector)) : ?>
+        <h2>Import an existing code</h2>
+        <fieldset>
+            <label>Code</label>
+            <div class="select-style">
+                <select name="code" title="Code" id="code_selector">
+                <?=$code_selector?>
+                </select>
+            </div>
+        </fieldset>
+        <br/>
+        <br/>
+        <input type="submit" class="button" name="import_code" value="Import" alt="Import" />
+    <?php endif; ?>
+    <br/>
     <h2>Advanced options</h2>
     <p>
         If this set of rules is now useless (e.g. because it has been created by mistake or is a duplicate of another one), you can delete it below.

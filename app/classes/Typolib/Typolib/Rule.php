@@ -31,13 +31,14 @@ class Rule
     private static $variable_to_ignore_array = [];
     private static $start_variable_tag = '😺';
     private static $end_variable_tag = '💩';
+    private static $start_exception_tag = '⚆';
+    private static $end_exception_tag = '⚇';
     private static $plural_separator_array = [];
     private static $all_ids = [];
     private static $quotation_marks = [
                                             ['«','»'],
                                             ['“','”'],
                                             ['"','"'],
-                                            ['‘','’'],
                                             ['»','«'],
                                             ['„','“'],
                                             ['„','”'],
@@ -211,6 +212,7 @@ class Rule
     public static function getArrayRuleExceptions($name_code, $locale_code, $id, $repo)
     {
         $code = Rule::getArrayRules($name_code, $locale_code, $repo);
+        $array = [];
         if ($code != null && Rule::existRule($code, $id)) {
             $rule_exceptions = RuleException::getArrayExceptions(
                                                                 $name_code,
@@ -225,11 +227,34 @@ class Rule
                     }
                 }
 
-                return $array;
+                return ! empty($array) ? $array : false;
             }
         }
 
         return false;
+    }
+
+    /**
+     * Get an array of all the exceptions for a specific rule.
+     *
+     * @param  String $exceptions The array which contains all the exceptions.
+     * @param  String $id         The rule id from which the exceptions depend.
+     * @return array  $array The exceptions of the rule.
+     */
+    public static function getRuleExceptions($exceptions, $id)
+    {
+        $array = [];
+        if ($exceptions != false && array_key_exists('exceptions', $exceptions)) {
+            foreach ($exceptions['exceptions'] as $id_exception => $exception) {
+                if ($exception['rule_id'] == $id) {
+                    $array[$id_exception] = $exception['content'];
+                }
+            }
+
+            return $array;
+        }
+
+        return $array;
     }
 
     /**
@@ -268,8 +293,10 @@ class Rule
      * @return array  $res         The text corrected and the position of the
      *                            quotation .
      */
-    public static function checkQuotationMarkRule($user_string, $rule)
+    public static function checkQuotationMarkRule($user_string, $rule, $rule_exceptions)
     {
+        $user_string = self::setExceptionTags($user_string, $rule_exceptions);
+
         $res = []; // var to be returned
         $array_quotation_marks = self::findQuotationMarks($user_string);
         $before = $rule[0];
@@ -277,33 +304,44 @@ class Rule
 
         $characters = \Typolib\Strings::getArrayFromString($user_string);
 
-        $variable_to_ignore = self::getTagsPosition($characters);
+        $variable_to_ignore = self::getTagsPosition($characters,
+                                                    self::$start_variable_tag,
+                                                    self::$end_variable_tag);
+        $exception_positions = self::getTagsPosition($characters,
+                                                     self::$start_exception_tag,
+                                                     self::$end_exception_tag);
 
         $positions = [];
         if ($array_quotation_marks != false) {
             $count = 0;
             foreach ($array_quotation_marks as $position => $quote) {
                 if (! self::ignoreCharacter($position, $variable_to_ignore)) {
-                    if ($count % 2 == 0 && $quote != $before) {
-                        $user_string = \Typolib\Strings::replaceString(
-                                                                $user_string,
-                                                                $before,
-                                                                $position
-                                                            );
-                        $positions[] = $position;
+                    if (! self::ignoreCharacter($position, $exception_positions)) {
+                        if ($count % 2 == 0 && $quote != $before) {
+                            $user_string = \Typolib\Strings::replaceString(
+                                                                    $user_string,
+                                                                    $before,
+                                                                    $position
+                                                                );
+                            $positions[] = $position;
+                        }
+                        if ($count % 2 == 1 && $quote != $after) {
+                            $user_string = \Typolib\Strings::replaceString(
+                                                                    $user_string,
+                                                                    $after,
+                                                                    $position
+                                                                );
+                            $positions[] = $position;
+                        }
+                        $count++;
                     }
-                    if ($count % 2 == 1 && $quote != $after) {
-                        $user_string = \Typolib\Strings::replaceString(
-                                                                $user_string,
-                                                                $after,
-                                                                $position
-                                                            );
-                        $positions[] = $position;
-                    }
-                    $count++;
                 }
             }
         }
+
+        $user_string = self::removeTagsFromString($user_string,
+                                                  self::$start_exception_tag,
+                                                  self::$end_exception_tag);
 
         array_push($res, $user_string);
         array_push($res, $positions);
@@ -317,8 +355,10 @@ class Rule
      *
      * @param string $user_string the string entered by the user
      */
-    public static function checkIfThenRule($user_string, $rule)
+    public static function checkIfThenRule($user_string, $rule, $rule_exceptions)
     {
+        $user_string = self::setExceptionTags($user_string, $rule_exceptions);
+
         $res = []; // var to be returned
         $search = $rule[0];
         $replace = $rule[1];
@@ -327,7 +367,12 @@ class Rule
 
         $characters = \Typolib\Strings::getArrayFromString($user_string);
 
-        $variable_to_ignore = self::getTagsPosition($characters);
+        $variable_to_ignore = self::getTagsPosition($characters,
+                                                    self::$start_variable_tag,
+                                                    self::$end_variable_tag);
+        $exception_positions = self::getTagsPosition($characters,
+                                                     self::$start_exception_tag,
+                                                     self::$end_exception_tag);
 
         $positions = []; // array containing the positions of the errors detected in the source string
 
@@ -337,8 +382,10 @@ class Rule
         while (($last_position = strpos($user_string, $search, $last_position)) !== false) {
             $next_position = $last_position + strlen($search);
             if (! self::ignoreCharacter($last_position, $variable_to_ignore)) {
-                $positions[] = [$last_position, $next_position];
-                $replacements[] = $last_position;
+                if (! self::ignoreCharacter($last_position, $exception_positions)) {
+                    $positions[] = [$last_position, $next_position];
+                    $replacements[] = $last_position;
+                }
             }
             $last_position = $next_position;
         }
@@ -354,6 +401,10 @@ class Rule
                                                             );
             }
         }
+
+        $user_string = self::removeTagsFromString($user_string,
+                                                  self::$start_exception_tag,
+                                                  self::$end_exception_tag);
 
         array_push($res, $user_string);
         array_push($res, $positions);
@@ -420,19 +471,25 @@ class Rule
      * @return array  $res         The text corrected and the position of the
      *                            mistakes.
      */
-    private static function checkBeforeAfter($user_string, $rule, $mode)
+    private static function checkBeforeAfter($user_string, $rule, $rule_exceptions, $mode)
     {
+        $user_string = self::setExceptionTags($user_string, $rule_exceptions);
+
         $res = [];
         $replacements = [];
         $searched_character = $rule[1];
         $check = $rule[0];
         $positions = [];
-        $ignore = false;
 
         $characters = \Typolib\Strings::getArrayFromString($user_string);
         $check_array = \Typolib\Strings::getArrayFromString($check);
 
-        $variable_to_ignore = self::getTagsPosition($characters);
+        $variable_to_ignore = self::getTagsPosition($characters,
+                                                    self::$start_variable_tag,
+                                                    self::$end_variable_tag);
+        $exception_positions = self::getTagsPosition($characters,
+                                                     self::$start_exception_tag,
+                                                     self::$end_exception_tag);
 
         $searched_characters_positions = [];
         if (in_array($searched_character, $characters)) {
@@ -443,36 +500,41 @@ class Rule
 
             foreach ($searched_characters_positions as $key => $position) {
                 if (! self::ignoreCharacter($position, $variable_to_ignore)) {
-                    $found = false;
-                    $i = $mode == 'check_after'
-                                            ? $position + 1
-                                            : $position - strlen($check);
-
-                    if (! empty($check_array)) {
-                        foreach ($check_array as $key => $char) {
-                            if (! isset($characters[$i]) || $char != $characters[$i]) {
-                                if ($mode == 'check_before') {
-                                    $replacements[] = [$position, $char, 0];
-                                } elseif (! $found) {
-                                    $slice = implode(array_slice($check_array, $key));
-                                    $replacements[] = [$i, $slice, 0];
+                    if (! self::ignoreCharacter($position, $exception_positions)) {
+                        $found = false;
+                        $i = $mode == 'check_after'
+                                                ? $position + 1
+                                                : $position - sizeof($check_array);
+                        if ($check != '∅') {
+                            foreach ($check_array as $key => $char) {
+                                if (! isset($characters[$i]) || $char != $characters[$i]) {
+                                    if ($mode == 'check_before') {
+                                        if ($characters[$i] == NBSP || $characters[$i] == WHITE_SP || $characters[$i] == NARROW_NBSP) {
+                                            $replacements[] = [$i, $char, 1];
+                                        } else {
+                                            $replacements[] = [$position, $char, 0];
+                                        }
+                                    } elseif (! $found) {
+                                        $slice = implode(array_slice($check_array, $key));
+                                        $replacements[] = [$i, $slice, 0];
+                                    }
+                                    $found = true;
                                 }
+                                $i++;
+                            }
+                        } else {
+                            if ($mode == 'check_before') {
+                                $i = $i + strlen($check) - 1;
+                            }
+                            if ($characters[$i] == NBSP || $characters[$i] == WHITE_SP || $characters[$i] == NARROW_NBSP) {
+                                $replacements[] = [$i, '', 1];
                                 $found = true;
                             }
-                            $i++;
                         }
-                    } else {
-                        if ($mode == 'check_before') {
-                            $i--;
-                        }
-                        if ($characters[$i] == NBSP || $characters[$i] == WHITE_SP || $characters[$i] == NARROW_NBSP) {
-                            $replacements[] = [$i, '', 1];
-                            $found = true;
-                        }
-                    }
 
-                    if ($found) {
-                        $positions[] = $position;
+                        if ($found) {
+                            $positions[] = $position;
+                        }
                     }
                 }
             }
@@ -488,6 +550,10 @@ class Rule
                                                         );
         }
 
+        $user_string = self::removeTagsFromString($user_string,
+                                                  self::$start_exception_tag,
+                                                  self::$end_exception_tag);
+
         array_push($res, $user_string);
         array_push($res, $positions);
 
@@ -502,22 +568,37 @@ class Rule
      * @return array  $string_with_tag The text corrected and the position of the
      *                            mistakes.
      */
-    private static function checkIgnoreVariables($user_string, $rule)
+    private static function checkIgnoreVariables($user_string, $rule, $rule_exceptions)
     {
+        $user_string = self::setExceptionTags($user_string, $rule_exceptions);
+
         $res = [];
         $positions = [];
         $variable_to_ignore = $rule[0];
+
+        $characters = \Typolib\Strings::getArrayFromString($user_string);
+
+        $exception_positions = self::getTagsPosition($characters,
+                                                     self::$start_exception_tag,
+                                                     self::$end_exception_tag);
         $offset = 0;
-        $found = true;
         $string_with_tag = $user_string;
 
-        if (strpos($user_string, $variable_to_ignore, $offset) !== false) {
-            $string_with_tag = str_replace(
-                            $variable_to_ignore,
-                            self::$start_variable_tag . $variable_to_ignore . self::$end_variable_tag,
-                            $user_string
-                        );
+        while (strpos($user_string, $variable_to_ignore, $offset) !== false) {
+            $position = strpos($user_string, $variable_to_ignore, $offset);
+            $offset = $position + strlen($variable_to_ignore);
+            if (! self::ignoreCharacter($position, $exception_positions)) {
+                $string_with_tag = \Typolib\Strings::replaceString($user_string,
+                    self::$start_variable_tag . $variable_to_ignore . self::$end_variable_tag,
+                    $position,
+                    strlen($variable_to_ignore));
+            }
         }
+
+        //remove the exception tags
+        $string_with_tag = self::removeTagsFromString($string_with_tag,
+                                                  self::$start_exception_tag,
+                                                  self::$end_exception_tag);
 
         return $string_with_tag;
     }
@@ -623,27 +704,47 @@ class Rule
 
     public static function buildRuleString($type, $rule)
     {
+        $new_rule = [];
         if (self::isSupportedType($type)) {
-            return vsprintf(self::$rules_type[$type], $rule);
+            foreach ($rule as $key => $value) {
+                switch ($value) {
+                    case NBSP:
+                        $value = '<span>non-breaking space</span>';
+                        break;
+
+                    case WHITE_SP:
+                        $value = '<span>white-space</span>';
+                        break;
+
+                    case NARROW_NBSP:
+                        $value = '<span>narrow no-break space</span>';
+                        break;
+                }
+                $new_rule[$key] = $value;
+            }
+
+            return vsprintf(self::$rules_type[$type], $new_rule);
         }
     }
 
     /**
      * Return the positions of characters between the tags in a string.
      *
-     * @param  array $characters The string we want to get the variable to ignore.
-     * @return array $variable_to_ignore The positions of all the tags.
+     * @param  array  $characters The string we want to get the variable to ignore.
+     * @param  string $start      The starting tag
+     * @param  string $end        The ending tag
+     * @return array  $variable_to_ignore The positions of all the tags.
      */
-    private static function getTagsPosition($characters)
+    private static function getTagsPosition($characters, $start, $end)
     {
         $variable_to_ignore = [];
 
-        if (in_array(self::$start_variable_tag, $characters)) {
-            $start_tags = array_keys($characters, self::$start_variable_tag);
+        if (in_array($start, $characters)) {
+            $start_tags = array_keys($characters, $start);
         }
 
-        if (in_array(self::$end_variable_tag, $characters)) {
-            $end_tags = array_keys($characters, self::$end_variable_tag);
+        if (in_array($end, $characters)) {
+            $end_tags = array_keys($characters, $end);
         }
 
         if (! empty($start_tags)) {
@@ -661,62 +762,147 @@ class Rule
      * Remove all the tags from a string.
      *
      * @param  string $string The string we want to remove tags.
+     * @param  string $start  The starting tag.
+     * @param  string $end    The ending tag.
      * @return string $string The string without the tags.
      */
-    private static function removeTagsFromString($string)
+    private static function removeTagsFromString($string, $start, $end)
     {
-        $string = str_replace(self::$start_variable_tag, '', $string);
-        $string = str_replace(self::$end_variable_tag, '', $string);
+        $string = str_replace($start, '', $string);
+        $string = str_replace($end, '', $string);
 
         return $string;
     }
 
-    public static function process($string, $rules)
+    public static function setExceptionTags($user_string, $rule_exceptions)
     {
-        $processed_string = [];
-        $positions = [];
-        $result = [];
-        $rule_comment;
-        foreach ($rules['rules'] as $id => $rule) {
-            if ($rule['type'] == 'plural_separator') {
-                $string = self::checkSeparatorRule($string, $rule['content']);
-            }
-        }
-        foreach ($rules['rules'] as $id => $rule) {
-            if ($rule['type'] == 'ignore_variable') {
-                $string = self::checkIgnoreVariables($string, $rule['content']);
-            }
-        }
-        foreach ($rules['rules'] as $id => $rule) {
-            if ($rule['type'] == 'replace_with') {
-                $result = self::checkIfThenRule($string, $rule['content']);
-                $comment = ! empty($rule['comment']) ? $rule['comment'] : '';
-                $positions[] = [$result[1], $comment];
-                $string = $result[0];
-            }
-        }
-        foreach ($rules['rules'] as $id => $rule) {
-            if ($rule['type'] == 'quotation_mark') {
-                $result = self::checkQuotationMarkRule($string, $rule['content']);
-                $comment = ! empty($rule['comment']) ? $rule['comment'] : '';
-                $positions[] = [$result[1], $comment];
-                $string = $result[0];
-            }
-        }
-        foreach ($rules['rules'] as $id => $rule) {
-            if (($rule['type'] == 'check_before') || ($rule['type'] == 'check_after')) {
-                $result = self::checkBeforeAfter($string, $rule['content'], $rule['type']);
-                $comment = ! empty($rule['comment']) ? $rule['comment'] : '';
-                $positions[] = [$result[1], $comment];
-                $string = $result[0];
+        $string_with_tag = $user_string;
+        $offset = 0;
+        if (! empty($rule_exceptions)) {
+            foreach ($rule_exceptions as $id => $exception) {
+                if (strpos($user_string, $exception, $offset) !== false) {
+                    $string_with_tag = str_replace(
+                                    $exception,
+                                    self::$start_exception_tag . $exception . self::$end_exception_tag,
+                                    $user_string
+                                );
+                }
             }
         }
 
-        $string = self::removeTagsFromString($string);
+        return $string_with_tag;
+    }
+
+    public static function process($string, $rules, $exceptions, $locale)
+    {
+        $processed_string = [];
+        $processed_common = [];
+        $positions = [];
+
+        if ($rules['common']) {
+            $common_rules = Rule::getArrayRules('common', $locale, RULES_STAGING);
+            $common_exceptions = RuleException::getArrayExceptions('common', $locale, RULES_STAGING);
+
+            if ($common_rules != false) {
+                $processed_common = self::checkAllRules($string, $common_rules, $common_exceptions);
+            }
+        }
+
+        $string = ! empty($processed_common[0]) ? $processed_common[0] : $string;
+
+        $processed_code = self::checkAllRules($string, $rules, $exceptions);
+
+        if (! empty($processed_common[1]) && ! empty($processed_code[1])) {
+            $positions = array_merge($processed_common[1], $processed_code[1]);
+        } elseif (! empty($processed_common[1])) {
+            $positions = $processed_common[1];
+        } else {
+            $positions = $processed_code[1];
+        }
+
+        $string = self::removeTagsFromString($processed_code[0],
+                                            self::$start_variable_tag,
+                                            self::$end_variable_tag);
 
         array_push($processed_string, $string);
         array_push($processed_string, $positions);
 
         return $processed_string;
+    }
+
+    private static function checkAllRules($string, $rules, $exceptions)
+    {
+        $processed_string = [];
+        $positions = [];
+        $result = [];
+        $exceptions_rule = [];
+        $rule_comment;
+
+        if (array_key_exists('rules', $rules)) {
+            foreach ($rules['rules'] as $id => $rule) {
+                if ($rule['type'] == 'plural_separator') {
+                    $string = self::checkSeparatorRule($string, $rule['content']);
+                }
+            }
+            foreach ($rules['rules'] as $id => $rule) {
+                if ($rule['type'] == 'ignore_variable') {
+                    $exceptions_rule = self::getRuleExceptions($exceptions, $id);
+                    $string = self::checkIgnoreVariables($string, $rule['content'], $exceptions_rule);
+                }
+            }
+            foreach ($rules['rules'] as $id => $rule) {
+                if ($rule['type'] == 'replace_with') {
+                    $exceptions_rule = self::getRuleExceptions($exceptions, $id);
+                    $result = self::checkIfThenRule($string, $rule['content'], $exceptions_rule);
+                    if (! empty($result[1])) {
+                        $comment = ! empty($rule['comment']) ? $rule['comment'] : '';
+                        $positions[] = [$result[1], $comment];
+                    }
+                    $string = $result[0];
+                }
+            }
+            foreach ($rules['rules'] as $id => $rule) {
+                if ($rule['type'] == 'quotation_mark') {
+                    $exceptions_rule = self::getRuleExceptions($exceptions, $id);
+                    $result = self::checkQuotationMarkRule($string, $rule['content'], $exceptions_rule);
+                    if (! empty($result[1])) {
+                        $comment = ! empty($rule['comment']) ? $rule['comment'] : '';
+                        $positions[] = [$result[1], $comment];
+                    }
+                    $string = $result[0];
+                }
+            }
+            foreach ($rules['rules'] as $id => $rule) {
+                if (($rule['type'] == 'check_before') || ($rule['type'] == 'check_after')) {
+                    $exceptions_rule = self::getRuleExceptions($exceptions, $id);
+                    $result = self::checkBeforeAfter($string, $rule['content'], $exceptions_rule, $rule['type']);
+                    if (! empty($result[1])) {
+                        $comment = ! empty($rule['comment']) ? $rule['comment'] : '';
+                        $positions[] = [$result[1], $comment];
+                    }
+                    $string = $result[0];
+                }
+            }
+        }
+
+        array_push($processed_string, $string);
+        array_push($processed_string, $positions);
+
+        return $processed_string;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public static function processArray($array, $rules, $exceptions, $locale)
+    {
+        $processed_array = [];
+        foreach ($array as $key => $string) {
+            $processed_array[$string] = self::process($string, $rules, $exceptions, $locale);
+        }
+
+        return $processed_array;
     }
 }

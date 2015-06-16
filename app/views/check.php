@@ -27,7 +27,7 @@
             <br/>
             <textarea id="enterText" name="enterText" rows="3" cols="15"></textarea>
         </fieldset>
-        <fieldset disabled>
+        <fieldset>
             <label for="checkResponse">Corrected text</label>
             <br/>
             <textarea id="checkResponse"></textarea>

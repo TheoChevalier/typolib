@@ -41,7 +41,7 @@ if (isset($_SERVER[$header])) {
 
     if ($validation == explode('=', $_SERVER[$header])[1]) {
         // Pull latest changes
-        exec("git-typolib checkout $branch ; git-typolib pull origin $branch");
+        echo exec("git checkout $branch ; git pull origin $branch");
 
         // Install or update dependencies
         if (file_exists($composer)) {
