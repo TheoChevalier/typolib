@@ -51,8 +51,8 @@ function clickHandlers() {
                     $('#modal .modal-content').html(response);
                     autoResizeTextarea($('#comment-edit'));
 
-                    $("#modal input[type='submit'").unbind('click');
-                    $("#modal input[type='submit'").click(function(event) {
+                    $("#modal input[type='submit']").unbind('click');
+                    $("#modal input[type='submit']").click(function(event) {
                         event.preventDefault();
                         var code = $('#code_selector').val();
                         var locale = $('#locale_selector').val();
