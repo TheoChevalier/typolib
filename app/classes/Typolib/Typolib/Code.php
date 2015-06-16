@@ -217,6 +217,7 @@ class Code
     public static function importCode($code_name, $locale_code, $code_name_import, $selected_rules = '', $repo)
     {
         $repo_mgr = new RepoManager();
+        $repo_mgr->checkForUpdates();
 
         $new_rule_exceptions = [];
 
@@ -263,8 +264,6 @@ class Code
                 }
             }
             if ($rules != Rule::getArrayRules($code_name, $locale_code, $repo)) {
-                $repo_mgr = new RepoManager();
-
                 file_put_contents($rule_file, serialize($rules));
 
                 $repo_mgr->commitAndPush("Importing rules in /$locale_code/$code_name");
@@ -280,8 +279,6 @@ class Code
             }
 
             if ($exceptions != RuleException::getArrayExceptions($code_name, $locale_code, $repo)) {
-                $repo_mgr = new RepoManager();
-
                 file_put_contents($exception_file, serialize($exceptions));
 
                 $repo_mgr->commitAndPush("Importing exceptions in /$locale_code/$code_name");
