@@ -39,7 +39,6 @@ class Rule
                                             ['«','»'],
                                             ['“','”'],
                                             ['"','"'],
-                                            ['‘','’'],
                                             ['»','«'],
                                             ['„','“'],
                                             ['„','”'],
@@ -213,6 +212,7 @@ class Rule
     public static function getArrayRuleExceptions($name_code, $locale_code, $id, $repo)
     {
         $code = Rule::getArrayRules($name_code, $locale_code, $repo);
+        $array = [];
         if ($code != null && Rule::existRule($code, $id)) {
             $rule_exceptions = RuleException::getArrayExceptions(
                                                                 $name_code,
@@ -227,7 +227,7 @@ class Rule
                     }
                 }
 
-                return $array;
+                return ! empty($array) ? $array : false;
             }
         }
 
@@ -504,12 +504,16 @@ class Rule
                         $found = false;
                         $i = $mode == 'check_after'
                                                 ? $position + 1
-                                                : $position - strlen($check);
+                                                : $position - sizeof($check_array);
                         if ($check != '∅') {
                             foreach ($check_array as $key => $char) {
                                 if (! isset($characters[$i]) || $char != $characters[$i]) {
                                     if ($mode == 'check_before') {
-                                        $replacements[] = [$position, $char, 0];
+                                        if ($characters[$i] == NBSP || $characters[$i] == WHITE_SP || $characters[$i] == NARROW_NBSP) {
+                                            $replacements[] = [$i, $char, 1];
+                                        } else {
+                                            $replacements[] = [$position, $char, 0];
+                                        }
                                     } elseif (! $found) {
                                         $slice = implode(array_slice($check_array, $key));
                                         $replacements[] = [$i, $slice, 0];
@@ -890,5 +894,15 @@ class Rule
     public function getId()
     {
         return $this->id;
+    }
+
+    public static function processArray($array, $rules, $exceptions, $locale)
+    {
+        $processed_array = [];
+        foreach ($array as $key => $string) {
+            $processed_array[$string] = self::process($string, $rules, $exceptions, $locale);
+        }
+
+        return $processed_array;
     }
 }
