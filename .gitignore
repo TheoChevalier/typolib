@@ -1,7 +1,7 @@
 app/config/config.ini
 cache/*.cache
 cache/lastupdate.txt
-data
+data/
 composer.lock
 composer.phar
 logs/*.log
@@ -9,3 +9,4 @@ vendor
 web/assets/jquery/
 web/assets/jquery-ui/
 components/
+web/github_log.txt

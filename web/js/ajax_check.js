@@ -55,3 +55,7 @@ $('#locale_selector').on('change', function() {
         }
     });
 });
+
+$('#code_selector').on('change', function() {
+    check();
+})

@@ -7,6 +7,12 @@ use Transvision\Utils;
 $l10n = new \tinyl10n\ChooseLocale(Locale::getLocaleList());
 $locale = $l10n->getCompatibleLocale();
 
+$repo_mgr = new RepoManager();
+$repo_mgr->cloneAndConfig();
+$repo_args = ['repo' => RULES_PRODUCTION];
+$repo_mgr_prod = new RepoManager($repo_args);
+$repo_mgr_prod->cloneAndConfig();
+
 $template     = true;
 $page         = $urls[$url['path']];
 $extra        = null;
@@ -17,6 +23,11 @@ switch ($url['path']) {
         $controller = 'check';
         $page_title = 'Check text';
         $page_descr = 'Enter text, select a set of rules to apply and you’re good to go!';
+        break;
+    case 'about':
+        $view = 'about';
+        $page_title = 'About ' . PRODUCT;
+        $page_descr = '';
         break;
     case 'api':
         $template = false;
