@@ -48,6 +48,7 @@ $('#locale_selector').on('change', function() {
                 $('#enterText').parent().show();
                 $('#checkResponse').parent().show();
                 $('#submitCheck').show();
+                check();
             }
         },
         error: function() {

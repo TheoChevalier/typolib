@@ -51,8 +51,8 @@ function clickHandlers() {
                     $('#modal .modal-content').html(response);
                     autoResizeTextarea($('#comment-edit'));
 
-                    $("#modal input[type='submit'").unbind('click');
-                    $("#modal input[type='submit'").click(function(event) {
+                    $("#modal input[type='submit']").unbind('click');
+                    $("#modal input[type='submit']").click(function(event) {
                         event.preventDefault();
                         var code = $('#code_selector').val();
                         var locale = $('#locale_selector').val();
@@ -277,7 +277,26 @@ function clickHandlers() {
             droparea.value = str1 + dropText + str3;
         }
     });
-};
+}
+
+function getCode() {
+    var locale = $('#locale_selector').val();
+    var code = $('#code_selector').val();
+    $.ajax({
+        url: "/api/",
+        type: "GET",
+        data: "action=get_rules&locale=" + locale + "&code=" + code + "&mode=1" ,
+        dataType: "html",
+        success: function(response) {
+            $("#results").html(response);
+            clickHandlers();
+            $('#exceptionview').hide();
+        },
+        error: function() {
+            console.error("AJAX failure - get rules");
+        }
+    });
+}
 
 function updateRuleTemplate() {
     var rule_type = $('#addrule_type :selected').val();
@@ -285,13 +304,12 @@ function updateRuleTemplate() {
     res.show();
     $('#template').html(res);
     clickHandlers();
-};
+}
 
 $('#exceptionview').hide();
 clickHandlers();
 updateRuleTemplate();
 autoResizeTextarea($('#comment'));
-
 
 
 $('#locale_selector').on('change', function() {
@@ -316,6 +334,7 @@ $('#locale_selector').on('change', function() {
                 $('#delete_code').show();
                 $('#new_rule').show();
                 $('#results').show();
+                getCode();
             }
         },
         error: function() {
@@ -325,23 +344,10 @@ $('#locale_selector').on('change', function() {
 });
 
 $('#code_selector').on('change', function() {
-    locale = $('#locale_selector').val();
-    $.ajax({
-        url: "/api/",
-        type: "GET",
-        data: "action=get_rules&locale=" + locale + "&code=" + this.value + "&mode=1" ,
-        dataType: "html",
-        success: function(response) {
-            $("#results").html(response);
-            clickHandlers();
-            $('#exceptionview').hide();
-        },
-        error: function() {
-            console.error("AJAX failure - get rules");
-        }
-    });
+    getCode();
 });
 
 $('#addrule_type').on('change', function() {
     updateRuleTemplate();
 });
+
