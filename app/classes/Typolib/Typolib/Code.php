@@ -44,6 +44,7 @@ class Code
                 if ($this->createCode()) {
                     $this->name = 'common';
                     if (! is_dir(DATA_ROOT . RULES_STAGING . "/$this->locale/$this->name")) {
+                        $this->path = DATA_ROOT . RULES_STAGING . "/$this->locale/$this->name";
                         $this->createCode();
                     }
                     $success = true;
@@ -68,10 +69,8 @@ class Code
 
             if ($this->name != 'common') {
                 $code['common'] = $this->use_common_code;
-                $path = $this->path;
-            } else {
-                $path = DATA_ROOT . RULES_STAGING . "/$this->locale/common";
             }
+            $path = $this->path;
 
             $repo_mgr = new RepoManager();
 
@@ -254,8 +253,6 @@ class Code
                             $rules['rules'][$rule_id]['comment'] = $comment;
                         }
 
-                        //$new_rule = new Rule($code_name, $locale_code, $rule['content'], $rule['type'], $comment);
-
                         if ($has_exceptions) {
                             $new_rule_exceptions[$rule_id] = Rule::getRuleExceptions($exceptions_to_import, $id);
                         }
@@ -276,7 +273,6 @@ class Code
                 foreach ($exception as $id_exception => $content) {
                     $exceptions['exceptions'][] = ['rule_id' => $id_rule,
                                                    'content' => $content, ];
-                    //$new_exception = new RuleException($code_name, $locale_code, $id_rule, $content);
                 }
             }
 
