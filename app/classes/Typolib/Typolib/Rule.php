@@ -393,7 +393,7 @@ class Rule
         $last_position = 0;
 
         // save all the positions of the errors
-        while (($last_position = strpos($user_string, $search, $last_position)) !== false) {
+        while (($last_position = mb_strpos($user_string, $search, $last_position)) !== false) {
             $next_position = $last_position + strlen($search);
             if (! self::ignoreCharacter($last_position, $variable_to_ignore)) {
                 if (! self::ignoreCharacter($last_position, $exception_positions)) {
@@ -403,7 +403,6 @@ class Rule
             }
             $last_position = $next_position;
         }
-
         if (! empty(($replacements))) {
             $replacements = array_reverse($replacements, true);
             foreach ($replacements as $key => $value) {
@@ -437,7 +436,7 @@ class Rule
     private static function checkSeparatorRule($user_string, $rule)
     {
         $separator = $rule[0];
-        $pos = strpos($user_string, $separator);
+        $pos = mb_strpos($user_string, $separator);
 
         if ($pos !== false) {
             $split_strings = explode($separator, $user_string);
@@ -601,8 +600,8 @@ class Rule
         $offset = 0;
         $string_with_tag = $user_string;
 
-        while (strpos($user_string, $variable_to_ignore, $offset) !== false) {
-            $position = strpos($user_string, $variable_to_ignore, $offset);
+        while (mb_strpos($user_string, $variable_to_ignore, $offset) !== false) {
+            $position = mb_strpos($user_string, $variable_to_ignore, $offset);
             $offset = $position + strlen($variable_to_ignore);
             if (! self::ignoreCharacter($position, $exception_positions)) {
                 $string_with_tag = \Typolib\Strings::replaceString($user_string,
@@ -797,7 +796,7 @@ class Rule
         $offset = 0;
         if (! empty($rule_exceptions)) {
             foreach ($rule_exceptions as $id => $exception) {
-                if (strpos($user_string, $exception, $offset) !== false) {
+                if (mb_strpos($user_string, $exception, $offset) !== false) {
                     $string_with_tag = str_replace(
                                     $exception,
                                     self::$start_exception_tag . $exception . self::$end_exception_tag,
