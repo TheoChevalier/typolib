@@ -39,14 +39,19 @@ switch ($url['path']) {
         $page_title = 'Check text';
         $page_descr = 'Enter text, select a set of rules to apply and you’re good to go!';
         break;
-    case 'display':
+    case 'display-verified':
         $controller = 'display';
-        $page_title = 'Rules viewer';
-        $page_descr = 'Display any rule used by Typolib’ and all its comments and exceptions.';
+        $page_title = 'Verified rules viewer';
+        $page_descr = 'Display any verified rule used by Typolib’ and all its comments and exceptions.';
+        break;
+    case 'display-unverified':
+        $controller = 'display';
+        $page_title = 'Unverified rules viewer';
+        $page_descr = 'Display any unverified rule used by Typolib’ and all its comments and exceptions.';
         break;
     case 'edit':
         $controller = 'view';
-        $page_title = 'Rules editor';
+        $page_title = 'Unverified rules editor';
         $page_descr = '';
         break;
     case 'insert':

@@ -3,6 +3,9 @@ namespace Typolib;
 
 use Transvision\Utils;
 
+$repo_mgr = new RepoManager();
+$repo_mgr->checkForUpdates();
+
 $locale_selector = Utils::getHtmlSelectOptions(
                                 Locale::getLocaleList(),
                                 $locale
@@ -16,8 +19,6 @@ $ruletypes_selector = Utils::getHtmlSelectOptions(
                                 key($rules),
                                 true
                             );
-
-$repo = $page == 'display' ? RULES_PRODUCTION : RULES_STAGING;
 
 $codes = $code_key = Code::getCodeList($locale, $repo);
 reset($code_key);

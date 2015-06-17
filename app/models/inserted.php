@@ -15,7 +15,7 @@ $locale_selector = Utils::getHtmlSelectOptions(
 if ($code_name != '') {
     try {
         $code = new Code($code_name, $locale, $use_common_code);
-        $success_msg[] = 'Code successfully inserted.';
+        $success_msg[] = 'Code successfully inserted. You can check your changes from <a href="/display-unverified">Unverified rules viewer</a>. We will review your changes shortly.';
     } catch (Exception $e) {
         $error_msg[] = $e->getMessage();
     }

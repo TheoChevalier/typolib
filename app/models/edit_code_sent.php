@@ -5,4 +5,4 @@ namespace Typolib;
 
 $common = isset($_GET['common']);
 Code::editCode($_GET['old_code'], $_GET['name'], $_GET['locale'], $common);
-$success_msg[] = 'Code successfully updated.';
+$success_msg[] = 'Code successfully updated. You can check your changes from <a href="/display-unverified">Unverified rules viewer</a>. We will review your changes shortly.';

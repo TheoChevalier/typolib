@@ -56,7 +56,9 @@ function autoResizeTextarea(elm) {
         hiddenDiv.html(content + '<br class="lbr">');
 
         $(this).css('height', hiddenDiv.height());
-
+        if ($(this).attr('id') == 'enterText') {
+            $('#checkResponse').css('height', hiddenDiv.height());
+        }
     });
 }
 
