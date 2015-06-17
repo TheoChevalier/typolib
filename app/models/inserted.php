@@ -15,10 +15,10 @@ $locale_selector = Utils::getHtmlSelectOptions(
 if ($code_name != '') {
     try {
         $code = new Code($code_name, $locale, $use_common_code);
-        $success_msg[] = 'Code successfully inserted. You can check your changes from <a href="/display-unverified">Unverified rules viewer</a>. We will review your changes shortly.';
+        $success_msg[] = 'Set of rules successfully inserted. You can check your changes from <a href="/display-unverified">Unverified rules viewer</a>. We will review your changes shortly.';
     } catch (Exception $e) {
         $error_msg[] = $e->getMessage();
     }
 } else {
-    $error_msg[] = 'Code name is empty.';
+    $error_msg[] = 'The name of the set of rules is empty.';
 }
