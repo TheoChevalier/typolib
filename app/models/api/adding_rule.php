@@ -7,12 +7,12 @@ $type = $_GET['type'];
 $comment = $_GET['comment'];
 $type_number = $_GET['type_number'];
 $rule_number = $_GET['rule_number'];
-$content_array = array_filter(json_decode($_GET['array']));
+$content_array = json_decode($_GET['array']);
 
 $array_OK = true;
 if (! empty($content_array)) {
     foreach ($content_array as $key => $value) {
-        if ($value == '') {
+        if (empty($value)) {
             $array_OK = false;
         }
     }
