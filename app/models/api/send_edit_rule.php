@@ -17,9 +17,9 @@ if (! empty($content_array)) {
         }
     }
     if ($array_OK) {
-        $new_rule = Rule::buildRuleString($id_type, $content_array);
+        echo Rule::buildRuleString($id_type, $content_array);
 
-        Utils::closeConnection($new_rule);
+        Utils::closeConnection();
 
         Rule::manageRule($code, $locale, $id_rule, 'update_content', $content_array, $comment);
     } else {
