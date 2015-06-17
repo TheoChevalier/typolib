@@ -44,7 +44,7 @@ function clickHandlers() {
                 data: "action=send_edit_exception&locale=" + locale
                                                 + "&code=" + code
                                                 + "&id_exception=" + id_exception
-                                                + "&exception=" + exception,
+                                                + "&exception=" + encodeURIComponent(exception),
                 dataType: "html",
                 success: function(response) {
                     if (response != "0") {
@@ -75,7 +75,9 @@ function clickHandlers() {
         $.ajax({
             url: "/api/",
             type: "GET",
-            data: "action=get_edit_rule&locale=" + locale + "&code=" + code + "&id_rule=" + id_rule,
+            data: "action=get_edit_rule&locale=" + locale
+                                    + "&code=" + code
+                                    + "&id_rule=" + id_rule,
             dataType: "html",
             context: this,
             success: function(response) {
@@ -106,8 +108,8 @@ function clickHandlers() {
                                                         + "&code=" + code
                                                         + "&id_rule="+ id_rule
                                                         + "&id_type=" + id_type
-                                                        + "&comment=" + comment
-                                                        + "&array=" + JSON.stringify(inputs),
+                                                        + "&comment=" + encodeURIComponent(comment)
+                                                        + "&array=" + encodeURIComponent(JSON.stringify(inputs)),
                             dataType: "html",
                             success: function(response) {
                                 if (response != "0") {
@@ -213,7 +215,7 @@ function clickHandlers() {
             data: "action=adding_exception&locale=" + locale
                                         + "&code=" + code
                                         + "&id_rule=" + id_rule
-                                        + "&content=" + exception,
+                                        + "&content=" + encodeURIComponent(exception),
             dataType: "html",
             success: function(response) {
                 if (response != "0") {
@@ -261,8 +263,8 @@ function clickHandlers() {
                                     + "&type=" + rule_type
                                     + "&type_number=" + type_number
                                     + "&rule_number=" + rule_number
-                                    + "&comment=" + comment
-                                    + "&array=" + JSON.stringify(inputs),
+                                    + "&comment=" + encodeURIComponent(comment)
+                                    + "&array=" + encodeURIComponent(JSON.stringify(inputs)),
             dataType: "html",
             success: function(response) {
                 if (response != "0") {
@@ -344,7 +346,9 @@ function getCode() {
     $.ajax({
         url: "/api/",
         type: "GET",
-        data: "action=get_rules&locale=" + locale + "&code=" + code + "&mode=1" ,
+        data: "action=get_rules&locale=" + locale
+                            + "&code=" + code
+                            + "&mode=1",
         dataType: "html",
         success: function(response) {
             $("#results").html(response);
