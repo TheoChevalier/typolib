@@ -46,10 +46,8 @@ class Utils
      */
     public static function closeConnection($value = '')
     {
-        ob_end_clean();
         header("Connection: close");
         ignore_user_abort(true);
-        ob_start();
         echo $value;
         $size = ob_get_length();
         header("Content-Length: $size");

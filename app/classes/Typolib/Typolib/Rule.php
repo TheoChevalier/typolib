@@ -19,6 +19,9 @@ class Rule
     private $content;
     private $type;
     private $comment;
+    private $file;
+    private $code;
+    private $commit_msg;
     // FIXME: string?
     public static $rules_type = [ 'replace_with'         => 'REPLACE %s WITH %s',
                                   'plural_separator'     => 'PLURAL SEPARATOR %s',
@@ -83,27 +86,36 @@ class Rule
      */
     private function createRule($name_code, $locale_code)
     {
-        $file = DATA_ROOT . RULES_STAGING . "/$locale_code/$name_code/rules.php";
-        $code = Rule::getArrayRules($name_code, $locale_code, RULES_STAGING);
-        $code['rules'][] = [
+        $this->file = DATA_ROOT . RULES_STAGING . "/$locale_code/$name_code/rules.php";
+        $this->code = Rule::getArrayRules($name_code, $locale_code, RULES_STAGING);
+        $this->code['rules'][] = [
                                 'content' => $this->content,
                                 'type'    => $this->type,
                             ];
 
         //Get the last inserted id
-        end($code['rules']);
-        $this->id = key($code['rules']);
+        end($this->code['rules']);
+        $this->id = key($this->code['rules']);
 
         if ($this->comment != '') {
-            $code['rules'][$this->id]['comment'] = $this->comment;
+            $this->code['rules'][$this->id]['comment'] = $this->comment;
         }
 
+        $this->commit_msg = "Adding new rule in /$locale_code/$name_code";
+    }
+
+    /**
+     * Write a rule that has just been created into its code file then commit
+     * the change to staging repo.
+     */
+    public function saveRule()
+    {
         $repo_mgr = new RepoManager();
         $repo_mgr->checkForUpdates();
 
-        file_put_contents($file, serialize($code));
+        file_put_contents($this->file, serialize($this->code));
 
-        $repo_mgr->commitAndPush("Adding new rule in /$locale_code/$name_code");
+        $repo_mgr->commitAndPush($this->commit_msg);
     }
 
     /**
@@ -165,7 +177,7 @@ class Rule
 
             file_put_contents($file, serialize($code));
 
-            $repo_mgr->commitAndPush("Editing rule in /$locale_code/$name_code");
+            $repo_mgr->commitAndPush("Editing rule $id in /$locale_code/$name_code");
 
             return true;
         }
@@ -893,6 +905,10 @@ class Rule
         return $processed_string;
     }
 
+    /**
+     * Getter for current rule ID.
+     * @return int Current ID.
+     */
     public function getId()
     {
         return $this->id;

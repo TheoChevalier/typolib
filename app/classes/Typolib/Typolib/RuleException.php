@@ -104,7 +104,7 @@ class RuleException
 
             file_put_contents($file, serialize($exception));
 
-            $repo_mgr->commitAndPush("Editing exception in /$code_locale/$code_name");
+            $repo_mgr->commitAndPush("Editing exception $id in /$code_locale/$code_name");
 
             return true;
         }
