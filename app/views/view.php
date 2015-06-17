@@ -1,7 +1,6 @@
 <form name="addform" id="mainform" method="get" action="">
 
     <fieldset id="main">
-        <?php if (isset($locale_selector)) : ?>
         <fieldset>
             <label>Locale</label>
             <div class="select-style">
@@ -10,18 +9,16 @@
                 </select>
             </div>
         </fieldset>
-        <?php endif; ?>
 
-        <?php if (isset($code_selector)) : ?>
         <fieldset>
-            <label>Code</label>
+            <label>Set of rules</label>
             <div class="select-style">
-                <select name="code" title="Code" id="code_selector">
+                <select name="code" title="Set of rules" id="code_selector">
                 <?=$code_selector?>
                 </select>
             </div>
         </fieldset>
-        <?php endif; ?>
+
         <fieldset>
             <fieldset id="edit_code">
                 <button type="submit" name="edit_code" class="button" title="Edit current code">
@@ -38,7 +35,6 @@
     <div id="new_rule">
         <h2>Adding a new rule</h2>
 
-        <?php if (isset($ruletypes_selector)) : ?>
         <fieldset id="rule_type">
             <label>Rule type</label>
             <div class="select-style">
@@ -47,7 +43,6 @@
                 </select>
             </div>
         </fieldset>
-        <?php endif; ?>
 
         <div id="template"></div>
     </div>
