@@ -528,7 +528,7 @@ class Rule
                                 }
                             } else {
                                 if ($mode == 'check_before') {
-                                    $i = $i + sizeof($check_array);
+                                    $i = $i + sizeof($check_array) - 1;
                                 }
                                 if ($characters[$i] == NBSP || $characters[$i] == WHITE_SP || $characters[$i] == NARROW_NBSP) {
                                     $replacements[] = [$i, '', 1];
