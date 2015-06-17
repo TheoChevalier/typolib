@@ -163,7 +163,11 @@ h2 {
 
 
 h1 a,
-h1 a:visited {
+h1 a:visited,
+#success a,
+#success a:visited,
+#errors a,
+#errors a:visited {
     color: #333;
 }
 
@@ -183,6 +187,13 @@ h3 {
     text-shadow: 0 0.1em 0 #cfcfcf;
     text-transform: uppercase;
     font-style: normal;
+}
+
+h4 {
+    font-family: 'Open Sans Light', Arial, sans-serif;
+    font-weight: normal;
+    font-size: 1.125rem;
+    margin-bottom: 5px;
 }
 
 #page-title {
@@ -409,6 +420,29 @@ textarea,
     margin-left: 0;
 }
 
+.notice {
+    clear: both;
+    opacity: 0.8;
+    padding: 20px 20px 20px 55px;
+    margin: 50px auto 0 auto;
+    border-radius: 0.25em;
+    border: 1px solid #3b4e62;
+    text-align: left;
+    max-width: 80%;
+}
+
+.notice::before {
+    position: absolute;
+    margin: -5px 0 0 -35px;
+    font-family: FontAwesome;
+    content: "\f059";
+    font-size: 1.5em
+}
+
+.notice h4 {
+    margin: 0;
+}
+
 /* Helpers */
 
 .bold {
@@ -461,6 +495,18 @@ textarea,
 
     textarea {
         width: 250px;
+    }
+
+
+    .notice {
+        padding: 20px 20px 20px 35px;
+        max-width: 50%;
+    }
+
+    .notice::before {
+        position: absolute;
+        margin: 2px 0 0 -23px;
+        font-size: 1.2em
     }
 
 }

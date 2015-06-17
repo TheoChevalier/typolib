@@ -50,10 +50,11 @@ if (strpos(VERSION, 'dev') !== false) {
   <div id='cssmenu'>
     <ul>
        <li <?=$page == 'root' ? 'class="active"' : ''?>><a href='/'>Home</a></li>
-       <li class='<?=$page == 'edit' || $page == 'display' || $page == 'insert' ? 'active ' : ''?>has-sub'><a href='/display'>Rules</a>
+       <li class='<?=$page == 'edit' || $page == 'display-verified' || $page == 'display-unverified' || $page == 'insert' ? 'active ' : ''?>has-sub'><a href='/display-verified'>Rules</a>
           <ul>
-               <li><a href='/display'>Rules viewer</a></li>
-               <li><a href='/edit'>Rules editor</a></li>
+               <li><a href='/display-verified'>Verified rules viewer</a></li>
+               <li><a href='/display-unverified'>Unverified rules viewer</a></li>
+               <li><a href='/edit'>Unverified rules editor</a></li>
                <li><a href='/insert'>New set of rules</a></li>
           </ul>
        </li>

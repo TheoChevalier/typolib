@@ -51,7 +51,14 @@
 
         <div id="template"></div>
     </div>
+
+<div class="notice">
+    <h4>Notice: Changes availability</h4>
+    <p>Please note that your changes will be visible immediately in edit mode, but we need to check them first before anyone can use them. We try to do that quickly, but in the mean time, you can do as many changes as you wish.</p>
+</div>
+
 </form>
+
 <?php
 
 include VIEWS . 'modal.php';

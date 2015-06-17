@@ -17,8 +17,6 @@ $ruletypes_selector = Utils::getHtmlSelectOptions(
                                 true
                             );
 
-$repo = $page == 'display' ? RULES_PRODUCTION : RULES_STAGING;
-
 $codes = $code_key = Code::getCodeList($locale, $repo);
 reset($code_key);
 $code_key = key($code_key);
