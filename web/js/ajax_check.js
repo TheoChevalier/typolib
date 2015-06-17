@@ -33,7 +33,7 @@ $('#locale_selector').on('change', function() {
     $.ajax({
         url: "/api/",
         type: "GET",
-        data: "action=get_codes&locale=" + this.value + "&mode=1" ,
+        data: "action=get_codes&locale=" + this.value + "&mode=0" ,
         dataType: "html",
         success: function(response) {
             $("#code_selector").html(response);
