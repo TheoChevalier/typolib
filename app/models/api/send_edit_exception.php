@@ -5,7 +5,6 @@ $exception = $_GET['exception'];
 $id_exception = $_GET['id_exception'];
 
 if (! empty($exception)) {
-
     echo '1';
     // Closing connection now, so that commit is done in the background and user doesn't wait
     Utils::closeConnection();

@@ -101,7 +101,7 @@ class Rule
             $this->code['rules'][$this->id]['comment'] = $this->comment;
         }
 
-        $this->commit_msg = "Adding new rule in /$locale_code/$name_code";
+        $this->commit_msg = "Adding rule $this->id in /$locale_code/$name_code";
     }
 
     /**

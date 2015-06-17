@@ -10,6 +10,10 @@ if ($exception != '') {
         $new_exception = new RuleException($code, $locale, $id_rule, $exception);
         $id_exception = $new_exception->getId();
         include VIEWS . 'view_exception.php';
+
+        Utils::closeConnection();
+
+        $new_exception->saveException();
     } catch (Exception $e) {
     }
 } else {

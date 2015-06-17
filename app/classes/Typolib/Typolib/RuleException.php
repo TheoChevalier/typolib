@@ -16,6 +16,9 @@ class RuleException
     private $id;
     private $content;
     private $rule_id;
+    private $file;
+    private $exception;
+    private $commit_msg;
 
     /**
      * Constructor that initializes all the arguments then call the method to create
@@ -54,21 +57,26 @@ class RuleException
      */
     private function createException($code_name, $code_locale)
     {
-        $file = DATA_ROOT . RULES_STAGING . "/$code_locale/$code_name/exceptions.php";
-        $exception = self::getArrayExceptions($code_name, $code_locale, RULES_STAGING);
-        $exception['exceptions'][] = ['rule_id' => $this->rule_id,
-                                      'content' => $this->content, ];
+        $this->file = DATA_ROOT . RULES_STAGING . "/$code_locale/$code_name/exceptions.php";
+        $this->exception = self::getArrayExceptions($code_name, $code_locale, RULES_STAGING);
+        $this->exception['exceptions'][] = ['rule_id' => $this->rule_id,
+                                      'content'       => $this->content, ];
 
         //Get the last inserted id
-        end($exception['exceptions']);
-        $this->id = key($exception['exceptions']);
+        end($this->exception['exceptions']);
+        $this->id = key($this->exception['exceptions']);
 
+        $this->commit_msg = "Adding exception $this->id in /$code_locale/$code_name";
+    }
+
+    public function saveException()
+    {
         $repo_mgr = new RepoManager();
         $repo_mgr->checkForUpdates();
 
-        file_put_contents($file, serialize($exception));
+        file_put_contents($this->file, serialize($this->exception));
 
-        $repo_mgr->commitAndPush("Adding new exception in /$code_locale/$code_name");
+        $repo_mgr->commitAndPush($this->commit_msg);
     }
 
     /**
