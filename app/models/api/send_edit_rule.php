@@ -5,6 +5,7 @@ $edit_mode = true;
 
 $id_rule = $_GET['id_rule'];
 $comment = $_GET['comment'];
+$id_type = $_GET['id_type'];
 
 $content_array = array_filter(json_decode($_GET['array']));
 
@@ -16,10 +17,11 @@ if (! empty($content_array)) {
         }
     }
     if ($array_OK) {
-        Rule::manageRule($code, $locale, $id_rule, 'update_content', $content_array, $comment);
+        echo Rule::buildRuleString($id_type, $content_array);
 
-        include MODELS . 'prepare_set_of_rules.php';
-        include VIEWS . 'view_treeview.php';
+        Utils::closeConnection();
+
+        Rule::manageRule($code, $locale, $id_rule, 'update_content', $content_array, $comment);
     } else {
         echo '0';
     }

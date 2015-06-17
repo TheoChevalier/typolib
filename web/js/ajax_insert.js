@@ -24,10 +24,41 @@ function clickHandlers() {
         event.preventDefault();
         var li = $(this).parent();
         var span = li.find('span');
+        var exception = span.html();
+        var id_exception = li.data('id-exception');
 
-        var exception = span.text;
-        li.html($('.edit-exception-form'));
-        li.find("input:text").val(exception);
+        $('#modal .modal-content').html($('.edit-exception-form'));
+        $(".edit-exception-form input[type='text']").val(exception);
+        $('.edit-exception-form').show();
+        $("#modal").show();
+        $("#submitUpdatedException").unbind('click');
+        $("#submitUpdatedException").click(function(event) {
+            event.preventDefault();
+            var code = $('#code_selector').val();
+            var locale = $('#locale_selector').val();
+            var exception = $("#modal input[type='text']").val();
+
+            $.ajax({
+                url: "/api/",
+                type: "GET",
+                data: "action=send_edit_exception&locale=" + locale
+                                                + "&code=" + code
+                                                + "&id_exception=" + id_exception
+                                                + "&exception=" + exception,
+                dataType: "html",
+                success: function(response) {
+                    if (response != "0") {
+                        $('#modal').hide();
+                        span.html($(".edit-exception-form input[type='text']").val());
+                    } else {
+                        alert("The exception form can’t be empty.");
+                    }
+                },
+                error: function() {
+                    console.error("AJAX failure - send edit exception");
+                }
+            });
+        });
     });
 
     $(".edit-rule").unbind('click');
@@ -36,7 +67,8 @@ function clickHandlers() {
         var code = $('#code_selector').val();
         var locale = $('#locale_selector').val();
         var li = $(this).parent();
-        var id_rule = li.find('.rule').data('id-rule');
+        var rule = li.find('.rule');
+        var id_rule = rule.data('id-rule');
 
         $("#modal").show();
 
@@ -57,6 +89,7 @@ function clickHandlers() {
                         var code = $('#code_selector').val();
                         var locale = $('#locale_selector').val();
                         var id_rule = $('#modal input[name="id_rule"]').val();
+                        var id_type = $('#modal input[name="id_type"]').val()
                         var comment = $('#modal textarea[name="comment"]').val();
                         var inputs = new Array();
                         $('#modal input[type=text]').each(function(){
@@ -65,16 +98,24 @@ function clickHandlers() {
                                 inputs.push(input.val());
                             }
                         });
+
                         $.ajax({
                             url: "/api/",
                             type: "GET",
-                            data: "action=send_edit_rule&locale=" + locale + "&code=" + code + "&id_rule=" + id_rule + "&comment=" + comment + "&array=" + JSON.stringify(inputs),
+                            data: "action=send_edit_rule&locale=" + locale
+                                                        + "&code=" + code
+                                                        + "&id_rule="+ id_rule
+                                                        + "&id_type=" + id_type
+                                                        + "&comment=" + comment
+                                                        + "&array=" + JSON.stringify(inputs),
                             dataType: "html",
                             success: function(response) {
                                 if (response != "0") {
                                     $('#modal').hide();
-                                    $("#results").html(response);
-                                    clickHandlers();
+                                    rule.html(response);
+                                    var exceptions = rule.parent().find('.exceptions');
+                                    exceptions.find('.comment').remove();
+                                    exceptions.prepend('<span class="comment">' + comment + '</span>');
                                 } else {
                                     alert("The rule form can’t be empty.");
                                 }
@@ -104,7 +145,9 @@ function clickHandlers() {
         $.ajax({
             url: "/api/",
             type: "GET",
-            data: "action=deleting_rule&locale=" + locale + "&code=" + code + "&id_rule=" + id_rule,
+            data: "action=deleting_rule&locale=" + locale
+                                    + "&code=" + code
+                                    + "&id_rule=" + id_rule,
             dataType: "html",
             context: this,
             success: function(response) {
@@ -137,7 +180,10 @@ function clickHandlers() {
         $.ajax({
             url: "/api/",
             type: "GET",
-            data: "action=deleting_exception&locale=" + locale + "&code=" + code + "&id_rule=" + id_rule + "&id_exception=" + id_exception,
+            data: "action=deleting_exception&locale=" + locale
+                                            + "&code=" + code
+                                            + "&id_rule=" + id_rule
+                                            + "&id_exception=" + id_exception,
             dataType: "html",
             context: this,
             success: function(response) {
@@ -164,7 +210,10 @@ function clickHandlers() {
         $.ajax({
             url: "/api/",
             type: "GET",
-            data: "action=adding_exception&locale=" + locale + "&code=" + code + "&id_rule=" + id_rule + "&content=" + exception,
+            data: "action=adding_exception&locale=" + locale
+                                        + "&code=" + code
+                                        + "&id_rule=" + id_rule
+                                        + "&content=" + exception,
             dataType: "html",
             success: function(response) {
                 if (response != "0") {
@@ -200,14 +249,24 @@ function clickHandlers() {
             }
         });
 
+        var li_type = $(".treeview [data-id-type='" + rule_type + "']");
+        var type_number = li_type.data('number-type');
+        var rule_number = li_type.find('ul').children().length;
+
         $.ajax({
             url: "/api/",
             type: "GET",
-            data: "action=adding_rule&locale=" + locale + "&code=" + code + "&type=" + rule_type + "&comment=" + comment + "&array=" + JSON.stringify(inputs),
+            data: "action=adding_rule&locale=" + locale
+                                    + "&code=" + code
+                                    + "&type=" + rule_type
+                                    + "&type_number=" + type_number
+                                    + "&rule_number=" + rule_number
+                                    + "&comment=" + comment
+                                    + "&array=" + JSON.stringify(inputs),
             dataType: "html",
             success: function(response) {
                 if (response != "0") {
-                    $("#results").html(response);
+                    li_type.find('.rules').append(response);
                     $('#comment').val('');
                     $('#rule').val(placeholder);
                     $('#template input[type=text]').each(function(){

@@ -36,4 +36,18 @@ class Utils
 
         return false;
     }
+
+    /**
+     * Closes the connection with the browser so that we can do things in the
+     * background
+     */
+    public static function closeConnection()
+    {
+        header("Connection: close");
+        ignore_user_abort(true);
+        $size = ob_get_length();
+        header("Content-Length: $size");
+        ob_end_flush();
+        flush();
+    }
 }
