@@ -1,7 +1,8 @@
 app/config/config.ini
 cache/*.cache
 cache/lastupdate.txt
-data/
+data/*
+!data/README.txt
 composer.lock
 composer.phar
 logs/*.log
