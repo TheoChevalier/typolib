@@ -3,6 +3,9 @@ namespace Typolib;
 
 use Transvision\Utils;
 
+$repo_mgr = new RepoManager();
+$repo_mgr->checkForUpdates();
+
 $locale_selector = Utils::getHtmlSelectOptions(
                                 Locale::getLocaleList(),
                                 $locale
