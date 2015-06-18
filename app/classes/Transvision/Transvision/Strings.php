@@ -209,6 +209,7 @@ class Strings
             mb_strlen($string1, 'UTF-8'),
             mb_strlen($string2, 'UTF-8'),
         ]);
+        $length = $length == 0 ? 1 : $length;
 
         return (float) (1 - self::levenshteinUTF8($string1, $string2) / $length) * 100;
     }

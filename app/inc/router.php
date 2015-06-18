@@ -2,6 +2,7 @@
 
 $url  = parse_url($_SERVER['REQUEST_URI']);
 $file = pathinfo($url['path']);
+set_time_limit(180);
 
 // Real files and folders don't get pre-processed
 if (file_exists($_SERVER['DOCUMENT_ROOT'] . $url['path'])

@@ -269,16 +269,20 @@ function clickHandlers() {
             dataType: "html",
             success: function(response) {
                 if (response != "0") {
-                    li_type.find('.rules').append(response);
-                    $('#comment').val('');
-                    $('#rule').val(placeholder);
-                    $('#template input[type=text]').each(function(){
-                        var input = $(this);
-                        if(input.attr('name').toLowerCase().indexOf("input") >= 0) {
-                            input.val('');
-                        }
-                    });
-                    clickHandlers();
+                    if (response == "-1") {
+                        alert("You can't have more than one quotation mark rule. If you need to change the rule, you can edit the current one.");
+                    } else {
+                        li_type.find('.rules').append(response);
+                        $('#comment').val('');
+                        $('#rule').val(placeholder);
+                        $('#template input[type=text]').each(function(){
+                            var input = $(this);
+                            if(input.attr('name').toLowerCase().indexOf("input") >= 0) {
+                                input.val('');
+                            }
+                        });
+                        clickHandlers();
+                    }
                 } else {
                     alert("The rule field can’t be empty.");
                 }
