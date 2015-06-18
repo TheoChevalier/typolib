@@ -83,6 +83,7 @@ function clickHandlers() {
             success: function(response) {
                 if (response != "0") {
                     $('#modal .modal-content').html(response);
+                    clickHandlers();
                     autoResizeTextarea($('#comment-edit'));
 
                     $("#modal input[type='submit']").unbind('click');
@@ -298,20 +299,18 @@ function clickHandlers() {
         closeRules($(this), '.rule');
     });
 
-    $(".draggable").unbind('draggable');
     $(".draggable").draggable({
         appendTo: "body",
         helper: "clone",
         cursor: "pointer",
-        revert: "invalid"
+        revert: "invalid",
+        zIndex: 2500,
     });
 
-    $(".droppable").unbind('droppable');
     $(".droppable").droppable({
         hoverClass: 'active',
         tolerance: 'pointer',
         drop: function(event, ui) {
-            var $this = $(this);
             var tempid;
             switch ($(ui.draggable).text()) {
                 case 'non-breaking space':
@@ -329,13 +328,14 @@ function clickHandlers() {
             }
             var dropText;
             dropText = tempid;
-            var droparea = document.getElementById(event.target.id);
+            var droparea = event.target;
             var range1 = droparea.selectionStart;
             var range2 = droparea.selectionEnd;
             var val = droparea.value;
             var str1 = val.substring(0, range1);
             var str3 = val.substring(range1, val.length);
             droparea.value = str1 + dropText + str3;
+            droparea.focus();
         }
     });
 }

@@ -1,4 +1,4 @@
-<h3>Special characters</h3>
+<h4>Special characters</h4>
 <div>
     <span class="draggable">∅</span>
     <span class="draggable">non-breaking space</span>
