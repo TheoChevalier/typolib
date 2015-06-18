@@ -1,7 +1,6 @@
 <form name="addform" id="mainform" method="get" action="">
 <div id="result"></div>
     <fieldset id="main">
-        <?php if (isset($locale_selector)) : ?>
         <fieldset>
             <label>Locale</label>
             <div class="select-style">
@@ -11,7 +10,6 @@
             </div>
         </fieldset>
         <br/>
-        <?php endif; ?>
 
         <fieldset>
             <p>Name of the set of rules<br />

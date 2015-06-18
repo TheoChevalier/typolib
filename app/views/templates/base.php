@@ -7,12 +7,12 @@ $css_include = isset($css_include) ? $css_include : [];
 $success_msg = isset($success_msg) ? $success_msg : [];
 $error_msg = isset($error_msg) ? $error_msg : [];
 
+$title_productname = PRODUCT;
+
 if (strpos(VERSION, 'dev') !== false) {
     $beta_version = true;
-    $title_productname = PRODUCT . ' Beta';
 } else {
     $beta_version = false;
-    $title_productname = PRODUCT;
 }
 
 ?>
@@ -24,6 +24,9 @@ if (strpos(VERSION, 'dev') !== false) {
     echo $page_title . ' — ';
 } ?><?=$title_productname?></title>
     <meta charset="utf-8" />
+    <meta name="title" content="<?=$title_productname?>" />
+    <meta name="description" content="<?=$title_productname?> is a tool helping software localizers doing localization QA for typography. It helps keeping typography consistent and you can adapt the rules to the context of your software and your locale." />
+    <meta name="keywords" content="localization, typography, quality assurance, punctuation, translation, consistency" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style/buttons.css?<?php echo VERSION; ?>" type="text/css" media="all" />
     <link rel="stylesheet" href="/style/menu.css?<?php echo VERSION; ?>" type="text/css" media="all" />

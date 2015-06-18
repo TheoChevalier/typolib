@@ -18,20 +18,18 @@
         <input type="submit" class="button" name="edit_code_sent" value="Edit" alt="Edit" />
     </fieldset>
     <br/>
-    <?php if (isset($code_selector)) : ?>
-        <h2>Import an existing code</h2>
-        <fieldset>
-            <label>Code</label>
-            <div class="select-style">
-                <select name="code" title="Code" id="code_selector">
-                <?=$code_selector?>
-                </select>
-            </div>
-        </fieldset>
-        <br/>
-        <br/>
-        <input type="submit" class="button" name="import_code" value="Import" alt="Import" />
-    <?php endif; ?>
+    <h2>Import an existing set of rules</h2>
+    <fieldset>
+        <label>Set of rules</label>
+        <div class="select-style">
+            <select name="code" title="Set of rules" id="code_selector">
+            <?=$code_selector?>
+            </select>
+        </div>
+    </fieldset>
+    <br/>
+    <br/>
+    <input type="submit" class="button" name="import_code" value="Import" alt="Import" />
     <br/>
     <h2>Advanced options</h2>
     <p>
