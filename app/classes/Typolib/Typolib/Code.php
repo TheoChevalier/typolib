@@ -221,8 +221,8 @@ class Code
 
         $new_rule_exceptions = [];
 
-        $rule_file = DATA_ROOT . RULES_STAGING . "/$locale_code/$code_name/rules.php";
-        $exception_file = DATA_ROOT . RULES_STAGING . "/$locale_code/$code_name/exceptions.php";
+        $rule_file = DATA_ROOT . $repo . "/$locale_code/$code_name/rules.php";
+        $exception_file = DATA_ROOT . $repo . "/$locale_code/$code_name/exceptions.php";
 
         $rules = Rule::getArrayRules($code_name, $locale_code, $repo);
         $exceptions = RuleException::getArrayExceptions($code_name, $locale_code, $repo);

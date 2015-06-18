@@ -28,11 +28,15 @@ if (! empty($content_array)) {
                 }
             }
             if ($adding_rule || $type != 'quotation_mark') {
-                $new_rule = new Rule($code, $locale, $content_array, $type, $comment);
+                $content_without_tags = [];
+                foreach ($content_array as $key => $field) {
+                    $content_without_tags[$key] = Strings::replaceTagsBySpaces($field);
+                }
+                $new_rule = new Rule($code, $locale, $content_without_tags, $type, $comment);
                 $id_rule = $new_rule->getId();
                 $rule = [];
                 $rule['type'] = $type;
-                $rule['content'] = $content_array;
+                $rule['content'] = $content_without_tags;
                 $rule['comment'] = $comment;
                 include VIEWS . 'view_rule.php';
 

@@ -81,4 +81,22 @@ class Strings
 
         return $characters;
     }
+
+    public static function replaceTagsBySpaces($string)
+    {
+        $string = str_replace('■', NBSP, $string);
+        $string = str_replace('□', NARROW_NBSP, $string);
+        $string = str_replace('␣', WHITE_SP, $string);
+
+        return $string;
+    }
+
+    public static function replaceSpacesByTags($string)
+    {
+        $string = str_replace(NBSP, '■', $string);
+        $string = str_replace(NARROW_NBSP, '□', $string);
+        $string = str_replace(WHITE_SP, '␣', $string);
+
+        return $string;
+    }
 }

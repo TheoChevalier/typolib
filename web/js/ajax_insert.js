@@ -318,13 +318,13 @@ function clickHandlers() {
             var tempid;
             switch ($(ui.draggable).text()) {
                 case 'non-breaking space':
-                    tempid = ' ';
+                    tempid = '■';
                     break;
                 case 'white-space':
-                    tempid = ' ';
+                    tempid = '␣';
                     break;
                 case 'narrow no-break space':
-                    tempid = ' ';
+                    tempid = '□';
                     break;
                 default:
                     tempid = $(ui.draggable).text();
