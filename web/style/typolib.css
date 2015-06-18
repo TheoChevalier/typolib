@@ -398,6 +398,26 @@ textarea,
     width: 30px;
 }
 
+#template input[type='text'].active,
+#modal input[type="text"].active {
+    border-color: #42a4e0;
+    box-shadow: 0px 0px 0px 3px rgba(73, 173, 227, 0.4);
+    transition: all 0.15s linear 0s;
+}
+
+.draggable {
+    display: inline-block;
+    border-radius: 6px;
+    text-align: center;
+    padding: 9px 15px;
+    margin-bottom: 10px;
+    background: #666 none repeat scroll 0% 0%;
+    color: #fff;
+    font-size: 0.875rem;
+    border: medium none;
+    cursor: move;
+}
+
 .window form {
     text-align: center;
 }
@@ -533,21 +553,4 @@ textarea,
         display: inline;
     }
 
-}
-
-#template input[type='text'].active {
-    border:solid 1.5px #93c54b;
-}
-
-.draggable {
-    display: inline-block;
-    border-radius: 6px;
-    text-align: center;
-    padding: 9px 15px;
-    margin-bottom: 10px;
-    background: #00a0dc none repeat scroll 0% 0%;
-    color: #fff;
-    font-size: 0.875rem;
-    border: medium none;
-    cursor: move;
 }
