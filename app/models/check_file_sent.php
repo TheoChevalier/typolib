@@ -8,7 +8,6 @@ $uploaddir = CACHE_PATH;
 $uploadfile = $uploaddir . basename($_FILES['user_file']['name']);
 
 if (move_uploaded_file($_FILES['user_file']['tmp_name'], $uploadfile)) {
-
     $rules = Rule::getArrayRules($code, $locale, RULES_STAGING);
     $exceptions = RuleException::getArrayExceptions($code, $locale, RULES_STAGING);
     $array = File::getFileContent($uploadfile, $locale, 'tmx');

@@ -61,7 +61,12 @@ if (strpos(VERSION, 'dev') !== false) {
                <li><a href='/insert'>New set of rules</a></li>
           </ul>
        </li>
-       <li <?=$page == 'check' ? 'class="active"' : ''?>><a href='/check'>Check text</a></li>
+       <li class='<?=$page == 'check' || $page == 'check-file' ? 'active ' : ''?>has-sub'><a href='/check'>Check</a>
+          <ul>
+               <li <?=$page == 'check' ? 'class="active"' : ''?>><a href='/check'>Check text</a></li>
+               <li <?=$page == 'check-file' ? 'class="active"' : ''?>><a href='/check-file'>Check file</a></li>
+          </ul>
+       </li>
        <li <?=$page == 'test' ? 'class="active"' : ''?>><a href='/test'>Test</a></li>
        <li <?=$page == 'user-guide' ? 'class="active"' : ''?>><a href='/user-guide'>User guide</a></li>
        <li <?=$page == 'about' ? 'class="active"' : ''?>><a href='/about'>About</a></li>
