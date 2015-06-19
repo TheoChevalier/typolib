@@ -39,6 +39,11 @@ switch ($url['path']) {
         $page_title = 'Check text';
         $page_descr = 'Enter text, select a set of rules to apply and you’re good to go!';
         break;
+    case 'check-file':
+        $controller = 'check_file';
+        $page_title = 'Check a file';
+        $page_descr = 'Send us your translation memory file, and we’ll check it for you.';
+        break;
     case 'display-verified':
         $controller = 'display';
         $page_title = 'Verified rules viewer';
