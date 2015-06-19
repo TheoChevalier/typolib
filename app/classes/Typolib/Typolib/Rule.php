@@ -965,7 +965,7 @@ class Rule
             $string = html_entity_decode(strip_tags($string));
             $res = self::process($string, $rules, $exceptions, $locale);
             if (! empty($res[1])) {
-                $processed_array[$string][$key] = $res;
+                $processed_array[$string] = $res;
             }
         }
 
