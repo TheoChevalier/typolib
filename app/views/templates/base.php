@@ -28,10 +28,10 @@ if (strpos(VERSION, 'dev') !== false) {
     <meta name="description" content="<?=$title_productname?> is a tool helping software localizers doing localization QA for typography. It helps keeping typography consistent and you can adapt the rules to the context of your software and your locale." />
     <meta name="keywords" content="localization, typography, quality assurance, punctuation, translation, consistency" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/buttons.css?<?php echo VERSION; ?>" type="text/css" media="all" />
-    <link rel="stylesheet" href="/style/menu.css?<?php echo VERSION; ?>" type="text/css" media="all" />
-    <link rel="stylesheet" href="/style/typolib.css?<?php echo VERSION; ?>" type="text/css" media="all" />
-    <link rel="stylesheet" href="/assets/font-awesome/font-awesome-built.css?<?php echo VERSION; ?>" type="text/css" media="all" />
+    <link rel="stylesheet" href="/style/buttons.css?<?= VERSION ?>" type="text/css" media="all" />
+    <link rel="stylesheet" href="/style/menu.css?<?= VERSION ?>" type="text/css" media="all" />
+    <link rel="stylesheet" href="/style/typolib.css?<?= VERSION ?>" type="text/css" media="all" />
+    <link rel="stylesheet" href="/assets/font-awesome/font-awesome-built.css?<?= VERSION ?>" type="text/css" media="all" />
 
     <?php
     foreach ($css_include as $css_file) {
@@ -47,7 +47,7 @@ if (strpos(VERSION, 'dev') !== false) {
         echo "<div id='beta-badge'><span>BETA</span></div>\n";
     }
     ?>
-    <h1 id="logo"><a href="/" id="typolib-title"><?php echo PRODUCT; ?></a></h1>
+    <h1 id="logo"><a href="/" id="typolib-title"><?= PRODUCT ?></a></h1>
   </header>
 
   <div id='cssmenu'>
@@ -108,7 +108,7 @@ if (strpos(VERSION, 'dev') !== false) {
   </div>
 
   <footer>
-    <p><?php echo PRODUCT; ?> v<?php echo VERSION; ?></p>
+    <p><?= PRODUCT; ?> v<?= VERSION; ?> — MPL 2 — 2014 - <?= date("Y"); ?></p>
   </footer>
 
   <script src="/assets/jquery/jquery.min.js"></script>
