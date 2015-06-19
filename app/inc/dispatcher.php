@@ -64,6 +64,11 @@ switch ($url['path']) {
         $page_title = 'Test page';
         $page_descr = 'This is a page for test purposes only.';
         break;
+    case 'user-guide':
+        $view = 'user-guide';
+        $page_title = 'User guide ' . PRODUCT;
+        $page_descr = '';
+        break;
     default:
         $controller = 'check';
         $page_title = 'Check text';

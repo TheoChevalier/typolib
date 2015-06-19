@@ -10,5 +10,6 @@ $urls = [
     'edit'                => 'edit',
     'insert'              => 'insert',
     'test'                => 'test',
+    'user-guide'          => 'user-guide',
     'view'                => 'view',
 ];
