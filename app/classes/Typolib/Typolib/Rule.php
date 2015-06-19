@@ -598,6 +598,8 @@ class Rule
         $positions = [];
         $variable_to_ignore = $rule[0];
 
+        $variable_array = \Typolib\Strings::getArrayFromString($variable_to_ignore);
+
         $characters = \Typolib\Strings::getArrayFromString($user_string);
 
         $exception_positions = self::getTagsPosition($characters,
@@ -605,14 +607,34 @@ class Rule
                                                      self::$end_exception_tag);
         $offset = 0;
 
-        while (mb_strpos($user_string, $variable_to_ignore, $offset) !== false) {
-            $position = mb_strpos($user_string, $variable_to_ignore, $offset);
-            $offset = $position + strlen($variable_to_ignore);
-            if (! self::ignoreCharacter($position, $exception_positions)) {
-                $user_string = \Typolib\Strings::replaceString($user_string,
-                    self::$start_variable_tag . $variable_to_ignore . self::$end_variable_tag,
-                    $position,
-                    strlen($variable_to_ignore));
+        if (in_array('★', $variable_array)) {
+            $pieces = explode('★', $variable_to_ignore);
+            $start = '\\' . $pieces[0];
+            $end = '\\' . $pieces[1];
+            preg_match_all('/' . $start . '(.*)' . $end . '/U', $user_string, $matches);
+            foreach ($matches[0] as $key => $value) {
+                $offset = 0;
+                while (mb_strpos($user_string, $value, $offset) !== false) {
+                    $position = mb_strpos($user_string, $value, $offset);
+                    $offset = $position + strlen($value);
+                    if (! self::ignoreCharacter($position, $exception_positions)) {
+                        $user_string = \Typolib\Strings::replaceString($user_string,
+                            self::$start_variable_tag . $value . self::$end_variable_tag,
+                            $position,
+                            strlen($value));
+                    }
+                }
+            }
+        } else {
+            while (mb_strpos($user_string, $variable_to_ignore, $offset) !== false) {
+                $position = mb_strpos($user_string, $variable_to_ignore, $offset);
+                $offset = $position + strlen($variable_to_ignore);
+                if (! self::ignoreCharacter($position, $exception_positions)) {
+                    $user_string = \Typolib\Strings::replaceString($user_string,
+                        self::$start_variable_tag . $variable_to_ignore . self::$end_variable_tag,
+                        $position,
+                        strlen($variable_to_ignore));
+                }
             }
         }
 

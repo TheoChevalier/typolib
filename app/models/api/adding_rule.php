@@ -11,6 +11,7 @@ $content_array = json_decode($_GET['array']);
 
 $array_OK = true;
 $adding_rule = true;
+$ignore_variable_OK = true;
 if (! empty($content_array)) {
     foreach ($content_array as $key => $value) {
         if (empty($value)) {
@@ -27,22 +28,35 @@ if (! empty($content_array)) {
                     }
                 }
             }
-            if ($adding_rule || $type != 'quotation_mark') {
-                $content_without_tags = [];
-                foreach ($content_array as $key => $field) {
-                    $content_without_tags[$key] = Strings::replaceTagsBySpaces($field);
+            if ($type == 'ignore_variable') {
+                $variable_array = \Typolib\Strings::getArrayFromString($content_array[0]);
+                if (in_array('★', $variable_array)) {
+                    $position = array_search('★', $variable_array);
+                    if ($position == 0 || $position == (sizeof($variable_array) - 1)) {
+                        $ignore_variable_OK = false;
+                    }
                 }
-                $new_rule = new Rule($code, $locale, $content_without_tags, $type, $comment);
-                $id_rule = $new_rule->getId();
-                $rule = [];
-                $rule['type'] = $type;
-                $rule['content'] = $content_without_tags;
-                $rule['comment'] = $comment;
-                include VIEWS . 'view_rule.php';
+            }
+            if ($adding_rule || $type != 'quotation_mark') {
+                if ($ignore_variable_OK) {
+                    $content_without_tags = [];
+                    foreach ($content_array as $key => $field) {
+                        $content_without_tags[$key] = Strings::replaceTagsBySpaces($field);
+                    }
+                    $new_rule = new Rule($code, $locale, $content_without_tags, $type, $comment);
+                    $id_rule = $new_rule->getId();
+                    $rule = [];
+                    $rule['type'] = $type;
+                    $rule['content'] = $content_without_tags;
+                    $rule['comment'] = $comment;
+                    include VIEWS . 'view_rule.php';
 
-                Utils::closeConnection();
+                    Utils::closeConnection();
 
-                $new_rule->saveRule();
+                    $new_rule->saveRule();
+                } else {
+                    echo '1';
+                }
             } else {
                 echo '-1';
             }

@@ -271,7 +271,9 @@ function clickHandlers() {
                 if (response != "0") {
                     if (response == "-1") {
                         alert("You can't have more than one quotation mark rule. If you need to change the rule, you can edit the current one.");
-                    } else {
+                    } else if (response == "1") {
+                        alert("You can't use ★ character. This special character must be used between two strings.");
+                    }else {
                         li_type.find('.rules').append(response);
                         $('#comment').val('');
                         $('#rule').val(placeholder);
