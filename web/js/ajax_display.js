@@ -14,7 +14,9 @@ function getCode() {
     $.ajax({
         url: "/api/",
         type: "GET",
-        data: "action=get_rules&locale=" + locale + "&code=" + code + "&mode=0",
+        data: "action=get_rules&locale=" + locale
+                            + "&code=" + encodeURIComponent(code)
+                            + "&mode=0",
         dataType: "html",
         success: function(response) {
             $("#results").html(response);

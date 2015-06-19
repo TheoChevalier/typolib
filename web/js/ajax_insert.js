@@ -42,7 +42,7 @@ function clickHandlers() {
                 url: "/api/",
                 type: "GET",
                 data: "action=send_edit_exception&locale=" + locale
-                                                + "&code=" + code
+                                                + "&code=" + encodeURIComponent(code)
                                                 + "&id_exception=" + id_exception
                                                 + "&exception=" + encodeURIComponent(exception),
                 dataType: "html",
@@ -76,7 +76,7 @@ function clickHandlers() {
             url: "/api/",
             type: "GET",
             data: "action=get_edit_rule&locale=" + locale
-                                    + "&code=" + code
+                                    + "&code=" + encodeURIComponent(code)
                                     + "&id_rule=" + id_rule,
             dataType: "html",
             context: this,
@@ -106,7 +106,7 @@ function clickHandlers() {
                             url: "/api/",
                             type: "GET",
                             data: "action=send_edit_rule&locale=" + locale
-                                                        + "&code=" + code
+                                                        + "&code=" + encodeURIComponent(code)
                                                         + "&id_rule="+ id_rule
                                                         + "&id_type=" + id_type
                                                         + "&comment=" + encodeURIComponent(comment)
@@ -149,7 +149,7 @@ function clickHandlers() {
             url: "/api/",
             type: "GET",
             data: "action=deleting_rule&locale=" + locale
-                                    + "&code=" + code
+                                    + "&code=" + encodeURIComponent(code)
                                     + "&id_rule=" + id_rule,
             dataType: "html",
             context: this,
@@ -184,7 +184,7 @@ function clickHandlers() {
             url: "/api/",
             type: "GET",
             data: "action=deleting_exception&locale=" + locale
-                                            + "&code=" + code
+                                            + "&code=" + encodeURIComponent(code)
                                             + "&id_rule=" + id_rule
                                             + "&id_exception=" + id_exception,
             dataType: "html",
@@ -214,7 +214,7 @@ function clickHandlers() {
             url: "/api/",
             type: "GET",
             data: "action=adding_exception&locale=" + locale
-                                        + "&code=" + code
+                                        + "&code=" + encodeURIComponent(code)
                                         + "&id_rule=" + id_rule
                                         + "&content=" + encodeURIComponent(exception),
             dataType: "html",
@@ -260,7 +260,7 @@ function clickHandlers() {
             url: "/api/",
             type: "GET",
             data: "action=adding_rule&locale=" + locale
-                                    + "&code=" + code
+                                    + "&code=" + encodeURIComponent(code)
                                     + "&type=" + rule_type
                                     + "&type_number=" + type_number
                                     + "&rule_number=" + rule_number
@@ -347,7 +347,7 @@ function getCode() {
         url: "/api/",
         type: "GET",
         data: "action=get_rules&locale=" + locale
-                            + "&code=" + code
+                            + "&code=" + encodeURIComponent(code)
                             + "&mode=1",
         dataType: "html",
         success: function(response) {

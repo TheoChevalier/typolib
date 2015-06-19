@@ -5,7 +5,9 @@ function check() {
     $.ajax({
         url: "/api/",
         type: "GET",
-        data: "action=check&locale=" + locale + "&code=" + code + "&string=" + encodeURIComponent(user_string),
+        data: "action=check&locale=" + locale
+                        + "&code=" + encodeURIComponent(code)
+                        + "&string=" + encodeURIComponent(user_string),
         dataType: "html",
         success: function(response) {
             if (response != "0") {
