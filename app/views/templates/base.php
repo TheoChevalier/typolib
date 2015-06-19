@@ -63,6 +63,7 @@ if (strpos(VERSION, 'dev') !== false) {
        </li>
        <li <?=$page == 'check' ? 'class="active"' : ''?>><a href='/check'>Check text</a></li>
        <li <?=$page == 'test' ? 'class="active"' : ''?>><a href='/test'>Test</a></li>
+       <li <?=$page == 'user-guide' ? 'class="active"' : ''?>><a href='/user-guide'>User guide</a></li>
        <li <?=$page == 'about' ? 'class="active"' : ''?>><a href='/about'>About</a></li>
     </ul>
   </div>
