@@ -141,65 +141,71 @@ function clickHandlers() {
     $(".delete-rule").unbind('click');
     $(".delete-rule").click(function(event) {
         event.preventDefault();
-        var code = $('#code_selector').val();
-        var locale = $('#locale_selector').val();
-        var li = $(this).parent();
-        var id_rule = li.find('.rule').data('id-rule');
-        $.ajax({
-            url: "/api/",
-            type: "GET",
-            data: "action=deleting_rule&locale=" + locale
-                                    + "&code=" + encodeURIComponent(code)
-                                    + "&id_rule=" + id_rule,
-            dataType: "html",
-            context: this,
-            success: function(response) {
-                if (response == "1") {
-                    if ($(this).parent().has('#exceptionview').length == 1) {
-                        $('#exceptionview').hide();
-                        $('#exceptionview').appendTo('body');
+
+        if (window.confirm("Are you sure you want to delete this rule? This cannot be undone.")) {
+            var code = $('#code_selector').val();
+            var locale = $('#locale_selector').val();
+            var li = $(this).parent();
+            var id_rule = li.find('.rule').data('id-rule');
+            $.ajax({
+                url: "/api/",
+                type: "GET",
+                data: "action=deleting_rule&locale=" + locale
+                                        + "&code=" + encodeURIComponent(code)
+                                        + "&id_rule=" + id_rule,
+                dataType: "html",
+                context: this,
+                success: function(response) {
+                    if (response == "1") {
+                        if ($(this).parent().has('#exceptionview').length == 1) {
+                            $('#exceptionview').hide();
+                            $('#exceptionview').appendTo('body');
+                        }
+                        $(this).parent().remove();
+                        hideEmptyNodes();
+                    } else {
+                        alert("Sorry, something went wrong while deleting this rule. Try again later.");
                     }
-                    $(this).parent().remove();
-                    hideEmptyNodes();
-                } else {
-                    alert("Sorry, something went wrong while deleting this rule. Try again later.");
+                },
+                error: function() {
+                    console.error("AJAX failure - delete rule");
                 }
-            },
-            error: function() {
-                console.error("AJAX failure - delete rule");
-            }
-        });
+            });
+        }
     });
 
     $(".delete-exception").unbind('click');
     $(".delete-exception").click(function(event) {
         event.preventDefault();
-        var code = $('#code_selector').val();
-        var locale = $('#locale_selector').val();
-        var li = $(this).parent();
-        var id_exception = li.data('id-exception');
-        var rule = li.parent().parent();
-        var id_rule = rule.find('.rule').data('id-rule');
-        $.ajax({
-            url: "/api/",
-            type: "GET",
-            data: "action=deleting_exception&locale=" + locale
-                                            + "&code=" + encodeURIComponent(code)
-                                            + "&id_rule=" + id_rule
-                                            + "&id_exception=" + id_exception,
-            dataType: "html",
-            context: this,
-            success: function(response) {
-                if (response == "1") {
-                    $(this).parent().remove();
-                } else {
-                    alert("Sorry, something went wrong while deleting this exception. Try again later.");
+
+        if (window.confirm("Are you sure you want to delete this exception? This cannot be undone.")) {
+            var code = $('#code_selector').val();
+            var locale = $('#locale_selector').val();
+            var li = $(this).parent();
+            var id_exception = li.data('id-exception');
+            var rule = li.parent().parent();
+            var id_rule = rule.find('.rule').data('id-rule');
+            $.ajax({
+                url: "/api/",
+                type: "GET",
+                data: "action=deleting_exception&locale=" + locale
+                                                + "&code=" + encodeURIComponent(code)
+                                                + "&id_rule=" + id_rule
+                                                + "&id_exception=" + id_exception,
+                dataType: "html",
+                context: this,
+                success: function(response) {
+                    if (response == "1") {
+                        $(this).parent().remove();
+                    } else {
+                        alert("Sorry, something went wrong while deleting this exception. Try again later.");
+                    }
+                },
+                error: function() {
+                    console.error("AJAX failure - delete exception");
                 }
-            },
-            error: function() {
-                console.error("AJAX failure - delete exception");
-            }
-        });
+            });
+        }
     });
 
 
@@ -270,9 +276,9 @@ function clickHandlers() {
             success: function(response) {
                 if (response != "0") {
                     if (response == "-1") {
-                        alert("You can't have more than one quotation mark rule. If you need to change the rule, you can edit the current one.");
+                        alert("You can only have one quotation mark rule. You can edit the current one, but if you want to support multiple quotation marks, you’ll have to create different sets of rules.");
                     } else if (response == "1") {
-                        alert("You can't use ★ character. This special character must be used between two strings.");
+                        alert("Wildcard “★” character must be used between two strings (delimiters).");
                     }else {
                         li_type.find('.rules').append(response);
                         $('#comment').val('');

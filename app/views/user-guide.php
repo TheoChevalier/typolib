@@ -34,7 +34,7 @@
 				<p class="user-guide-content">
 					For this rule type, you have to enter after “Replace” the character or string you want to search and be replaced in your text. Then, you have to enter after “with” the substitution character or string.
 					<br/><br/>
-					Example in Typolib' : <br/>
+					Example in Typolib’: <br/>
 					<img src="/img/user-guide-screens/replace_with.PNG" alt="Replace with rule example" height="" width="600px" border=1 border-color="white" class="user-guide-image">
 				</p>
 		</div>
@@ -47,7 +47,7 @@
 					This rule type is dedicated to localization formats relying on specific character to separate plurals in a string.<br/>
 					For instance: “Fenêtre partagée avec #1 onglet;Fenêtres partagées avec #1 onglets”
 					<br/><br/>
-					Example in Typolib': <br/>
+					Example in Typolib’: <br/>
 					<img src="/img/user-guide-screens/plural_separator.PNG" alt="Plural separator rule example" height="" width="400px" border=1 border-color="white" class="user-guide-image">
 				</p>
 		</div>
@@ -55,7 +55,7 @@
 		<br/><br/>
 
 		<div id="ignore-variable-rule">
-			<h3>"Ignore variable [...]” rule: </h3>
+			<h3>“Ignore variable [...]” rule: </h3>
 				<p class="user-guide-content">
 					For this rule type, you have to enter variables to ignore which are used in your files.
 					<br/><br/>
@@ -67,7 +67,7 @@
 		<br/><br/>
 
 		<div id="quotation-marks-rule">
-			<h3>"Quotation mark [...] [...]” rule: </h3>
+			<h3>“Quotation mark [...] [...]” rule: </h3>
 				<p class="user-guide-content">
 					For this rule type, you have to enter the opening and the closing quotation mark to use.<br/>
 					You don’t have to enter spaces after the opening quotation mark and before the closing quotation mark.
@@ -156,10 +156,10 @@
 			<p class="user-guide-content">
 				You can use this page if you want to check a text for all the rules you have entered for a specific set of rules and a specific locale.
 				<ol>
-					<li>you choose a locale (the language)</li>
-					<li>you choose a specific set of rules you want to apply for the selected locale </li>
-					<li>you enter the text to check</li>
-					<li>the “corrected“ text is displayed. All the rules of the set of rules have been checked and the errors have been corrected</li>
+					<li>select a locale (the language)</li>
+					<li>select a specific set of rules you want to apply for the selected locale</li>
+					<li>enter the text to check</li>
+					<li>the “corrected“ text is displayed. All the rules from this set of rules have been applied and the errors have been corrected</li>
 				</ol>
 			</p>
 	</div>
@@ -186,13 +186,13 @@
 
 					<img src="/img/user-guide-screens/white_space_special_character.PNG" alt="White space special character" class="user-guide-image" style="display:inline-block">
 					<br/>
-					This is the “standard” space character.
+					This is the regular space character.
 
 					<br/><br/>
 
 					<img src="/img/user-guide-screens/narrow_non_breaking_space_special_character.PNG" alt="Narrow no-break space special character" class="user-guide-image" style="display:inline-block">
 					<br/>
-					This is a non-breaking space but thinner. It is used in French for example (before “ ? ! ” )
+					This is a non-breaking space, but thinner. It is used in French for instance, before “?” and “!”.
 
 			</p>
 	</div>
