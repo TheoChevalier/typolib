@@ -114,15 +114,15 @@ if (strpos(VERSION, 'dev') !== false) {
   </div>
 
   <footer>
-    <p><?= PRODUCT; ?> v<?= VERSION; ?> — MPL 2 — 2014 - <?= date("Y"); ?></p>
+    <p><?= PRODUCT ?> v<?= VERSION ?> — MPL 2 — 2014 - <?= date("Y"); ?></p>
   </footer>
 
   <script src="/assets/jquery/jquery.min.js"></script>
   <script src="/assets/jquery-ui/jquery-ui.min.js"></script>
-  <script src="/js/base.js"></script>
+  <script src="/js/base.js?<?= VERSION ?>"></script>
   <?php
     foreach ($javascript_include as $js_file) {
-        echo "    <script src=\"/js/{$js_file}\"></script>\n";
+        echo "    <script src=\"/js/{$js_file}?" . VERSION . "\"></script>\n";
     }
   ?>
 </body>

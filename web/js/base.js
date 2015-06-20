@@ -11,6 +11,7 @@ $(document).ready(function() {
     function hideEmptyNodes() {
         $('.ruletype').each(function() {
             var li = $(this).parent();
+            li.show();
             if (li.find('ul').children().length == 0) {
                 li.hide();
             }
