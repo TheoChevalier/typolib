@@ -6,16 +6,19 @@ $locale = $_POST['locale'];
 
 $uploaddir = CACHE_PATH;
 $uploadfile = $uploaddir . basename($_FILES['user_file']['name']);
+$ext = pathinfo($uploadfile, PATHINFO_EXTENSION);
 
-if (move_uploaded_file($_FILES['user_file']['tmp_name'], $uploadfile)) {
-    $rules = Rule::getArrayRules($code, $locale, RULES_STAGING);
-    $exceptions = RuleException::getArrayExceptions($code, $locale, RULES_STAGING);
-    $array = File::getFileContent($uploadfile, $locale, 'tmx');
-    if (! empty($rules)) {
-        $result = Rule::processArray($array, $rules, $exceptions, $locale);
-        file_put_contents(CACHE_PATH . "test.php", sizeof($array) . ' ' . sizeof($result) . ' ' . print_r($result, true));
+if (File::isSupportedType($ext)) {
+    if (move_uploaded_file($_FILES['user_file']['tmp_name'], $uploadfile)) {
+        $rules = Rule::getArrayRules($code, $locale, RULES_STAGING);
+        $exceptions = RuleException::getArrayExceptions($code, $locale, RULES_STAGING);
+        $array = File::getFileContent($uploadfile, $locale, $ext);
+        if (! empty($rules)) {
+            $result = Rule::processArray($array, $rules, $exceptions, $locale);
+        }
+    } else {
+        $error_msg[] = 'We’re sorry, an error occurred when uploading the file.';
     }
 } else {
-    $error_msg[] = "We’re sorry, an error occurred when uploading the file.";
-    print_r($_FILES['user_file']);
+    $error_msg[] = 'We’re sorry, the type of the file is not supported by ' . PRODUCT . '.';
 }

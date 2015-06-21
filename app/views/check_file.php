@@ -1,4 +1,23 @@
+<?php
+namespace Typolib;
+
+$formats = '';
+$i = 0;
+
+foreach (File::getSupportedTypes() as $format) {
+    if ($format != 'array') {
+        if ($i > 0) {
+            $formats .= ', .' . $format;
+        } else {
+            $formats .= '.' . $format;
+        }
+        $i++;
+    }
+}
+?>
+
 <form enctype="multipart/form-data" action="/check-file/" id="mainform" method="post">
+    <h2>Select a set of rules</h2>
     <fieldset>
         <label>Locale</label>
         <div class="select-style">
@@ -16,8 +35,13 @@
             </select>
         </div>
     </fieldset>
-    <br/>
+    <h2>Select a file</h2>
+    <fieldset>
     <input name="MAX_FILE_SIZE" type="hidden" value="8000000">
-    Send a file: <input name="user_file" type="file" />
+    <input name="user_file" type="file" accept="<?=$formats?>" />
+    <br/><br/>8MB max — Accepted file types: <?=$formats?>.
+    </fieldset>
+    <br/>
+    <br/>
     <input type="submit" class="button" value="Send" />
 </form>

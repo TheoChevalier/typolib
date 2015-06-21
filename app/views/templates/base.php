@@ -67,7 +67,6 @@ if (strpos(VERSION, 'dev') !== false) {
                <li <?=$page == 'check-file' ? 'class="active"' : ''?>><a href='/check-file'>Check file</a></li>
           </ul>
        </li>
-       <li <?=$page == 'test' ? 'class="active"' : ''?>><a href='/test'>Test</a></li>
        <li <?=$page == 'user-guide' ? 'class="active"' : ''?>><a href='/user-guide'>User guide</a></li>
        <li <?=$page == 'about' ? 'class="active"' : ''?>><a href='/about'>About</a></li>
     </ul>
