@@ -882,7 +882,7 @@ class Rule
                                             self::$start_variable_tag,
                                             self::$end_variable_tag);
 
-        array_push($processed_string, $string);
+        array_push($processed_string, Utils::htmlFormatting($string));
         array_push($processed_string, $positions);
 
         return $processed_string;
