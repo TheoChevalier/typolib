@@ -43,5 +43,8 @@ foreach (File::getSupportedTypes() as $format) {
     </fieldset>
     <br/>
     <br/>
-    <input type="submit" class="button" value="Send" />
+    <span id="spinner-file" style="display:none;">
+        <i class="fa fa-spinner fa-spin fa-2x"></i> We’re parsing your file, this could take a while…
+    </span>
+    <input type="submit" class="button" value="Send" onClick="alert('coucou');$(this).hide();$('spinner-file').show();" />
 </form>
