@@ -490,6 +490,36 @@ textarea,
     margin: 0;
 }
 
+/* Tables */
+table {
+    border-collapse: collapse;
+    margin: 0.5em auto;
+}
+
+tr:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+tr:first-child {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+th {
+    padding: 0.5em;
+}
+
+td {
+    padding: 0.5em;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    font-size: 0.9em;
+    vertical-align: top;
+}
+
 /* Helpers */
 
 .bold {

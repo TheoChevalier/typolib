@@ -84,6 +84,16 @@ class File
     }
 
     /**
+     * Get supported types
+     *
+     * @return array Array of the file formats we support.
+     */
+    public static function getSupportedTypes()
+    {
+        return array_keys(self::$supported_type);
+    }
+
+    /**
      * Get the zend adapter depending on the provided type of file.
      *
      * @param  String $type The type of file we want to get the adapter.
