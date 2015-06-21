@@ -50,4 +50,12 @@ class Utils
         ob_end_flush();
         flush();
     }
+
+    public static function htmlFormatting($string)
+    {
+        $string = str_replace("\n", '<br/>', $string);
+        $string = str_replace(NARROW_NBSP, '<span class="thin-nbsp">&thinsp;</span>', $string);
+
+        return str_replace(NBSP, "<span class=\"nbsp\">&nbsp;</span>", $string);
+    }
 }

@@ -26,7 +26,8 @@
         <fieldset>
             <label for="checkResponse">Corrected text</label>
             <br/>
-            <textarea id="checkResponse"></textarea>
+            <div id="checkResponse"></div>
+            <textarea disabled id="fake-textarea"></textarea>
         </fieldset>
         <br/>
         <input type="submit" class="button" name="check" value="Check" alt="Check" id="submitCheck"/>

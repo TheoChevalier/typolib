@@ -9,24 +9,24 @@
     <h2>Potential mistakes</h2>
 </div>
 <table>
-<tr class="column_headers">
-                        <th>Original string</th>
-                        <th>Corrected string</th>
-                        <th>Error message</th>
-</tr>
-<?php
-if (! empty($result)) {
-    foreach ($result as $string => $error) {
-        echo "<tr>\n<td>" . $string . "</td>\n"
-           . "<td>" . $error[0] . "</td>\n"
-           . "<td>";
-        if (! empty($error[1][0][0][1])) {
-            print_r($error[1][0][0], true);
+    <tr class="column_headers">
+        <th>Original string</th>
+        <th>Corrected string</th>
+        <th>Error message</th>
+    </tr>
+    <?php
+    if (! empty($result)) {
+        foreach ($result as $string => $error) {
+            echo "<tr>\n<td>" . $string . "</td>\n"
+               . "<td>" . $error[0] . "</td>\n"
+               . "<td>";
+            if (! empty($error[1][0][0][1])) {
+                print_r($error[1][0][0], true);
+            }
+            echo "</td>\n</tr>";
         }
-        echo "</td>\n</tr>";
     }
-}
-?>
+    ?>
 </table>
 
 <?php else: ?>

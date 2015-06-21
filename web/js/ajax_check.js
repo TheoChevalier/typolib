@@ -11,9 +11,9 @@ function check() {
         dataType: "html",
         success: function(response) {
             if (response != "0") {
-                $("#checkResponse").val(response);
+                $("#checkResponse").html(response);
             } else {
-                $("#checkResponse").val('');
+                $("#checkResponse").html('');
             }
         },
         error: function() {

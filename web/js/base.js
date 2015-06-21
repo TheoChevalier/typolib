@@ -59,6 +59,7 @@ function autoResizeTextarea(elm) {
         $(this).css('height', hiddenDiv.height());
         if ($(this).attr('id') == 'enterText') {
             $('#checkResponse').css('height', hiddenDiv.height());
+            $('#fake-textarea').css('height', hiddenDiv.height());
         }
     });
 }

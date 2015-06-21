@@ -39,9 +39,12 @@ foreach (File::getSupportedTypes() as $format) {
     <fieldset>
     <input name="MAX_FILE_SIZE" type="hidden" value="8000000">
     <input name="user_file" type="file" accept="<?=$formats?>" />
-    <br/><br/>8MB max — Accepted file types: <?=$formats?>.
+    <br/><br/>8MB max — Accepted files: <?=$formats?>.
     </fieldset>
     <br/>
     <br/>
-    <input type="submit" class="button" value="Send" />
+    <span id="spinner-file" style="display:none;">
+        <i class="fa fa-spinner fa-spin fa-2x"></i> We’re parsing your file, this could take a while…
+    </span>
+    <input type="submit" class="button" value="Send" onClick="$(this).hide();$('spinner-file').show();" />
 </form>
