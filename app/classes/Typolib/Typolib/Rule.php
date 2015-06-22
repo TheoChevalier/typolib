@@ -884,6 +884,7 @@ class Rule
 
         array_push($processed_string, Utils::htmlFormatting($string));
         array_push($processed_string, $positions);
+        array_push($processed_string, $processed_code[2]);
 
         return $processed_string;
     }
@@ -892,6 +893,7 @@ class Rule
     {
         $processed_string = [];
         $positions = [];
+        $comments = [];
         $result = [];
         $exceptions_rule = [];
         $rule_comment;
@@ -913,8 +915,8 @@ class Rule
                     $exceptions_rule = self::getRuleExceptions($exceptions, $id);
                     $result = self::checkIfThenRule($string, $rule['content'], $exceptions_rule);
                     if (! empty($result[1])) {
-                        $comment = ! empty($rule['comment']) ? $rule['comment'] : '';
-                        $positions[] = [$result[1], $comment];
+                        $comments[] = ! empty($rule['comment']) ? $rule['comment'] : '';
+                        $positions[] = $result[1];
                     }
                     $string = $result[0];
                 }
@@ -924,8 +926,8 @@ class Rule
                     $exceptions_rule = self::getRuleExceptions($exceptions, $id);
                     $result = self::checkQuotationMarkRule($string, $rule['content'], $exceptions_rule);
                     if (! empty($result[1])) {
-                        $comment = ! empty($rule['comment']) ? $rule['comment'] : '';
-                        $positions[] = [$result[1], $comment];
+                        $comments[] = ! empty($rule['comment']) ? $rule['comment'] : '';
+                        $positions[] = $result[1];
                     }
                     $string = $result[0];
                 }
@@ -935,8 +937,8 @@ class Rule
                     $exceptions_rule = self::getRuleExceptions($exceptions, $id);
                     $result = self::checkBeforeAfter($string, $rule['content'], $exceptions_rule, $rule['type']);
                     if (! empty($result[1])) {
-                        $comment = ! empty($rule['comment']) ? $rule['comment'] : '';
-                        $positions[] = [$result[1], $comment];
+                        $comments[] = ! empty($rule['comment']) ? $rule['comment'] : '';
+                        $positions[] = $result[1];
                     }
                     $string = $result[0];
                 }
@@ -945,6 +947,7 @@ class Rule
 
         array_push($processed_string, $string);
         array_push($processed_string, $positions);
+        array_push($processed_string, $comments);
 
         return $processed_string;
     }
@@ -965,7 +968,7 @@ class Rule
             $string = html_entity_decode(strip_tags($string));
             $res = self::process($string, $rules, $exceptions, $locale);
             if (! empty($res[1])) {
-                $processed_array[$string] = $res;
+                $processed_array[$string] = [$res[0], $res[2]];
             }
         }
 
