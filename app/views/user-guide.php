@@ -170,7 +170,7 @@
 		<h2>Special characters</h2>
 
 			<p class="user-guide-content">
-				In order to add rules to a set of rules, Typolib’ can use specific characters: <br/><br/>
+				In order to add rules to a set of rules, Typolib' can use special characters: <br/><br/>
 
 					<img src="/img/user-guide-screens/empty_set_special_character.PNG" alt="Empty set special character" class="user-guide-image" style="display:inline-block">
 					<br/>
@@ -193,6 +193,12 @@
 					<img src="/img/user-guide-screens/narrow_non_breaking_space_special_character.PNG" alt="Narrow no-break space special character" class="user-guide-image" style="display:inline-block">
 					<br/>
 					This is a non-breaking space, but thinner. It is used in French for instance, before “?” and “!”.
+
+					<br/><br/>
+
+					<img src="/img/user-guide-screens/wildcard.PNG" alt="Wildcard special character" class="user-guide-image" style="display:inline-block">
+					<br/>
+					This special character can replace any string or character. It must be used between two strings (delimiters).
 
 			</p>
 	</div>
