@@ -8,9 +8,7 @@ Typolib’ is a project created by French students in MIAGE with the help of the
 
 **Build Status:** [![Build Status](https://api.travis-ci.org/TheoChevalier/typolib.svg)](https://travis-ci.org/TheoChevalier/typolib)
 
-
-**Test Coverage:** [![Coverage Status](https://coveralls.io/repos/TheoChevalier/typolib/badge.svg)](https://coveralls.io/r/TheoChevalier/typolib)
-
+[Online classes documentation](http://typolib.theochevalier.fr/documentation/namespaces/Typolib.html)
 
 ## Dependencies
 
