@@ -1,4 +1,4 @@
-<form name="addform" id="mainform" method="get" action="">
+<form name="addform" id="mainform" method="get" action="#">
     <fieldset id="main">
         <fieldset>
             <label>Locale</label>
@@ -24,12 +24,12 @@
             <textarea id="enterText" name="enterText" rows="3" cols="15"></textarea>
         </fieldset>
         <fieldset>
-            <label for="checkResponse">Corrected text</label>
+            <label>Corrected text</label>
             <br/>
             <div id="checkResponse"></div>
             <textarea disabled id="fake-textarea"></textarea>
         </fieldset>
         <br/>
-        <input type="submit" class="button" name="check" value="Check" alt="Check" id="submitCheck"/>
+        <input type="submit" class="button" name="check" value="Check" id="submitCheck"/>
     </fieldset>
 </form>
