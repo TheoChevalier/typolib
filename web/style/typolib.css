@@ -589,11 +589,6 @@ td {
         font-size: 1.2em;
     }
 
-    textarea {
-        width: 250px;
-    }
-
-
     .notice {
         padding: 20px 20px 20px 35px;
         max-width: 50%;
