@@ -281,32 +281,6 @@ footer {
     text-align: center;
 }
 
-.user-guide-content,
-ol li {
-    text-align: left;
-}
-
-#summary {
-    margin:0 auto;
-    text-align: center;
-    width: 300px;
-}
-
-#summary-content ul li {
-    text-align: left;
-}
-
-.user-guide-image {
-    margin-left: auto; 
-    margin-right: auto; 
-    display: block;
-}
-
-.special-character-description {
-    vertical-align: top;
-    padding-top: 15px;
-}
-
 .select-style {
     background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50px' height='50px'><polyline points='46.139,15.518 25.166,36.49 4.193,15.519'/></svg>");
     background-position: center right 10px;
@@ -501,6 +475,76 @@ textarea,
     margin: 0;
 }
 
+.user-guide-hint {
+    position: absolute;
+    right: 20px;
+    margin-top: -50px;
+    border: 1px solid #0095dd;
+    background: #fff;
+}
+
+.user-guide-hint:hover {
+    border: 1px solid #00539f;
+}
+
+/* User guide */
+#user-guide #mainform {
+    padding: 5px;
+}
+
+#user-guide img {
+    margin-left: auto; 
+    margin-right: auto; 
+    display: block;
+}
+
+.user-guide-content img {
+    width: 400px;
+}
+
+#rule-editor-editing img {
+    width: 600px;
+}
+
+#check-text img {
+    width: 800px;
+}
+
+.user-guide-content img,
+#rule-editor-editing img,
+#check-text img {
+    border: 1px solid white;
+}
+
+#special-characters .user-guide-content img {
+    border: none;
+    width: auto;
+}
+
+#special-characters img {
+    display: inline-block;
+}
+
+.user-guide-content,
+ol li {
+    text-align: left;
+}
+
+#summary {
+    margin:0 auto;
+    text-align: center;
+    width: 300px;
+}
+
+#summary-content ul li {
+    text-align: left;
+}
+
+.special-character-description {
+    vertical-align: top;
+    padding-top: 15px;
+}
+
 /* Tables */
 table {
     border-collapse: collapse;
@@ -589,10 +633,11 @@ td {
         font-size: 1.2em;
     }
 
-    textarea {
+    textarea,
+    #fake-textarea,
+    #checkResponse {
         width: 250px;
     }
-
 
     .notice {
         padding: 20px 20px 20px 35px;
@@ -605,6 +650,13 @@ td {
         font-size: 1.2em
     }
 
+    .user-guide-hint {
+        display: block;
+        position: static;
+        margin-top: 20px;
+        width: 80%;
+        max-width: 600px;
+    }
 }
 
 @media only screen and (max-width: 460px) {
@@ -626,6 +678,10 @@ td {
 
     #main select {
         display: inline;
+    }
+
+    #user-guide img {
+        max-width: 300px;
     }
 
 }

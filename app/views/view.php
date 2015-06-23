@@ -1,3 +1,4 @@
+<a href="/user-guide" class="user-guide-hint notice">Need help?</a>
 <form name="addform" id="mainform" method="get" action="">
 
     <fieldset id="main">
