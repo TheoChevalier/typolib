@@ -20,8 +20,8 @@
             echo "<tr>\n<td>" . $string . "</td>\n"
                . "<td>" . $error[0] . "</td>\n"
                . "<td>";
-            if (! empty($error[1][0][0][1])) {
-                print_r($error[1][0][0], true);
+            foreach ($error[1] as $comment) {
+                echo $comment . '<br/>';
             }
             echo "</td>\n</tr>";
         }
