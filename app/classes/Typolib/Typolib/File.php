@@ -35,6 +35,10 @@ class File
     public static function getFileContent($path, $locale, $type)
     {
         if (self::isSupportedType($type)) {
+
+            // Clear cache
+            Utils::deleteFolder(DATA_ROOT . '/tmp');
+            mkdir(DATA_ROOT . '/tmp');
             $cache = Zend_Cache::factory(
                 'Core', 'File',
                 [
