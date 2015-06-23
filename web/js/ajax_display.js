@@ -10,13 +10,17 @@ function clickHandlers() {
 function getCode() {
     locale = $('#locale_selector').val();
     code = $('#code_selector').val();
+    var node = 0;
+    if ($('#display-unverified').children().length !== 0) {
+        node = 1;
+    }
 
     $.ajax({
         url: "/api/",
         type: "GET",
         data: "action=get_rules&locale=" + locale
                             + "&code=" + encodeURIComponent(code)
-                            + "&mode=0",
+                            + "&mode=" + node,
         dataType: "html",
         success: function(response) {
             $("#results").html(response);
@@ -30,10 +34,15 @@ function getCode() {
 }
 
 $('#locale_selector').on('change', function() {
+    var node = 0;
+    if ($('#display-unverified').children().length !== 0) {
+        node = 1;
+    }
+
     $.ajax({
         url: "/api/",
         type: "GET",
-        data: "action=get_codes&locale=" + this.value + "&mode=0",
+        data: "action=get_codes&locale=" + this.value + "&mode=" + node,
         dataType: "html",
         success: function(response) {
             $("#code_selector").html(response);

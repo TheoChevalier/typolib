@@ -1,6 +1,6 @@
 <?php if (! empty($result)) : ?>
 <div id="mainform">
-    <p>We’ve checked the file you’ve sent, find the results below.</p>
+    <p>We’ve checked the file you’ve sent using <b><?=$code_pretty?></b> (<b><?=$locale?></b>), find the results below.</p>
 
     <h2>Stats</h2>
     <br/><b>Number of strings:</b> <?= sizeof($array) ?>

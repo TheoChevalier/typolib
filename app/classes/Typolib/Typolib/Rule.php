@@ -970,7 +970,9 @@ class Rule
             $string = html_entity_decode(strip_tags($string));
             $res = self::process($string, $rules, $exceptions, $locale);
             if (! empty($res[1])) {
-                $processed_array[$string] = [$res[0], $res[2]];
+                $string = Utils::htmlFormatting($string);
+                $corrected = $res[0];
+                $processed_array[$string] = [$corrected, $res[2]];
             }
         }
 
