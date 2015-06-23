@@ -394,7 +394,7 @@ class Rule
 
         // save all the positions of the errors
         while (($last_position = mb_strpos($user_string, $search, $last_position)) !== false) {
-            $next_position = $last_position + strlen($search);
+            $next_position = $last_position + mb_strlen($search);
             if (! self::ignoreCharacter($last_position, $variable_to_ignore)) {
                 if (! self::ignoreCharacter($last_position, $exception_positions)) {
                     $positions[] = [$last_position, $next_position];
@@ -410,7 +410,7 @@ class Rule
                                                                 $user_string,
                                                                 $replace,
                                                                 $value,
-                                                                strlen($search)
+                                                                mb_strlen($search)
                                                             );
             }
         }
@@ -505,12 +505,14 @@ class Rule
                                                      self::$end_exception_tag);
 
         $searched_characters_positions = [];
-        if (in_array($searched_character, $characters)) {
-            $searched_characters_positions = array_keys(
-                                                    $characters,
-                                                    $searched_character
-                                                );
+        $offset = 0;
+        while (mb_strpos($user_string, $searched_character, $offset) !== false) {
+            $position = mb_strpos($user_string, $searched_character, $offset);
+            $offset = $position + mb_strlen($searched_character);
+            $searched_characters_positions[] = $position;
+        }
 
+        if (! empty($searched_characters_positions)) {
             foreach ($searched_characters_positions as $key => $position) {
                 //Don't check if it's the beginning or the end of the string
                 if (($position != 0 || $mode != 'check_before') && ($position != sizeof($characters) - 1 || $mode != 'check_after')) {
@@ -616,24 +618,24 @@ class Rule
                 $offset = 0;
                 while (mb_strpos($user_string, $value, $offset) !== false) {
                     $position = mb_strpos($user_string, $value, $offset);
-                    $offset = $position + strlen($value);
+                    $offset = $position + mb_strlen($value);
                     if (! self::ignoreCharacter($position, $exception_positions)) {
                         $user_string = \Typolib\Strings::replaceString($user_string,
                             self::$start_variable_tag . $value . self::$end_variable_tag,
                             $position,
-                            strlen($value));
+                            mb_strlen($value));
                     }
                 }
             }
         } else {
             while (mb_strpos($user_string, $variable_to_ignore, $offset) !== false) {
                 $position = mb_strpos($user_string, $variable_to_ignore, $offset);
-                $offset = $position + strlen($variable_to_ignore);
+                $offset = $position + mb_strlen($variable_to_ignore);
                 if (! self::ignoreCharacter($position, $exception_positions)) {
                     $user_string = \Typolib\Strings::replaceString($user_string,
                         self::$start_variable_tag . $variable_to_ignore . self::$end_variable_tag,
                         $position,
-                        strlen($variable_to_ignore));
+                        mb_strlen($variable_to_ignore));
                 }
             }
         }
