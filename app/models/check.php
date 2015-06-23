@@ -11,10 +11,10 @@ $locale_selector = Utils::getHtmlSelectOptions(
 $rules = Rule::getRulesTypeList();
 reset($rules);
 
-$codes = $code_key = Code::getCodeList($locale, RULES_STAGING);
+$codes = $code_key = Code::getCodeList($locale, RULES_PRODUCTION);
 reset($code_key);
 $code_key = key($code_key);
 $code_selector = Utils::getHtmlSelectOptions($codes, $code_key, true);
 
 $first_rule = array_values($rules)[0];
-$rules = Rule::getArrayRules($code_key, $locale, RULES_STAGING);
+$rules = Rule::getArrayRules($code_key, $locale, RULES_PRODUCTION);
