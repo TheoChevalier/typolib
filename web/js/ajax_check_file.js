@@ -29,4 +29,5 @@ $('input[type="submit"]').click(function() {
 
 $('#spinner-file .close').click(function() {
     $('#spinner-file').hide();
+    $('input[type="submit"]').show();
 });
