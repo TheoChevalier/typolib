@@ -4,6 +4,9 @@ namespace Typolib;
 $code = $_POST['code'];
 $locale = $_POST['locale'];
 
+$code_pretty = Rule::getArrayRules($code, $locale, RULES_PRODUCTION);
+$code_pretty = $code_pretty['name'];
+
 $uploaddir = CACHE_PATH;
 $uploadfile = $uploaddir . basename($_FILES['user_file']['name']);
 $ext = pathinfo($uploadfile, PATHINFO_EXTENSION);
@@ -20,5 +23,5 @@ if (File::isSupportedType($ext)) {
         $error_msg[] = 'We’re sorry, an error occurred when uploading the file.';
     }
 } else {
-    $error_msg[] = 'We’re sorry, the type of the file is not supported by ' . PRODUCT . '.';
+    $error_msg[] = 'We’re sorry, this type of file is not supported by ' . PRODUCT . '.';
 }
